@@ -1,0 +1,20 @@
+{
+  "name": "Shree Sakhi — Periods, PCOD & Pregnancy Help",
+  "short_name": "Shree Sakhi",
+  "description": "Judgement-free answers on periods, PCOD, and pregnancy for girls and women in India.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBF2E7",
+  "theme_color": "#7A2E3B",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23FBF2E7'/%3E%3Ccircle cx='20' cy='20' r='17' stroke='%23C9973F' stroke-width='1.5'/%3E%3Cpath d='M20 8c3 5 8 7 8 12a8 8 0 1 1-16 0c0-5 5-7 8-12z' fill='%237A2E3B'/%3E%3Ccircle cx='20' cy='21' r='2.4' fill='%23F5E7C6'/%3E%3C/svg%3E",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
