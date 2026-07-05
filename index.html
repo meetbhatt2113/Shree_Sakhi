@@ -2286,6 +2286,11 @@ Rules you always follow:
   let isListening = false;
   let replyTexts = {}; // bubbleId -> text, for replay
 
+  function isIOS(){
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); // iPadOS reports as Mac
+  }
+
   function setupRecognition(){
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if(!SR){ return null; }
@@ -2298,9 +2303,17 @@ Rules you always follow:
       addBubble('user', text);
       askSakhiAI(text);
     };
-    r.onerror = ()=>{
+    r.onerror = (e)=>{
       setListeningUI(false);
-      setLiveStatus('ready', 'ready to listen');
+      let msg = 'ready to listen';
+      if(e.error === 'not-allowed' || e.error === 'permission-denied'){
+        addBubble('ai', "I can't hear you — microphone access seems to be blocked. Check your browser's site settings and allow microphone access for this page, then try again.");
+      } else if(e.error === 'no-speech'){
+        msg = "didn't catch that — tap to try again";
+      } else if(e.error === 'network'){
+        addBubble('ai', "Voice recognition needs an internet connection — please check yours and try again, or type your question instead.");
+      }
+      setLiveStatus('ready', msg);
     };
     r.onend = ()=>{ setListeningUI(false); };
     return r;
@@ -2324,14 +2337,37 @@ Rules you always follow:
   function toggleListening(){
     if(!recognition) recognition = setupRecognition();
     if(!recognition){
-      alert('Voice input isn\'t supported in this browser — please try Chrome or Edge, or type your question below.');
+      const msg = isIOS()
+        ? "Voice input isn't supported on iPhone/iPad browsers yet (this is an Apple limitation, not this site) — please type your question below instead, it works exactly the same way."
+        : "Voice input isn't supported in this browser — please try Chrome on Android, or type your question below instead.";
+      addBubble('ai', msg);
+      document.getElementById('typedQuestion').focus();
       return;
     }
     if(isListening){ recognition.stop(); return; }
     window.speechSynthesis && window.speechSynthesis.cancel();
-    setListeningUI(true);
-    recognition.start();
+    try{
+      setListeningUI(true);
+      recognition.start();
+    }catch(err){
+      setListeningUI(false);
+      addBubble('ai', "Couldn't start listening — please check microphone permissions for this site, or type your question below instead.");
+    }
   }
+
+  // Let her know upfront on unsupported browsers, rather than only after tapping the mic
+  (function checkVoiceSupportOnLoad(){
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR){
+      const micBtn = document.getElementById('micBtn');
+      if(micBtn){
+        micBtn.style.opacity = '0.5';
+        micBtn.title = isIOS()
+          ? 'Voice input is not supported on iPhone/iPad — please type your question instead'
+          : 'Voice input is not supported in this browser — please type your question instead';
+      }
+    }
+  })();
 
   function askTyped(){
     const val = document.getElementById('typedQuestion').value.trim();
