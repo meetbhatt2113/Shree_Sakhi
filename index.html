@@ -1,0 +1,2461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shree Sakhi — Har Sawaal Ka Jawaab</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='19' fill='%23FBF2E7' stroke='%23C9973F' stroke-width='1.5'/%3E%3Cpath d='M20 8c3 5 8 7 8 12a8 8 0 1 1-16 0c0-5 5-7 8-12z' fill='%237A2E3B'/%3E%3Ccircle cx='20' cy='21' r='2.4' fill='%23F5E7C6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Poppins:wght@300;400;500;600;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon:#7A2E3B;
+    --maroon-deep:#511D26;
+    --gold:#C9973F;
+    --gold-light:#E8C77E;
+    --cream:#FBF2E7;
+    --cream-deep:#F3E4D0;
+    --sage:#6E8B5E;
+    --sage-light:#DCE6D3;
+    --rose:#D98B96;
+    --rose-light:#F6DFE1;
+    --ink:#2B1B1A;
+    --paper:#FFFDF9;
+    --on-dark-band:#FBF2E7; /* constant light text color for maroon/dark bands — never changes with theme */
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Poppins',sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces',serif;
+    margin:0 0 .4em 0;
+    font-weight:600;
+    color:var(--maroon-deep);
+  }
+  a{color:inherit;}
+  .eyebrow{
+    font-size:.72rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--maroon);
+    font-weight:600;
+    margin-bottom:.6em;
+    display:inline-block;
+  }
+  .container{max-width:1080px;margin:0 auto;padding:0 24px;}
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(251,242,231,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--cream-deep);
+  }
+  .navwrap{
+    max-width:1080px;margin:0 auto;padding:14px 24px 10px;
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:10px;
+  }
+  .nav-controls{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .navlinks-row{
+    max-width:1080px;margin:0 auto;padding:0 24px 14px;
+  }
+  .navlinks{display:flex;gap:8px 20px;flex-wrap:wrap;justify-content:center;}
+  .brand{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .brand .mark{width:34px;height:34px;flex-shrink:0;}
+  .brand-text{font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;color:var(--maroon-deep);}
+  .brand-text span{color:var(--gold);}
+  .navlinks a{
+    font-size:.85rem;font-weight:500;text-decoration:none;color:var(--maroon-deep);
+    padding:6px 2px;border-bottom:2px solid transparent;transition:border-color .2s;
+  }
+  .navlinks a:hover{border-color:var(--gold);}
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:78px 24px 60px;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 88% 12%, var(--rose-light) 0%, transparent 42%),
+      radial-gradient(circle at 8% 90%, var(--sage-light) 0%, transparent 40%);
+  }
+  .hero-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;}
+  @media(max-width:820px){.hero-inner{grid-template-columns:1fr;}}
+  .letter{
+    background:var(--paper);
+    border-radius:4px;
+    padding:38px 40px;
+    box-shadow:0 18px 40px -18px rgba(81,29,38,0.35);
+    border-left:5px solid var(--gold);
+  }
+  .letter h1{font-size:2.35rem;line-height:1.18;}
+  .letter p{font-size:1.02rem;color:#4a3835;}
+  .letter .sign{
+    margin-top:22px;font-family:'Fraunces',serif;font-style:italic;color:var(--maroon);font-size:1.05rem;
+  }
+  .heroart{display:flex;justify-content:center;}
+  .cta-row{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;padding:13px 26px;border-radius:30px;font-weight:600;font-size:.92rem;
+    text-decoration:none;cursor:pointer;border:none;transition:transform .15s, box-shadow .15s;
+  }
+  .btn-primary{background:var(--maroon);color:var(--on-dark-band);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 20px -8px rgba(122,46,59,0.55);}
+  .btn-ghost{background:transparent;border:1.5px solid var(--maroon);color:var(--maroon-deep);}
+  .btn-ghost:hover{background:var(--maroon);color:var(--on-dark-band);}
+  /* divider motif */
+  .divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 10px;width:fit-content;}
+  .divider svg{display:block;}
+  /* ---------- SECTION shell ---------- */
+  section{padding:70px 24px;}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 44px;}
+  .section-head p{color:#5a4744;font-size:1rem;}
+  .band-cream{background:var(--cream);}
+  .band-paper{background:var(--paper);}
+  .band-maroon{background:linear-gradient(180deg,var(--maroon-deep),var(--maroon));color:var(--on-dark-band);}
+  .band-maroon h2, .band-maroon h3{color:var(--on-dark-band);}
+  .band-sage{background:linear-gradient(180deg,#f6f8f2,var(--sage-light));}
+  /* ---------- FAQ ---------- */
+  .tabbar{display:flex;justify-content:center;gap:10px;margin-bottom:36px;flex-wrap:wrap;}
+  .tabbtn{
+    padding:10px 22px;border-radius:24px;border:1.5px solid var(--maroon);
+    background:transparent;color:var(--maroon-deep);font-weight:600;font-size:.88rem;
+    cursor:pointer;font-family:'Poppins',sans-serif;transition:all .2s;
+  }
+  .tabbtn.active{background:var(--maroon);color:var(--on-dark-band);}
+  .faqgroup{display:none;max-width:780px;margin:0 auto;}
+  .faqgroup.active{display:block;}
+  .faq-cat{
+    font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);
+    font-weight:700;margin:30px 0 12px;
+  }
+  .faq-cat:first-child{margin-top:0;}
+  .accordion-item{
+    background:var(--paper);border:1px solid var(--cream-deep);border-radius:12px;
+    margin-bottom:10px;overflow:hidden;
+  }
+  .accordion-q{
+    width:100%;text-align:left;background:none;border:none;padding:18px 22px;
+    font-family:'Poppins',sans-serif;font-weight:600;font-size:.96rem;color:var(--ink);
+    display:flex;justify-content:space-between;align-items:center;gap:14px;cursor:pointer;
+  }
+  .accordion-q .plus{font-size:1.3rem;color:var(--maroon);transition:transform .25s;flex-shrink:0;}
+  .accordion-item.open .plus{transform:rotate(45deg);}
+  .accordion-a{
+    max-height:0;overflow:hidden;transition:max-height .3s ease;
+    padding:0 22px;font-size:.93rem;color:#4a3835;
+  }
+  .accordion-item.open .accordion-a{max-height:600px;padding:0 22px 20px;}
+  /* ---------- CARD GRID ---------- */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  @media(max-width:760px){.grid3{grid-template-columns:1fr;}.grid2{grid-template-columns:1fr;}}
+  .card{
+    background:var(--paper);border-radius:14px;padding:26px;border:1px solid var(--cream-deep);
+  }
+  .card h4{font-size:1.05rem;margin-bottom:.5em;}
+  .card ul{margin:0;padding-left:1.1em;font-size:.92rem;color:#4a3835;}
+  .card ul li{margin-bottom:6px;}
+  .icon-badge{
+    width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--rose-light);font-size:1.3rem;margin-bottom:14px;
+  }
+  .card.sage .icon-badge{background:var(--sage-light);}
+  .card.gold .icon-badge{background:#F5E7C6;}
+  /* two-column avoid/do lists */
+  .dolist{border-left:4px solid var(--sage);}
+  .avoidlist{border-left:4px solid var(--rose);}
+  .tag{
+    display:inline-block;background:var(--sage-light);color:#3d5230;font-size:.72rem;
+    padding:3px 10px;border-radius:20px;font-weight:600;margin-bottom:10px;
+  }
+  .tag.avoid{background:var(--rose-light);color:#7a3038;}
+  /* mood grid small cards */
+  .moodcard{
+    background:var(--paper);border-radius:14px;padding:20px;border:1px solid var(--cream-deep);
+    text-align:center;
+  }
+  .moodcard .emoji{font-size:1.8rem;margin-bottom:8px;}
+  .moodcard h4{font-size:.95rem;margin-bottom:6px;}
+  .moodcard p{font-size:.82rem;color:#5a4744;margin:0;}
+  /* find doctor */
+  .finder-box{
+    background:var(--paper);border-radius:18px;padding:34px;max-width:640px;margin:0 auto;
+    box-shadow:0 20px 40px -22px rgba(81,29,38,0.3);
+  }
+  .finder-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .finder-row input{
+    flex:1;min-width:200px;padding:13px 16px;border-radius:10px;border:1.5px solid var(--cream-deep);
+    font-family:'Poppins',sans-serif;font-size:.95rem;
+  }
+  .finder-row input:focus{outline:none;border-color:var(--gold);}
+  .quickpicks{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .chip{
+    padding:6px 14px;border-radius:20px;background:var(--sage-light);color:#3d5230;
+    font-size:.8rem;font-weight:600;border:none;cursor:pointer;
+  }
+  .helpline-strip{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:14px;max-width:1000px;margin:40px auto 0;
+  }
+  @media(max-width:820px){.helpline-strip{grid-template-columns:repeat(2,1fr);}}
+  .helpline-card{
+    background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:14px;
+    padding:18px;text-align:center;
+  }
+  .helpline-card .num{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:600;color:var(--gold-light);}
+  .helpline-card .lbl{font-size:.78rem;opacity:.85;margin-top:4px;}
+  /* footer */
+  footer{background:var(--maroon-deep);color:var(--on-dark-band);padding:40px 24px 30px;text-align:center;}
+  footer p{font-size:.82rem;opacity:.8;max-width:640px;margin:8px auto;}
+  .disclaimer{
+    background:var(--cream-deep);border-radius:12px;padding:16px 20px;font-size:.82rem;
+    color:#5a4744;max-width:780px;margin:30px auto 0;text-align:center;
+  }
+  @media(max-width:600px){
+    .letter{padding:26px 22px;}
+    .letter h1{font-size:1.7rem;}
+    section{padding:50px 18px;}
+  }
+
+  /* ---------- LANGUAGE SWITCH ---------- */
+  .langswitch{display:flex;gap:4px;background:var(--cream-deep);border-radius:20px;padding:3px;}
+  .langswitch button{
+    border:none;background:transparent;padding:5px 12px;border-radius:16px;font-size:.76rem;
+    font-weight:700;cursor:pointer;color:var(--maroon-deep);font-family:'Poppins',sans-serif;
+  }
+  .langswitch button.active{background:var(--maroon);color:var(--on-dark-band);}
+
+  /* ---------- TOOLS ---------- */
+  .toolbar{display:flex;justify-content:center;gap:8px;margin-bottom:32px;flex-wrap:wrap;}
+  .toolbtn{
+    padding:9px 16px;border-radius:20px;border:1.5px solid var(--sage);background:transparent;
+    color:#3d5230;font-weight:600;font-size:.8rem;cursor:pointer;font-family:'Poppins',sans-serif;
+  }
+  .toolbtn.active{background:var(--sage);color:#fff;}
+  .toolpanel{display:none;max-width:680px;margin:0 auto;}
+  .toolpanel.active{display:block;}
+  .tool-card{background:var(--paper);border:1px solid var(--cream-deep);border-radius:16px;padding:28px;}
+  .tool-card label{display:block;font-size:.82rem;font-weight:600;color:var(--maroon-deep);margin:14px 0 6px;}
+  .tool-card input, .tool-card select{
+    width:100%;padding:11px 14px;border-radius:8px;border:1.5px solid var(--cream-deep);
+    font-family:'Poppins',sans-serif;font-size:.92rem;
+  }
+  .tool-card input:focus, .tool-card select:focus{outline:none;border-color:var(--gold);}
+  .tool-result{
+    margin-top:18px;padding:16px 18px;background:var(--sage-light);border-radius:12px;
+    font-size:.9rem;color:#2f4023;display:none;
+  }
+  .tool-result.show{display:block;}
+  .tool-result strong{color:var(--maroon-deep);font-family:'Fraunces',serif;font-size:1.1rem;}
+  .mini-note{font-size:.78rem;color:#7a6a67;margin-top:10px;}
+
+  .ai-insight-box{
+    margin-top:24px;padding-top:20px;border-top:1px dashed var(--cream-deep);
+  }
+  .ai-insight-box h4{font-size:.95rem;margin-bottom:4px;}
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+  .stat-row label{font-size:.72rem;margin:0 0 4px;}
+  .stat-row input{padding:9px 10px;font-size:.85rem;}
+  @media(max-width:520px){.stat-row{grid-template-columns:1fr;}}
+  .ai-insight-result{
+    display:none;margin-top:16px;padding:16px 18px;border-radius:14px;font-size:.9rem;line-height:1.55;
+    background:linear-gradient(135deg,var(--rose-light),var(--sage-light));color:var(--ink);
+  }
+  .ai-insight-result.show{display:block;}
+  .ai-insight-result .ai-loading{display:inline-flex;gap:4px;}
+  .ai-insight-result .ai-loading span{
+    width:6px;height:6px;border-radius:50%;background:var(--maroon);opacity:.5;animation:typingDot 1.2s ease-in-out infinite;
+  }
+  .ai-insight-result .ai-loading span:nth-child(2){animation-delay:.2s;}
+  .ai-insight-result .ai-loading span:nth-child(3){animation-delay:.4s;}
+  [data-theme="dark"] .ai-insight-box{border-top-color:#3a2830;}
+  [data-theme="dark"] .ai-insight-result{background:linear-gradient(135deg,#3a2430,#1c2a20);color:#EDE3DD;}
+  .checklist label{
+    display:flex;align-items:flex-start;gap:10px;font-size:.88rem;font-weight:400;color:var(--ink);
+    margin-bottom:10px;cursor:pointer;
+  }
+  .checklist input[type="checkbox"]{width:auto;margin-top:3px;}
+  .kickbtn-wrap{text-align:center;padding:20px 0;}
+  .kickbig{
+    width:140px;height:140px;border-radius:50%;background:var(--rose);color:#fff;border:none;
+    font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;cursor:pointer;box-shadow:0 12px 24px -10px rgba(217,139,150,.6);
+  }
+  .kickbig:active{transform:scale(.96);}
+  .kickstats{display:flex;justify-content:center;gap:26px;margin-top:18px;}
+  .kickstats div{text-align:center;}
+  .kickstats .kn{font-family:'Fraunces',serif;font-size:1.6rem;color:var(--maroon-deep);}
+  .kickstats .kl{font-size:.74rem;color:#7a6a67;}
+
+  /* ---------- FLIP CARDS (myths) ---------- */
+  .flipgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  @media(max-width:700px){.flipgrid{grid-template-columns:1fr;}}
+  .flipcard{perspective:1200px;height:180px;cursor:pointer;}
+  .flipinner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;}
+  .flipcard.flipped .flipinner{transform:rotateY(180deg);}
+  .flipface{
+    position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:22px;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .flipfront{background:var(--rose-light);border:1px solid var(--rose);}
+  .flipback{background:var(--sage-light);border:1px solid var(--sage);transform:rotateY(180deg);}
+  .flipface .tag2{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+  .flipfront .tag2{color:#7a3038;}
+  .flipback .tag2{color:#3d5230;}
+  .flipface p{margin:0;font-size:.92rem;font-weight:500;color:var(--ink);}
+
+  /* ---------- STORIES ---------- */
+  .storycard{
+    background:var(--paper);border-radius:16px;padding:26px;border:1px solid var(--cream-deep);
+    border-top:4px solid var(--gold);
+  }
+  .storycard .who{font-size:.78rem;font-weight:700;color:var(--maroon);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+  .storycard p{font-size:.92rem;color:#4a3835;font-style:italic;}
+
+  /* ---------- ASK SAKHI ---------- */
+  .askform textarea, .askform input, .askform select{
+    width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--cream-deep);
+    font-family:'Poppins',sans-serif;font-size:.92rem;margin-bottom:14px;
+  }
+  .askform textarea{min-height:110px;resize:vertical;}
+  .askform label{display:block;font-size:.8rem;font-weight:600;color:var(--maroon-deep);margin-bottom:6px;}
+
+  /* ---------- FLOATING TALK BUTTON ---------- */
+  .floatbtn{
+    position:fixed;bottom:22px;right:22px;z-index:60;
+    background:var(--maroon);color:var(--on-dark-band);border:none;border-radius:30px;
+    padding:14px 20px;font-weight:700;font-size:.86rem;box-shadow:0 14px 30px -12px rgba(81,29,38,0.6);
+    cursor:pointer;display:flex;align-items:center;gap:8px;
+  }
+  .floatmenu{
+    position:fixed;bottom:78px;right:22px;z-index:60;background:var(--paper);border-radius:14px;
+    box-shadow:0 20px 40px -18px rgba(0,0,0,0.3);padding:14px;display:none;min-width:220px;
+  }
+  .floatmenu.show{display:block;}
+  .floatmenu a{
+    display:block;padding:10px 12px;border-radius:8px;font-size:.86rem;font-weight:600;
+    text-decoration:none;color:var(--maroon-deep);margin-bottom:4px;
+  }
+  .floatmenu a:hover{background:var(--cream);}
+
+  .verify-badge{
+    display:inline-flex;align-items:center;gap:6px;background:var(--sage-light);color:#3d5230;
+    font-size:.76rem;font-weight:700;padding:4px 12px;border-radius:20px;margin-top:10px;
+  }
+
+  /* ---------- SECTION LOOP ANIMATIONS ---------- */
+  .section-anim{display:flex;justify-content:center;margin-bottom:6px;}
+  .section-anim svg{display:block;}
+
+  @keyframes bottlePulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.06);}
+  }
+  @keyframes steamRise1{
+    0%{transform:translateY(0) scaleX(1);opacity:0;}
+    15%{opacity:.9;}
+    100%{transform:translateY(-22px) scaleX(1.4);opacity:0;}
+  }
+  @keyframes steamRise2{
+    0%{transform:translateY(0) scaleX(1);opacity:0;}
+    15%{opacity:.7;}
+    100%{transform:translateY(-22px) scaleX(1.4);opacity:0;}
+  }
+  .bottle-body{animation:bottlePulse 1.4s ease-in-out infinite;transform-origin:center bottom;}
+  .steam-a{animation:steamRise1 1.6s ease-in-out infinite;}
+  .steam-b{animation:steamRise2 1.6s ease-in-out infinite;animation-delay:.5s;}
+  .steam-c{animation:steamRise1 1.6s ease-in-out infinite;animation-delay:.9s;}
+
+  @keyframes heartBeat{
+    0%,100%{transform:scale(1);}
+    15%{transform:scale(1.18);}
+    30%{transform:scale(0.96);}
+    45%{transform:scale(1.12);}
+    60%{transform:scale(1);}
+  }
+  @keyframes babyBounce{
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    50%{transform:translateY(-6px) rotate(-4deg);}
+  }
+  .heart-shape{animation:heartBeat 1.5s ease-in-out infinite;transform-origin:center;}
+  .baby-shape{animation:babyBounce 1.8s ease-in-out infinite;transform-origin:center bottom;}
+
+  /* ================= GEN-Z LAYER ================= */
+  :root{
+    --gz-pink:#FF6FA0;
+    --gz-purple:#8C6CF6;
+    --gz-mint:#3FD8B8;
+    --gz-sun:#FFC857;
+  }
+  .gz-gradient-text{
+    background:linear-gradient(90deg,var(--gz-pink),var(--gz-purple));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sticker-pill{
+    display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border-radius:24px;
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:.8rem;color:#fff;
+    background:linear-gradient(135deg,var(--gz-pink),var(--gz-purple));
+    box-shadow:0 8px 18px -8px rgba(140,108,246,.55);
+  }
+  .sticker-pill.mint{background:linear-gradient(135deg,var(--gz-mint),#2bb89f);box-shadow:0 8px 18px -8px rgba(63,216,184,.5);}
+  .sticker-pill.sun{background:linear-gradient(135deg,var(--gz-sun),#f2a93b);box-shadow:0 8px 18px -8px rgba(255,200,87,.5);color:#4a2f00;}
+  .glass-card{
+    background:rgba(255,255,255,0.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.7);border-radius:20px;
+  }
+  .gz-blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.55;animation:blobFloat 7s ease-in-out infinite;}
+  @keyframes blobFloat{0%,100%{transform:translateY(0) translateX(0);}50%{transform:translateY(-14px) translateX(8px);}}
+
+  /* new pain-relief loop icons */
+  @keyframes iceHeatSwap{
+    0%,40%{opacity:1;}45%,90%{opacity:0;}95%,100%{opacity:1;}
+  }
+  @keyframes iceHeatSwap2{
+    0%,40%{opacity:0;}45%,90%{opacity:1;}95%,100%{opacity:0;}
+  }
+  .ice-layer{animation:iceHeatSwap 3s ease-in-out infinite;}
+  .heat-layer{animation:iceHeatSwap2 3s ease-in-out infinite;}
+
+  @keyframes stretchSway{
+    0%,100%{transform:rotate(0deg);}
+    25%{transform:rotate(-8deg);}
+    75%{transform:rotate(8deg);}
+  }
+  .stretch-fig{animation:stretchSway 3.5s ease-in-out infinite;transform-origin:bottom center;}
+
+  @keyframes cupSteamSlow{
+    0%{transform:translateY(0) scaleX(1);opacity:0;}
+    20%{opacity:.85;}
+    100%{transform:translateY(-20px) scaleX(1.5);opacity:0;}
+  }
+  .cup-steam-a{animation:cupSteamSlow 3s ease-in-out infinite;}
+  .cup-steam-b{animation:cupSteamSlow 3s ease-in-out infinite;animation-delay:1s;}
+  .cup-steam-c{animation:cupSteamSlow 3s ease-in-out infinite;animation-delay:2s;}
+
+  @keyframes pillowGlow{
+    0%,100%{opacity:.25;transform:scale(1);}
+    50%{opacity:.6;transform:scale(1.15);}
+  }
+  @keyframes pillowBob{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-4px);}
+  }
+  .pillow-glow{animation:pillowGlow 4s ease-in-out infinite;transform-origin:center;}
+  .pillow-shape{animation:pillowBob 4s ease-in-out infinite;}
+
+  @keyframes legLift{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-7px);}
+  }
+  .leg-shape{animation:legLift 3s ease-in-out infinite;}
+
+  @keyframes flameFlicker{
+    0%,100%{transform:scaleY(1) rotate(0deg);}
+    30%{transform:scaleY(1.15) rotate(-3deg);}
+    60%{transform:scaleY(0.9) rotate(3deg);}
+  }
+  .flame-shape{animation:flameFlicker 3s ease-in-out infinite;transform-origin:bottom center;}
+
+  @keyframes stickerFloat{
+    0%,100%{transform:translateY(0) rotate(-3deg);}
+    50%{transform:translateY(-8px) rotate(3deg);}
+  }
+  .sticker-float{animation:stickerFloat 3.4s ease-in-out infinite;display:inline-block;}
+  @keyframes stickerWiggle{
+    0%,100%{transform:rotate(-6deg) scale(1);}
+    50%{transform:rotate(6deg) scale(1.08);}
+  }
+  .sticker-wiggle{animation:stickerWiggle 2.6s ease-in-out infinite;display:inline-block;}
+
+  /* ================= 3D DEPTH LAYER ================= */
+  .icon-badge{
+    position:relative;overflow:hidden;
+    box-shadow:0 10px 18px -8px rgba(122,46,59,0.35), inset 0 2px 3px rgba(255,255,255,0.6), inset 0 -6px 10px rgba(0,0,0,0.06);
+    background:radial-gradient(circle at 32% 28%, #ffffff 0%, var(--rose-light) 42%, var(--rose) 100%);
+  }
+  .card.sage .icon-badge{background:radial-gradient(circle at 32% 28%, #ffffff 0%, var(--sage-light) 42%, var(--sage) 100%);}
+  .card.gold .icon-badge{background:radial-gradient(circle at 32% 28%, #ffffff 0%, #F5E7C6 42%, var(--gold) 100%);}
+
+  .card, .moodcard, .storycard, .helpline-card{
+    transition:transform .3s ease, box-shadow .3s ease;
+    transform-style:preserve-3d;
+  }
+  .card:hover, .moodcard:hover, .storycard:hover{
+    transform:perspective(700px) rotateX(3deg) translateY(-6px) scale(1.015);
+    box-shadow:0 24px 40px -20px rgba(81,29,38,0.35);
+  }
+  .btn{transition:transform .2s ease, box-shadow .2s ease;}
+  .btn:active{transform:translateY(1px) scale(.97);}
+
+  @keyframes bounceIcon{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+  }
+  @keyframes rotateIcon{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
+  }
+  @keyframes floatIcon{
+    0%,100%{transform:translateY(0) rotate(-3deg);}
+    50%{transform:translateY(-9px) rotate(3deg);}
+  }
+  @keyframes twinkleIcon{
+    0%,100%{opacity:.3;transform:scale(0.8);}
+    50%{opacity:1;transform:scale(1.15);}
+  }
+  @keyframes flipIcon{
+    0%,100%{transform:rotateY(0deg);}
+    50%{transform:rotateY(180deg);}
+  }
+  @keyframes pulseIcon{
+    0%,100%{transform:scale(1);opacity:1;}
+    50%{transform:scale(1.25);opacity:.6;}
+  }
+  @keyframes waveIcon{
+    0%,100%{transform:scaleY(1);}
+    50%{transform:scaleY(1.6);}
+  }
+  .anim-bounce{animation:bounceIcon 2.2s ease-in-out infinite;}
+  .anim-rotate{animation:rotateIcon 3.5s linear infinite;transform-origin:center;}
+  .anim-float{animation:floatIcon 3.2s ease-in-out infinite;}
+  .anim-twinkle{animation:twinkleIcon 1.8s ease-in-out infinite;}
+  .anim-flip{animation:flipIcon 3s ease-in-out infinite;transform-origin:center;}
+  .anim-pulse{animation:pulseIcon 2s ease-in-out infinite;transform-origin:center;}
+  .anim-wave{animation:waveIcon 1.2s ease-in-out infinite;transform-origin:bottom;}
+
+  /* ================= AI VOICE WIDGET — PREMIUM ================= */
+  .voicewidget.premium{
+    max-width:640px;margin:0 auto;
+    background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.65));
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    border-radius:28px;padding:28px;
+    border:1px solid rgba(255,255,255,0.8);
+    box-shadow:0 30px 60px -28px rgba(81,29,38,0.4), inset 0 1px 0 rgba(255,255,255,0.9);
+    position:relative;overflow:hidden;
+  }
+  .voicewidget.premium::before{
+    content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;border-radius:50%;
+    background:radial-gradient(circle, var(--gz-pink), transparent 70%);opacity:.25;pointer-events:none;
+  }
+  .voicewidget.premium::after{
+    content:'';position:absolute;bottom:-70px;left:-50px;width:180px;height:180px;border-radius:50%;
+    background:radial-gradient(circle, var(--gz-purple), transparent 70%);opacity:.2;pointer-events:none;
+  }
+
+  .vw-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;position:relative;z-index:1;}
+  .vw-avatar{
+    width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 16px -6px rgba(140,108,246,.5);
+  }
+  .vw-name{font-family:'Fraunces',serif;font-weight:600;color:var(--maroon-deep);font-size:1.05rem;}
+  .vw-status{font-family:'Fredoka',sans-serif;font-size:.78rem;color:#7a6a67;display:flex;align-items:center;gap:6px;}
+  .vw-dot{width:7px;height:7px;border-radius:50%;background:var(--gz-mint);display:inline-block;animation:pulseIcon 1.6s ease-in-out infinite;}
+  .vw-status.thinking .vw-dot{background:var(--gz-sun);}
+  .vw-status.speaking .vw-dot{background:var(--gz-pink);}
+  .vw-status.listening .vw-dot{background:var(--gz-purple);}
+
+  .vw-thread{
+    position:relative;z-index:1;max-height:320px;overflow-y:auto;margin-bottom:18px;
+    padding-right:4px;scroll-behavior:smooth;
+  }
+  .vw-thread::-webkit-scrollbar{width:5px;}
+  .vw-thread::-webkit-scrollbar-thumb{background:var(--cream-deep);border-radius:10px;}
+
+  .vw-empty{text-align:center;padding:24px 12px;}
+  .vw-empty-orb{
+    width:56px;height:56px;border-radius:50%;margin:0 auto 14px;
+    background:radial-gradient(circle at 32% 28%, #fff, var(--gz-pink) 45%, var(--gz-purple) 100%);
+    box-shadow:0 12px 24px -10px rgba(140,108,246,.5);animation:floatIcon 3.5s ease-in-out infinite;
+  }
+  .vw-empty p{font-size:.88rem;color:#7a6a67;max-width:340px;margin:0 auto;}
+
+  .vw-bubble{
+    max-width:82%;padding:12px 16px;border-radius:18px;font-size:.9rem;line-height:1.5;
+    margin-bottom:12px;animation:bubbleIn .35s ease both;
+  }
+  @keyframes bubbleIn{0%{opacity:0;transform:translateY(8px) scale(.97);}100%{opacity:1;transform:translateY(0) scale(1);}}
+  .vw-bubble.user{
+    margin-left:auto;background:linear-gradient(135deg, var(--maroon), var(--maroon-deep));
+    color:var(--on-dark-band);border-bottom-right-radius:6px;
+  }
+  .vw-bubble.ai{
+    margin-right:auto;background:linear-gradient(135deg, var(--rose-light), var(--sage-light));
+    color:var(--ink);border-bottom-left-radius:6px;
+  }
+  .vw-bubble.ai .vw-replay{
+    display:inline-flex;align-items:center;gap:4px;margin-top:8px;background:none;border:none;
+    color:var(--maroon);font-weight:700;font-size:.76rem;cursor:pointer;padding:0;
+  }
+  .vw-typing{display:inline-flex;gap:4px;padding:4px 0;}
+  .vw-typing span{
+    width:7px;height:7px;border-radius:50%;background:var(--maroon);opacity:.5;
+    animation:typingDot 1.2s ease-in-out infinite;
+  }
+  .vw-typing span:nth-child(2){animation-delay:.2s;}
+  .vw-typing span:nth-child(3){animation-delay:.4s;}
+  @keyframes typingDot{0%,60%,100%{transform:translateY(0);opacity:.4;}30%{transform:translateY(-5px);opacity:1;}}
+
+  .vw-controls{position:relative;z-index:1;text-align:center;}
+  .voice-picker{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .vp-label{font-size:.78rem;color:#7a6a67;font-weight:600;}
+  .vp-btn{
+    padding:6px 14px;border-radius:20px;border:1.5px solid var(--cream-deep);background:var(--paper);
+    font-size:.78rem;font-weight:600;color:var(--maroon-deep);cursor:pointer;font-family:'Poppins',sans-serif;
+    transition:all .2s;
+  }
+  .vp-btn.active{background:linear-gradient(135deg,var(--gz-pink),var(--gz-purple));color:#fff;border-color:transparent;}
+  [data-theme="dark"] .vp-btn{background:#241922;border-color:#3a2830;color:#EDE3DD;}
+  .mic-wrap{position:relative;width:120px;height:120px;margin:0 auto 18px;}
+  .mic-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--gz-pink);opacity:0;}
+  .mic-ring.r2{border-color:var(--gz-purple);}
+  .mic-ring.pulsing{animation:micRing 1.6s ease-out infinite;}
+  .mic-ring.r2.pulsing{animation:micRing 1.6s ease-out infinite .5s;}
+  @keyframes micRing{0%{transform:scale(0.75);opacity:.6;}100%{transform:scale(1.7);opacity:0;}}
+
+  .wavebars{
+    position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);
+    display:flex;align-items:flex-end;gap:4px;height:16px;opacity:0;transition:opacity .2s;
+  }
+  .wavebars.active{opacity:1;}
+  .wavebars span{
+    width:4px;background:linear-gradient(180deg,var(--gz-pink),var(--gz-purple));border-radius:3px;
+    animation:waveIcon 1s ease-in-out infinite;
+  }
+  .wavebars span:nth-child(1){height:6px;animation-delay:0s;}
+  .wavebars span:nth-child(2){height:14px;animation-delay:.15s;}
+  .wavebars span:nth-child(3){height:8px;animation-delay:.3s;}
+  .wavebars span:nth-child(4){height:16px;animation-delay:.1s;}
+  .wavebars span:nth-child(5){height:10px;animation-delay:.25s;}
+
+  .micbtn{
+    position:relative;width:104px;height:104px;border-radius:50%;border:none;cursor:pointer;
+    background:radial-gradient(circle at 32% 28%, #ffffff 0%, var(--gz-pink) 45%, var(--gz-purple) 100%);
+    box-shadow:0 16px 32px -12px rgba(140,108,246,.6), inset 0 3px 6px rgba(255,255,255,0.5);
+    font-size:2.1rem;transition:transform .2s, box-shadow .2s;
+  }
+  .micbtn:hover{transform:scale(1.05);box-shadow:0 20px 38px -12px rgba(140,108,246,.7), inset 0 3px 6px rgba(255,255,255,0.5);}
+  .micbtn.listening{animation:pulseIcon 1s ease-in-out infinite;}
+  .micbtn.speaking{animation:micRing 1s ease-in-out infinite;background:radial-gradient(circle at 32% 28%, #ffffff 0%, var(--gz-mint) 45%, #2bb89f 100%);}
+
+  .voice-typed{display:flex;gap:8px;margin-top:6px;}
+  .voice-typed input{
+    flex:1;padding:12px 18px;border-radius:24px;border:1.5px solid var(--cream-deep);
+    font-family:'Poppins',sans-serif;background:rgba(255,255,255,0.7);
+  }
+  .voice-typed input:focus{outline:none;border-color:var(--gz-purple);}
+
+  /* ================= DARK MODE ================= */
+  html{transition:background-color .35s ease;}
+  body, nav, section, .card, .moodcard, .storycard, .tool-card, .finder-box,
+  .accordion-item, .voicewidget.premium, .helpline-card, .letter, .glass-card,
+  .voice-typed input, .askform input, .askform textarea, .askform select{
+    transition:background-color .35s ease, color .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+
+  .theme-toggle{
+    width:38px;height:38px;border-radius:50%;border:1.5px solid var(--cream-deep);background:var(--paper);
+    cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 10px -4px rgba(0,0,0,0.2);
+  }
+
+  [data-theme="dark"]{
+    --cream:#170F13;
+    --cream-deep:#271A21;
+    --paper:#231720;
+    --ink:#EDE3DD;
+  }
+  [data-theme="dark"] body{background:var(--cream);color:var(--ink);}
+  [data-theme="dark"] .band-cream{background:var(--cream);}
+  [data-theme="dark"] .band-paper{background:var(--paper);}
+  [data-theme="dark"] .band-sage{background:linear-gradient(180deg,#151d15,#1c281d);}
+  [data-theme="dark"] .band-maroon{background:linear-gradient(180deg,#2a1219,#3d1a24);}
+  [data-theme="dark"] nav{background:rgba(23,15,19,0.9);border-color:#3a2830;}
+  [data-theme="dark"] .navlinks a{color:#F2E3D5;}
+  [data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h4{color:#F5D9A8;}
+  [data-theme="dark"] .section-head p{color:#C9BDB8;}
+  [data-theme="dark"] .letter{background:#241922;border-left-color:var(--gold);}
+  [data-theme="dark"] .letter p{color:#D9CFC9;}
+  [data-theme="dark"] .card, [data-theme="dark"] .moodcard, [data-theme="dark"] .storycard,
+  [data-theme="dark"] .tool-card, [data-theme="dark"] .finder-box, [data-theme="dark"] .accordion-item,
+  [data-theme="dark"] .helpline-card{
+    background:#241922;border-color:#3a2830;color:#EDE3DD;
+  }
+  [data-theme="dark"] .voicewidget.premium{
+    background:linear-gradient(180deg, rgba(40,28,34,0.9), rgba(30,20,26,0.9));border-color:rgba(255,255,255,0.08);
+  }
+  [data-theme="dark"] .glass-card{background:rgba(45,32,40,0.55);border-color:rgba(255,255,255,0.08);}
+  [data-theme="dark"] .flipfront{background:#3a2430;border-color:#5a3540;}
+  [data-theme="dark"] .flipback{background:#1c2a20;border-color:#2f4a38;}
+  [data-theme="dark"] .disclaimer{background:#271a21;color:#C9BDB8;}
+  [data-theme="dark"] .mini-note{color:#a89a95;}
+  [data-theme="dark"] .accordion-a{color:#CFC3BD;}
+  [data-theme="dark"] .accordion-q{color:#EDE3DD;}
+  [data-theme="dark"] .voice-typed input, [data-theme="dark"] .askform input,
+  [data-theme="dark"] .askform textarea, [data-theme="dark"] .askform select,
+  [data-theme="dark"] .finder-row input, [data-theme="dark"] .tool-card input,
+  [data-theme="dark"] .tool-card select{
+    background:#1c1319;border-color:#4a3542;color:#EDE3DD;
+  }
+  [data-theme="dark"] .tool-result{background:#20301f;color:#cfe8c9;}
+  [data-theme="dark"] .vw-thread::-webkit-scrollbar-thumb{background:#3a2830;}
+  [data-theme="dark"] .theme-toggle{background:#241922;border-color:#3a2830;}
+  [data-theme="dark"] .langswitch{background:#241922;}
+  [data-theme="dark"] .langswitch button{color:#EDE3DD;}
+  [data-theme="dark"] footer{background:#12080c;}
+
+  /* retint the many hardcoded inline text colors used across cards */
+  [data-theme="dark"] [style*="color:#4a3835"]{color:#D9CFC9 !important;}
+  [data-theme="dark"] [style*="color:#5a4744"]{color:#C9BDB8 !important;}
+  [data-theme="dark"] [style*="color:#3d5230"]{color:#9FD9B8 !important;}
+  [data-theme="dark"] [style*="color:#7a6a67"]{color:#B5A9A4 !important;}
+  [data-theme="dark"] [style*="color:#7a3038"]{color:#F0A0A8 !important;}
+  [data-theme="dark"] [style*="color:#4a2f00"]{color:#F0C97A !important;}
+  [data-theme="dark"] [style*="color:#2f4023"]{color:#B8E0A0 !important;}
+  [data-theme="dark"] .tool-card label,
+  [data-theme="dark"] .askform label,
+  [data-theme="dark"] .tool-card h4,
+  [data-theme="dark"] .voicewidget h4,
+  [data-theme="dark"] .finder-box h4{color:#F0C97A;}
+  [data-theme="dark"] .vw-name{color:#F5D9A8;}
+  [data-theme="dark"] .vw-status{color:#B5A9A4;}
+  [data-theme="dark"] .vw-bubble.ai{color:#1a1015;}
+  [data-theme="dark"] .verify-badge{background:#20301f;color:#cfe8c9;}
+
+  /* production pass: catch remaining class-based (non-inline) hardcoded colors */
+  [data-theme="dark"] .card ul, [data-theme="dark"] .card li{color:#D9CFC9;}
+  [data-theme="dark"] .moodcard p{color:#C9BDB8;}
+  [data-theme="dark"] .storycard p{color:#D9CFC9;}
+  [data-theme="dark"] .toolbtn{color:#9FD9B8;border-color:#3f6b4f;}
+  [data-theme="dark"] .toolbtn.active{color:#0e1f10;}
+  [data-theme="dark"] .kickstats .kl{color:#B5A9A4;}
+  [data-theme="dark"] .vw-empty p{color:#B5A9A4;}
+  [data-theme="dark"] .vp-label{color:#B5A9A4;}
+  [data-theme="dark"] .flipfront .tag2{color:#F0A0A8;}
+  [data-theme="dark"] .flipback .tag2{color:#9FD9B8;}
+  [data-theme="dark"] .flipface p{color:#EDE3DD;}
+  [data-theme="dark"] .checklist label{color:#EDE3DD;}
+  [data-theme="dark"] .storycard .who{color:#E8A5AE;}
+  [data-theme="dark"] .brand-text{color:#F2E3D5;}
+  [data-theme="dark"] .eyebrow{color:#E8A5AE;}
+  [data-theme="dark"] .icon-badge{box-shadow:0 10px 18px -8px rgba(0,0,0,0.6), inset 0 2px 3px rgba(255,255,255,0.25), inset 0 -6px 10px rgba(0,0,0,0.35);}
+  [data-theme="dark"] .sign{color:#E8A5AE;}
+  [data-theme="dark"] .btn-ghost{border-color:#E8A5AE;color:#F2E3D5;}
+  [data-theme="dark"] .cb-time, [data-theme="dark"] select{background:#1c1319;color:#EDE3DD;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navwrap">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" stroke="#C9973F" stroke-width="1.5"/>
+        <path d="M20 8c3 5 8 7 8 12a8 8 0 1 1-16 0c0-5 5-7 8-12z" fill="#7A2E3B"/>
+        <circle cx="20" cy="21" r="2.4" fill="#F5E7C6"/>
+      </svg>
+      <div class="brand-text">Shree <span>Sakhi</span></div>
+    </div>
+    <div class="nav-controls">
+      <div class="langswitch" id="langswitch">
+        <button class="active" data-lang="en">EN</button>
+        <button data-lang="hi">हि</button>
+        <button data-lang="gu">ગુ</button>
+      </div>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
+    </div>
+  </div>
+  <div class="navlinks-row">
+    <div class="navlinks">
+      <a href="#ai-voice" data-i18n="nav.aivoice">Ask Sakhi AI</a>
+      <a href="#faqs" data-i18n="nav.faqs">FAQs</a>
+      <a href="#tools" data-i18n="nav.tools">Tools</a>
+      <a href="#myths" data-i18n="nav.myths">Myths vs Facts</a>
+      <a href="#periods-care" data-i18n="nav.periods">Periods Care</a>
+      <a href="#pregnancy-care" data-i18n="nav.pregnancy">Pregnancy Care</a>
+      <a href="#mind-calm" data-i18n="nav.calm">Mind &amp; Calm</a>
+      <a href="#stories" data-i18n="nav.stories">Stories</a>
+      <a href="#voice-support" data-i18n="nav.voice">Talk by Voice</a>
+      <a href="#ask-sakhi" data-i18n="nav.ask">Ask Sakhi</a>
+      <a href="#find-doctor" data-i18n="nav.doctor">Find a Doctor</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="gz-blob" style="width:90px;height:90px;top:14%;left:6%;background:radial-gradient(circle,var(--gz-sun),transparent 70%);animation-delay:.3s;"></div>
+  <div class="gz-blob" style="width:70px;height:70px;top:70%;left:12%;background:radial-gradient(circle,var(--gz-mint),transparent 70%);animation-delay:1.4s;"></div>
+  <div class="gz-blob" style="width:110px;height:110px;top:20%;right:8%;background:radial-gradient(circle,var(--gz-pink),transparent 70%);animation-delay:.8s;"></div>
+  <div class="gz-blob" style="width:60px;height:60px;top:78%;right:14%;background:radial-gradient(circle,var(--gz-purple),transparent 70%);animation-delay:2s;"></div>
+  <div class="hero-inner">
+    <div class="letter">
+      <span class="eyebrow" data-i18n="hero.eyebrow">A letter from your sakhi</span>
+      <h1 data-i18n="hero.title">No question is too small. No feeling is too silly.</h1>
+      <p data-i18n="hero.p1">Periods, PCOD, pregnancy, mood swings, cramps, fear, confusion — whatever it is, you can ask it here, plainly, without shame and without judgement. Shree Sakhi exists so that no girl or woman has to lie awake overthinking alone.</p>
+      <p data-i18n="hero.p2">Read the answers, take what helps, and please — when something feels serious, sit with a real doctor too. We're a sakhi, a friend who points you in the right direction, not a replacement for one.</p>
+      <div class="cta-row">
+        <a href="#ai-voice" class="btn btn-primary" data-i18n="hero.cta1">Ask your question →</a>
+        <a href="#find-doctor" class="btn btn-ghost" data-i18n="hero.cta2">Find a gynecologist</a>
+      </div>
+      <div class="sign" data-i18n="hero.sign">— with love, Shree Sakhi</div>
+    </div>
+    <div class="heroart">
+      <svg width="280" height="340" viewBox="0 0 280 340" fill="none">
+        <ellipse cx="140" cy="300" rx="110" ry="18" fill="#E8C77E" opacity="0.35"/>
+        <path d="M140 60c-45 55-80 95-80 150a80 80 0 0 0 160 0c0-55-35-95-80-150z" fill="#F6DFE1"/>
+        <path d="M140 100c-30 42-55 72-55 112a55 55 0 0 0 110 0c0-40-25-70-55-112z" fill="#D98B96"/>
+        <circle cx="140" cy="205" r="20" fill="#FBF2E7"/>
+        <path d="M140 20c10 20 26 24 26 42a26 26 0 1 1-52 0c0-18 16-22 26-42z" fill="#6E8B5E"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- AI VOICE COMPANION -->
+<section id="ai-voice" class="band-cream">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="26" fill="#F6DFE1"/>
+          <rect x="24" y="14" width="12" height="20" rx="6" fill="#7A2E3B"/>
+          <path class="anim-pulse" d="M18 28a12 12 0 0 0 24 0" stroke="#7A2E3B" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M30 40v6M24 46h12" stroke="#7A2E3B" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="eyebrow">Instant answers, out loud</span>
+      <h2>Ask Sakhi AI — By Voice</h2>
+      <p>Tap the mic, ask your question like you'd ask a friend, and hear a reply back. Works best in Chrome or Edge.</p>
+    </div>
+
+    <div class="voicewidget premium">
+      <div class="vw-header">
+        <div class="vw-avatar">
+          <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="19" fill="url(#vwGrad)"/>
+            <path d="M20 8c3 5 8 7 8 12a8 8 0 1 1-16 0c0-5 5-7 8-12z" fill="#fff" opacity="0.9"/>
+            <defs><linearGradient id="vwGrad" x1="0" y1="0" x2="40" y2="40"><stop stop-color="var(--gz-pink)"/><stop offset="1" stop-color="var(--gz-purple)"/></linearGradient></defs>
+          </svg>
+        </div>
+        <div>
+          <div class="vw-name">Sakhi AI</div>
+          <div class="vw-status" id="vwLiveStatus"><span class="vw-dot"></span> ready to listen</div>
+        </div>
+      </div>
+
+      <div class="vw-thread" id="vwThread">
+        <div class="vw-empty" id="vwEmpty">
+          <div class="vw-empty-orb"></div>
+          <p>Tap the mic and ask anything — periods, PCOD, pregnancy, or just how you're feeling today.</p>
+        </div>
+      </div>
+
+      <div class="vw-controls">
+        <div class="voice-picker" id="voicePicker">
+          <span class="vp-label">Voice:</span>
+          <button class="vp-btn active" data-gender="female" onclick="chooseVoiceGender('female')">👩 Female</button>
+          <button class="vp-btn" data-gender="male" onclick="chooseVoiceGender('male')">👨 Male</button>
+        </div>
+        <div class="mic-wrap">
+          <div class="mic-ring r1" id="micRing"></div>
+          <div class="mic-ring r2" id="micRing2"></div>
+          <div class="wavebars" id="waveBars">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <button class="micbtn" id="micBtn" onclick="toggleListening()">🎙️</button>
+        </div>
+        <div class="voice-typed">
+          <input type="text" id="typedQuestion" placeholder="Or type your question instead..." onkeydown="if(event.key==='Enter')askTyped()">
+          <button class="btn btn-primary" onclick="askTyped()">Send</button>
+        </div>
+      </div>
+      <p class="mini-note" style="margin-top:16px;">This is an AI assistant, not a doctor — for anything serious, please also use the Talk by Voice helplines above or the Find a Doctor section below. Your voice is converted to text in your own browser; only the text is sent to generate a reply.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION (first content section) -->
+<section id="faqs" class="band-paper">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="26" fill="#F5E7C6"/>
+          <text class="anim-bounce" x="30" y="40" text-anchor="middle" font-family="Fraunces,serif" font-size="30" font-weight="700" fill="#7A2E3B">?</text>
+        </svg>
+      </div>
+      <span class="eyebrow">Start here</span>
+      <h2>Frequently Asked, Rarely Answered</h2>
+      <p>The questions girls whisper to their friends at 1am — answered out loud, in plain language.</p>
+    </div>
+
+    <div class="tabbar">
+      <button class="tabbtn active" data-tab="periods">Periods &amp; PCOD/PCOS</button>
+      <button class="tabbtn" data-tab="pregnancy">Pregnancy</button>
+      <button class="tabbtn" data-tab="stages">Life Stages &amp; More</button>
+    </div>
+
+    <!-- PERIODS FAQ GROUP -->
+    <div class="faqgroup active" id="tab-periods">
+
+      <div class="faq-cat">Late periods &amp; pregnancy worry</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">My period is late and we didn't use protection — am I pregnant?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Maybe — but a late period doesn't automatically mean pregnancy. Stress, sudden weight change, travel, illness, thyroid issues, PCOD, or even breastfeeding can delay a period by days or weeks. If it's been <strong>7 days or more</strong> past your expected date, take a home urine pregnancy test first thing in the morning for the most accurate result — testing too early can give a false negative. If it's negative but your period still doesn't come within a week, or if you get a positive result, please see a gynecologist to confirm and plan next steps. Try not to spiral before you have the actual answer — one test will tell you more than a hundred worried thoughts.</p></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">How late can a period be before I should worry?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>A normal cycle is anywhere from 21–35 days, so a small shift month to month is not unusual. If your period is more than 7–10 days late, or if you regularly skip periods, it's worth getting checked — this can point to PCOD, thyroid imbalance, stress, or pregnancy. Track your cycle for 2–3 months (a simple calendar or app works) so a doctor has real data to work with.</p></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">We used protection but it slipped/broke — what now?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Emergency contraception pills are most effective the sooner they're taken, ideally within 72 hours, though some types work up to 120 hours. They're available at most pharmacies without much delay. This is a backup option, not a regular birth control method, and it can shift your next period's timing — that's normal. If you're unsure which one to take or have questions after, a gynecologist or even a pharmacist can guide you without judgement.</p></div>
+      </div>
+
+      <div class="faq-cat">PCOD / PCOS</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">What actually is PCOD/PCOS?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>PCOD/PCOS (Polycystic Ovarian Disease/Syndrome) is a hormonal condition where the ovaries produce slightly higher levels of male hormones (androgens), which can disrupt ovulation. It's extremely common — many young women have it and live full, healthy lives once it's managed. It is not something you did wrong, and it doesn't mean you can't have children.</p></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">How do I know if I have PCOD?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Common signs include irregular or missed periods, excess facial/body hair, acne, sudden weight gain (especially around the belly), thinning hair on the scalp, and dark patches of skin on the neck or underarms. Having one or two of these doesn't confirm PCOD — a doctor usually checks through a pelvic ultrasound and blood tests (hormone levels) before diagnosing it.</p></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">Can PCOD be cured completely?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>There's no single "cure," but it's very manageable. Regular movement (30 minutes most days), a diet lower in refined sugar and processed food, consistent sleep, and stress management can noticeably improve symptoms. Some women also need medication from a gynecologist or endocrinologist to regulate cycles or hormones — that's completely normal and not a failure on your part.</p></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">Does PCOD affect my chances of getting pregnant later?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>PCOD can make ovulation irregular, which can make conceiving take longer — but the large majority of women with PCOD do go on to have healthy pregnancies, sometimes with a little medical support like ovulation-tracking or fertility medication. Getting it diagnosed and managed early makes the whole journey easier later.</p></div>
+      </div>
+
+      <div class="faq-cat">General period questions</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">Is it normal for period blood colour and flow to change every month?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Yes, mild variation in colour (bright red to brownish) and flow is normal and often just reflects how fast the blood leaves the body. What's worth flagging to a doctor: soaking through a pad/tampon every hour for several hours straight, periods lasting more than 8 days, or severe pain that stops you from daily activities.</p></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">Can I bathe, exercise, or go to a temple during periods?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Yes to bathing and light exercise — both are actually good for cramps and hygiene. Whether you visit a temple is entirely a personal or family/cultural choice, not a medical one; there's no health reason to avoid it. You get to decide what feels right for you.</p></div>
+      </div>
+
+    </div>
+
+    <!-- PREGNANCY FAQ GROUP -->
+    <div class="faqgroup" id="tab-pregnancy">
+
+      <div class="faq-cat">Exercise &amp; movement</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">How should I exercise so the baby stays fit and healthy?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Gentle, consistent movement is the goal — not intensity. Walking (20–30 minutes daily), prenatal yoga, pelvic floor exercises (kegels), and light stretching are generally considered safe through most of a healthy pregnancy. Avoid contact sports, heavy lifting, exercises lying flat on your back after the first trimester, and anything with a high fall risk. Always get your specific plan approved by your gynecologist, since it depends on your trimester and any complications.</p></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">How much should I walk daily during pregnancy?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Most healthy pregnancies benefit from 20–30 minutes of easy-paced walking a day, split into two shorter walks if that's more comfortable. Walk in the cooler parts of the day, wear supportive footwear, keep water with you, and stop immediately if you feel dizzy, breathless, or notice contractions or bleeding.</p></div>
+      </div>
+
+      <div class="faq-cat">Food &amp; diet</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">What should I eat for a healthy pregnancy?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Focus on variety: iron-rich foods (leafy greens, dal, jaggery), calcium (milk, curd, sesame/til), protein (eggs, paneer, sprouts, lentils), fruits, and plenty of water. Your doctor will usually also prescribe folic acid, iron, and calcium supplements — take them as advised, food alone often isn't enough to meet pregnancy needs.</p></div>
+      </div>
+
+      <div class="faq-cat">Reading, screen-time &amp; mind</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">What should I read or watch during pregnancy?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Anything that keeps you calm and smiling counts. Gentle fiction, light memoirs, or a good pregnancy/parenting book help you feel prepared without overwhelm. For screen time — comfort shows over intense thrillers or heavy news cycles tends to help mood and sleep. See our full Mind &amp; Calm section below for specific picks.</p></div>
+      </div>
+
+      <div class="faq-cat">Labour &amp; delivery</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">What can I do to improve my chances of a normal (vaginal) delivery?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Staying active throughout pregnancy (walking, prenatal yoga), maintaining a healthy weight gain as guided by your doctor, practising breathing techniques, and staying mentally prepared through antenatal classes are all linked to better chances of normal delivery. That said, birth doesn't always go to plan, and a C-section is sometimes the safest choice for you or the baby — that is never a failure, just a different, equally valid way to become a mother.</p></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">How do I know if labour has actually started?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Regular, increasingly painful contractions that don't go away with rest, your water breaking, or a "bloody show" (mucus discharge tinged with blood) are common signs. If you're unsure, call your doctor or hospital — they'd always rather you call and be told it's early than wait too long.</p></div>
+      </div>
+
+      <div class="faq-cat">When to worry</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">What symptoms during pregnancy mean I should call a doctor immediately?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Heavy bleeding, severe abdominal pain, a bad headache with blurred vision, sudden swelling of the face/hands, reduced baby movement, fever, or fluid leaking — any of these need an urgent call to your doctor or hospital, not a wait-and-see approach.</p></div>
+      </div>
+
+    </div>
+
+    <!-- LIFE STAGES & MORE FAQ GROUP -->
+    <div class="faqgroup" id="tab-stages">
+
+      <div class="faq-cat">First period (Menarche 101)</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">I just got my first period — what do I actually need to know?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>First — nothing is wrong with you, this means your body is healthy and growing exactly as it should. Periods usually start between ages 9–15. Use a pad, tampon, or menstrual cup, changing it every 4–6 hours. The first few cycles can be irregular, light, or heavy, and that's normal while your body finds its rhythm — it can take up to 1–2 years to settle into a pattern. Keep a small pouch with a spare pad in your bag, and it's okay to tell a trusted adult (mother, sister, teacher) — you don't have to figure this out alone.</p></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">Is period pain in the first few years worse than later?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>It can be, since your body and hormones are still adjusting. A warm compress, gentle walking, and rest usually help. If the pain ever makes you faint, vomit repeatedly, or stops you from standing up, tell an adult and see a doctor — that level of pain isn't something to just "push through."</p></div>
+      </div>
+
+      <div class="faq-cat">Menopause &amp; perimenopause</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">What is perimenopause and when does it start?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Perimenopause is the transition phase before periods stop for good, usually starting in the mid-to-late 40s (though it can start earlier). Periods become irregular, and symptoms like hot flashes, mood swings, sleep trouble, and vaginal dryness are common as hormone levels shift.</p></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">How do I manage hot flashes and mood swings during menopause?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Layered, breathable clothing, staying hydrated, cutting back on caffeine/spicy food if they trigger flashes, regular light exercise, and good sleep hygiene all help. If symptoms are seriously disrupting your life, a gynecologist can discuss options including hormone therapy — this is a medical conversation worth having, not something to just endure quietly.</p></div>
+      </div>
+
+      <div class="faq-cat">Postpartum (after delivery)</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">What's normal to feel in the weeks after giving birth?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Physically: bleeding for a few weeks, soreness, and fatigue are expected as your body recovers. Emotionally, mild mood dips ("baby blues") in the first two weeks are common and usually pass on their own. Rest when the baby rests, accept help with housework, and don't expect your body or energy to "bounce back" on any fixed timeline.</p></div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">How do I know if it's more than "baby blues" — could it be postpartum depression?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>If sadness, hopelessness, anxiety, or a lack of connection to the baby lasts more than two weeks, or feels heavy and constant rather than up-and-down, it may be postpartum depression — a real, common, treatable medical condition, not a personal failing. Please tell your doctor, partner, or family; you deserve support, and it can get significantly better with the right help.</p></div>
+      </div>
+
+      <div class="faq-cat">Contraception basics</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">What are the common birth control options, in simple terms?<span class="plus">+</span></button>
+        <div class="accordion-a"><p><strong>Condoms</strong> — easy access, also protect against infections. <strong>Daily contraceptive pills</strong> — very effective if taken consistently, need a doctor's guidance to pick the right one. <strong>IUD/Copper-T</strong> — inserted by a doctor, works for years, low daily effort. <strong>Injectables/implants</strong> — longer-acting, doctor-administered. <strong>Emergency contraception</strong> — a backup for one-off situations, not a regular method. The "right" one depends on your health, lifestyle, and whether you want children later — this is genuinely worth a private conversation with a gynecologist rather than guessing.</p></div>
+      </div>
+
+      <div class="faq-cat">Government support &amp; financial help</div>
+
+      <div class="accordion-item">
+        <button class="accordion-q">Is there government financial help for pregnancy and delivery in India?<span class="plus">+</span></button>
+        <div class="accordion-a"><p>Yes. <strong>Janani Suraksha Yojana (JSY)</strong> gives a cash incentive to women who deliver in a government or accredited hospital, with the exact amount depending on your state and rural/urban location. <strong>Pradhan Mantri Matru Vandana Yojana (PMMVY)</strong> gives an additional maternity benefit, typically for a first pregnancy. <strong>Ayushman Bharat (PM-JAY)</strong> offers cashless hospital treatment for eligible low-income families. Your local <strong>ASHA worker</strong> or nearest government hospital/PHC can help you register — amounts and eligibility rules change by state, so confirm current figures at <em>nhm.gov.in</em> or with your ASHA worker rather than relying on any fixed number.</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE TOOLS SECTION -->
+<section id="tools" class="band-cream">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="26" fill="#DCE6D3"/>
+          <g class="anim-rotate">
+            <path d="M30 14v6M30 40v6M14 30h6M40 30h6M19 19l4 4M37 37l4 4M41 19l-4 4M23 37l-4 4" stroke="#3d5230" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="30" cy="30" r="8" fill="#3d5230"/>
+          </g>
+        </svg>
+      </div>
+      <span class="eyebrow">Tools that listen back</span>
+      <h2>Track It, Don't Just Wonder About It</h2>
+      <p>Simple tools that live right here in your browser — nothing is sent anywhere, it's saved only on this device.</p>
+    </div>
+
+    <div class="toolbar">
+      <button class="toolbtn active" data-tool="cycle">Cycle Tracker</button>
+      <button class="toolbtn" data-tool="pregweek">Pregnancy Week-by-Week</button>
+      <button class="toolbtn" data-tool="duedate">Due Date Calculator</button>
+      <button class="toolbtn" data-tool="symptom">Symptom Checker</button>
+      <button class="toolbtn" data-tool="kicks">Kick Counter</button>
+    </div>
+
+    <!-- CYCLE TRACKER -->
+    <div class="toolpanel active" id="tool-cycle">
+      <div class="tool-card">
+        <h4>Log this period's start date</h4>
+        <label for="cycleDate">First day of your most recent period</label>
+        <input type="date" id="cycleDate">
+        <label for="cycleLen">Your usual cycle length (days)</label>
+        <input type="number" id="cycleLen" value="28" min="18" max="45">
+        <div class="cta-row" style="margin-top:16px;">
+          <button class="btn btn-primary" onclick="logCycle()">Save &amp; predict →</button>
+          <button class="btn btn-ghost" onclick="clearCycle()">Clear history</button>
+        </div>
+        <div class="tool-result" id="cycleResult"></div>
+        <div id="cycleHistory" style="margin-top:16px;font-size:.85rem;color:#5a4744;"></div>
+        <p class="mini-note">Predictions are an estimate based on your average — real cycles vary with stress, illness, and PCOD. If cycles are consistently irregular, mention it to a doctor.</p>
+
+        <div class="ai-insight-box">
+          <h4>✨ Want a personalized insight?</h4>
+          <p class="mini-note" style="margin-top:0;">Optional — adding these helps Sakhi AI give more relevant, personal context. Nothing here is stored anywhere.</p>
+          <div class="stat-row">
+            <div><label for="cycleAge">Age</label><input type="number" id="cycleAge" placeholder="years" min="9" max="60"></div>
+            <div><label for="cycleHeight">Height</label><input type="number" id="cycleHeight" placeholder="cm" min="100" max="220"></div>
+            <div><label for="cycleWeight">Weight</label><input type="number" id="cycleWeight" placeholder="kg" min="25" max="200"></div>
+          </div>
+          <button class="btn btn-primary" style="margin-top:14px;" onclick="getCycleAIInsight()">✨ Get AI insight</button>
+          <div class="ai-insight-result" id="cycleAIResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREGNANCY WEEK TRACKER -->
+    <div class="toolpanel" id="tool-pregweek">
+      <div class="tool-card">
+        <h4>See what week you're in</h4>
+        <label for="lmpDate">First day of your last menstrual period (LMP)</label>
+        <input type="date" id="lmpDate">
+        <div class="cta-row" style="margin-top:16px;">
+          <button class="btn btn-primary" onclick="calcPregWeek()">Show my week →</button>
+        </div>
+        <div class="tool-result" id="pregWeekResult"></div>
+        <p class="mini-note">Based on a standard 40-week pregnancy counted from your last period — your doctor's ultrasound dating is more precise if the two differ.</p>
+
+        <div class="ai-insight-box">
+          <h4>✨ Want a personalized insight?</h4>
+          <p class="mini-note" style="margin-top:0;">Optional — these help Sakhi AI tailor the answer to you. This is general guidance, never a substitute for your doctor's advice.</p>
+          <div class="stat-row">
+            <div><label for="pregAge">Age</label><input type="number" id="pregAge" placeholder="years" min="14" max="55"></div>
+            <div><label for="pregHeight">Height</label><input type="number" id="pregHeight" placeholder="cm" min="120" max="220"></div>
+            <div><label for="pregWeight">Current weight</label><input type="number" id="pregWeight" placeholder="kg" min="30" max="200"></div>
+          </div>
+          <button class="btn btn-primary" style="margin-top:14px;" onclick="getPregAIInsight()">✨ Get AI insight</button>
+          <div class="ai-insight-result" id="pregAIResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DUE DATE CALCULATOR -->
+    <div class="toolpanel" id="tool-duedate">
+      <div class="tool-card">
+        <h4>Estimate your due date</h4>
+        <label for="lmpDate2">First day of your last menstrual period</label>
+        <input type="date" id="lmpDate2">
+        <div class="cta-row" style="margin-top:16px;">
+          <button class="btn btn-primary" onclick="calcDueDate()">Calculate →</button>
+        </div>
+        <div class="tool-result" id="dueDateResult"></div>
+        <p class="mini-note">This uses the standard 280-day estimate (Naegele's rule). Your actual delivery date can fall anywhere in a 2-week window around this.</p>
+      </div>
+    </div>
+
+    <!-- SYMPTOM CHECKER -->
+    <div class="toolpanel" id="tool-symptom">
+      <div class="tool-card">
+        <h4>Is this normal, or should I call a doctor?</h4>
+        <p style="font-size:.85rem;color:#5a4744;">Tick anything you're currently experiencing.</p>
+        <div class="checklist" id="symptomList">
+          <label><input type="checkbox" data-level="urgent"> Heavy bleeding — soaking a pad/tampon every hour</label>
+          <label><input type="checkbox" data-level="urgent"> Severe abdominal pain that won't ease</label>
+          <label><input type="checkbox" data-level="urgent"> Fever above 100.4°F (38°C)</label>
+          <label><input type="checkbox" data-level="urgent"> Severe headache with blurred vision or swelling (if pregnant)</label>
+          <label><input type="checkbox" data-level="urgent"> Reduced or no baby movement (if pregnant, past 28 weeks)</label>
+          <label><input type="checkbox" data-level="urgent"> Fluid leaking or fainting</label>
+          <label><input type="checkbox" data-level="common"> Mild cramps or lower back ache</label>
+          <label><input type="checkbox" data-level="common"> Bloating or mild mood swings</label>
+          <label><input type="checkbox" data-level="common"> Slight change in flow or cycle length this month</label>
+          <label><input type="checkbox" data-level="common"> Mild nausea or tiredness (if pregnant)</label>
+        </div>
+        <button class="btn btn-primary" onclick="checkSymptoms()">Check →</button>
+        <div class="tool-result" id="symptomResult"></div>
+        <p class="mini-note">This is a general guide, not a diagnosis. When in doubt, calling a doctor costs you a few minutes — ignoring something serious can cost much more.</p>
+      </div>
+    </div>
+
+    <!-- KICK COUNTER -->
+    <div class="toolpanel" id="tool-kicks">
+      <div class="tool-card">
+        <h4>Count your baby's movements</h4>
+        <p style="font-size:.85rem;color:#5a4744;">Best used from week 28 onward. Sit or lie comfortably, and tap every time you feel a kick, roll, or flutter.</p>
+        <div class="kickbtn-wrap">
+          <button class="kickbig" onclick="addKick()">Tap for<br>each kick 👶</button>
+        </div>
+        <div class="kickstats">
+          <div><div class="kn" id="kickCount">0</div><div class="kl">kicks</div></div>
+          <div><div class="kn" id="kickTime">0:00</div><div class="kl">minutes elapsed</div></div>
+        </div>
+        <div class="cta-row" style="justify-content:center;margin-top:16px;">
+          <button class="btn btn-ghost" onclick="resetKicks()">Reset session</button>
+        </div>
+        <div class="tool-result" id="kickResult"></div>
+        <p class="mini-note">Fewer than 10 movements in 2 hours (once you're used to your baby's pattern) is a reason to call your doctor promptly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MYTHS VS FACTS -->
+<section id="myths" class="band-paper">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="26" fill="#F6DFE1"/>
+          <rect class="anim-flip" x="18" y="18" width="24" height="24" rx="5" fill="#D98B96"/>
+        </svg>
+      </div>
+      <span class="eyebrow">Let's clear the air</span>
+      <h2>Myths vs Facts</h2>
+      <p>Tap a card to flip it and see the truth behind what you've probably heard.</p>
+    </div>
+    <div class="flipgrid">
+      <div class="flipcard" onclick="this.classList.toggle('flipped')">
+        <div class="flipinner">
+          <div class="flipface flipfront"><span class="tag2">Myth</span><p>Periods are "impure" and you shouldn't enter a kitchen or temple.</p></div>
+          <div class="flipface flipback"><span class="tag2">Fact</span><p>Menstrual blood is simply the shedding of the uterine lining — it isn't dirty or impure. Temple entry is a personal or cultural choice, not a health requirement.</p></div>
+        </div>
+      </div>
+      <div class="flipcard" onclick="this.classList.toggle('flipped')">
+        <div class="flipinner">
+          <div class="flipface flipfront"><span class="tag2">Myth</span><p>You can't get pregnant the first time you have sex.</p></div>
+          <div class="flipface flipback"><span class="tag2">Fact</span><p>Pregnancy can happen the very first time, any time there's unprotected contact around ovulation. There's no "safe" first time.</p></div>
+        </div>
+      </div>
+      <div class="flipcard" onclick="this.classList.toggle('flipped')">
+        <div class="flipinner">
+          <div class="flipface flipfront"><span class="tag2">Myth</span><p>PCOD/PCOS means you'll never be able to have children.</p></div>
+          <div class="flipface flipback"><span class="tag2">Fact</span><p>Most women with PCOD conceive naturally or with medical support like ovulation induction. It can make it take longer — it doesn't mean "never."</p></div>
+        </div>
+      </div>
+      <div class="flipcard" onclick="this.classList.toggle('flipped')">
+        <div class="flipinner">
+          <div class="flipface flipfront"><span class="tag2">Myth</span><p>Exercising during pregnancy can hurt the baby.</p></div>
+          <div class="flipface flipback"><span class="tag2">Fact</span><p>Gentle, doctor-approved exercise is actually linked to easier labour and better outcomes. Complete bed rest is only advised for specific medical reasons.</p></div>
+        </div>
+      </div>
+      <div class="flipcard" onclick="this.classList.toggle('flipped')">
+        <div class="flipinner">
+          <div class="flipface flipfront"><span class="tag2">Myth</span><p>Eating certain foods during pregnancy decides the baby's gender.</p></div>
+          <div class="flipface flipback"><span class="tag2">Fact</span><p>A baby's sex is determined at conception by chromosomes, not by diet. No food changes it — and in India, checking or trying to influence it is also illegal under the PCPNDT Act.</p></div>
+        </div>
+      </div>
+      <div class="flipcard" onclick="this.classList.toggle('flipped')">
+        <div class="flipinner">
+          <div class="flipface flipfront"><span class="tag2">Myth</span><p>A C-section means you "failed" at giving birth.</p></div>
+          <div class="flipface flipback"><span class="tag2">Fact</span><p>A C-section is a medical decision made for safety, not a measure of strength or motherhood. Both paths bring a baby into the world just as validly.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERIODS CARE SECTION -->
+<section id="periods-care" class="band-cream">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="70" height="70" viewBox="0 0 70 70" fill="none">
+          <path class="steam-a" d="M28 18c-2 3 2 4 0 7" stroke="#D98B96" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path class="steam-b" d="M35 14c-2 3 2 4 0 7" stroke="#D98B96" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path class="steam-c" d="M42 18c-2 3 2 4 0 7" stroke="#D98B96" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <g class="bottle-body">
+            <rect x="20" y="26" width="30" height="34" rx="14" fill="#D98B96"/>
+            <rect x="27" y="18" width="16" height="12" rx="4" fill="#C9973F"/>
+            <path d="M27 40h16M27 47h12" stroke="#FBF2E7" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+          </g>
+        </svg>
+      </div>
+      <span class="eyebrow">Periods care</span>
+      <h2>Getting Through the Hard Days, Gently</h2>
+      <p>For the cramps, the mood dips, and everything in between.</p>
+    </div>
+
+    <div class="grid3">
+      <div class="card">
+        <div class="icon-badge">🔥</div>
+        <h4>Easing heavy period pain</h4>
+        <ul>
+          <li>Hold a warm water bottle or heating pad on your lower belly or back</li>
+          <li>Gentle walking or stretching — lying still can sometimes make cramps feel worse</li>
+          <li>A warm bath or shower relaxes tight pelvic muscles</li>
+          <li>A cup of warm ajwain, ginger, or chamomile water can help</li>
+          <li>Light massage with warm oil on the lower abdomen, in slow circles</li>
+          <li>Over-the-counter pain relief (like a basic anti-inflammatory) is fine occasionally — but if pain is severe every month, please see a gynecologist to rule out conditions like endometriosis</li>
+        </ul>
+      </div>
+      <div class="card avoidlist">
+        <span class="sticker-pill" style="background:linear-gradient(135deg,#D98B96,#7a3038);">😮‍💨 better to limit</span>
+        <div class="icon-badge">🚫</div>
+        <h4>What to go easy on</h4>
+        <ul>
+          <li>Excess caffeine (coffee, cola) — can worsen cramps and irritability</li>
+          <li>Very salty or processed food — increases bloating</li>
+          <li>Too much sugar — can intensify mood swings after the initial lift</li>
+          <li>Alcohol and smoking — worsen cramps and hormonal balance</li>
+          <li>Extremely cold food/drinks for some people — if you notice they worsen your cramps, skip them during this week</li>
+        </ul>
+      </div>
+      <div class="card dolist">
+        <span class="sticker-pill mint">✅ good to add</span>
+        <div class="icon-badge">🥗</div>
+        <h4>What actually helps</h4>
+        <ul>
+          <li>Iron-rich foods — spinach, dates, jaggery, pomegranate (you're losing blood, replace it)</li>
+          <li>Warm fluids — soups, herbal teas, warm water through the day</li>
+          <li>Bananas and dark chocolate — genuinely help with cramps and mood, not just comfort food myths</li>
+          <li>Enough sleep — periods hit harder on broken sleep</li>
+          <li>Magnesium-rich foods — nuts, seeds, and bananas can ease cramping</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top:60px;">
+      <span class="sticker-pill sun">🎯 the actual toolkit</span>
+      <h3 style="margin-top:14px;">3 Ways to Kill Cramps, Fast</h3>
+      <p>Tap-and-try techniques — pick whichever fits where you are right now.</p>
+    </div>
+    <div class="grid3">
+      <div class="card glass-card" style="text-align:center;">
+        <div class="section-anim" style="margin-bottom:10px;">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <circle class="ice-layer" cx="30" cy="30" r="20" fill="#8FD8F0"/>
+            <circle class="heat-layer" cx="30" cy="30" r="20" fill="#F0955A"/>
+          </svg>
+        </div>
+        <h4>Heat or cold, alternated</h4>
+        <p style="font-size:.88rem;color:#4a3835;">Warm compress on the lower belly for 15 min eases cramps by relaxing muscle; a cold pack on the lower back for a few minutes can numb sharper pain. Alternate if one alone isn't enough.</p>
+      </div>
+      <div class="card glass-card" style="text-align:center;">
+        <div class="section-anim" style="margin-bottom:10px;">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <g class="stretch-fig">
+              <circle cx="30" cy="12" r="6" fill="#7A2E3B"/>
+              <path d="M30 18v20M30 22l-12-6M30 22l12-6M30 38l-8 14M30 38l8 14" stroke="#7A2E3B" stroke-width="4" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <h4>Child's pose &amp; cat-cow</h4>
+        <p style="font-size:.88rem;color:#4a3835;">Two minutes of child's pose, then slow cat-cow stretches, gently mobilizes the lower back and pelvis — often cuts cramp intensity within minutes.</p>
+      </div>
+      <div class="card glass-card" style="text-align:center;">
+        <div class="section-anim" style="margin-bottom:10px;">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <path class="cup-steam-a" d="M22 14c-2 3 2 4 0 7" stroke="#C9973F" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path class="cup-steam-b" d="M30 10c-2 3 2 4 0 7" stroke="#C9973F" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path class="cup-steam-c" d="M38 14c-2 3 2 4 0 7" stroke="#C9973F" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M16 26h28v10a14 14 0 0 1-28 0z" fill="#D98B96"/>
+            <path d="M44 30c5 0 5 8 0 8" stroke="#D98B96" stroke-width="3" fill="none"/>
+          </svg>
+        </div>
+        <h4>Sip something warm</h4>
+        <p style="font-size:.88rem;color:#4a3835;">Ajwain (carom seed) water, ginger tea, or cinnamon tea — all have mild anti-inflammatory, muscle-relaxing effects. Sip slowly over 10 minutes.</p>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top:60px;">
+      <span class="eyebrow">Mood swing survival kit</span>
+      <h3>Feeling low, irritated, or just want to cry? That's okay.</h3>
+      <p>Here's a permission slip to feel better, on purpose.</p>
+    </div>
+    <div class="grid3">
+      <div class="moodcard glass-card">
+        <div class="emoji sticker-wiggle">🍫🍦</div>
+        <h4>Eat what you crave, guilt-free</h4>
+        <p>Dark chocolate, warm gulab jamun, ice cream, or a hot bowl of maggi — cravings during periods are hormonal, not a discipline failure. Enjoy it without the guilt lecture.</p>
+      </div>
+      <div class="moodcard glass-card">
+        <div class="emoji sticker-float">📺</div>
+        <h4>Watch something soft</h4>
+        <p>Comfort sitcoms (Friends, Modern Family, Brooklyn Nine-Nine), a nostalgic Bollywood rom-com, or a gentle K-drama. Save the intense thrillers for another week.</p>
+      </div>
+      <div class="moodcard glass-card">
+        <div class="emoji sticker-wiggle">🎧</div>
+        <h4>Music to soften the mood</h4>
+        <p>Soft acoustic playlists, lo-fi study beats, old Bollywood melodies (Lata Mangeshkar, Arijit Singh ballads), or anything nostalgic that makes you feel held.</p>
+      </div>
+      <div class="moodcard glass-card">
+        <div class="emoji sticker-float">🛌</div>
+        <h4>Rest without guilt</h4>
+        <p>Cancelling a plan or lying in bed an extra hour isn't laziness this week — it's your body doing real work. Let yourself rest.</p>
+      </div>
+      <div class="moodcard glass-card">
+        <div class="emoji sticker-wiggle">💬</div>
+        <h4>Vent to someone</h4>
+        <p>Call your sakhi, your mother, a friend — say the irritated thought out loud instead of holding it in. It usually shrinks the moment you say it.</p>
+      </div>
+      <div class="moodcard glass-card">
+        <div class="emoji sticker-float">🧸</div>
+        <h4>Comfort over productivity</h4>
+        <p>A heating pad, your softest clothes, and a to-do list that can wait one more day. You don't owe anyone your best self this week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREGNANCY CARE SECTION -->
+<section id="pregnancy-care" class="band-sage">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="70" height="70" viewBox="0 0 70 70" fill="none">
+          <path class="heart-shape" d="M35 52c-10-7-18-14-18-23a10 10 0 0 1 18-6 10 10 0 0 1 18 6c0 9-8 16-18 23z" fill="#7A2E3B" opacity="0.85"/>
+          <g class="baby-shape">
+            <circle cx="35" cy="30" r="7" fill="#F6DFE1"/>
+            <path d="M35 37c-5 0-9 4-9 9v3h18v-3c0-5-4-9-9-9z" fill="#F6DFE1"/>
+          </g>
+        </svg>
+      </div>
+      <span class="eyebrow">Pregnancy care</span>
+      <h2>Carrying a Life, Taking Care of Yours Too</h2>
+      <p>Movement, food, and everyday choices for a healthier nine months.</p>
+    </div>
+
+    <div class="grid3">
+      <div class="card sage">
+        <div class="icon-badge">🧘‍♀️</div>
+        <h4>Safe movement</h4>
+        <ul>
+          <li>20–30 min gentle walk daily</li>
+          <li>Prenatal yoga or stretching</li>
+          <li>Pelvic floor (kegel) exercises</li>
+          <li>Swimming, if you're already comfortable in water</li>
+          <li>Avoid: contact sports, heavy weights, lying flat on the back after month 4, anything with fall risk</li>
+        </ul>
+      </div>
+      <div class="card dolist">
+        <span class="tag">Eat well</span>
+        <div class="icon-badge">🍲</div>
+        <h4>What to eat more of</h4>
+        <ul>
+          <li>Leafy greens, dal, jaggery — for iron</li>
+          <li>Milk, curd, til/sesame — for calcium</li>
+          <li>Eggs, paneer, sprouts — for protein</li>
+          <li>Seasonal fruit and lots of water</li>
+          <li>Doctor-prescribed folic acid, iron &amp; calcium supplements — don't skip these</li>
+        </ul>
+      </div>
+      <div class="card avoidlist">
+        <span class="tag avoid">Better to avoid</span>
+        <div class="icon-badge">⚠️</div>
+        <h4>What to steer clear of</h4>
+        <ul>
+          <li>Raw or undercooked eggs, meat, and unpasteurised dairy</li>
+          <li>Papaya (raw/semi-ripe) and pineapple in large amounts</li>
+          <li>Excess caffeine — keep it minimal</li>
+          <li>Alcohol and smoking — avoid entirely</li>
+          <li>High-mercury fish (like certain large sea fish)</li>
+          <li>Unwashed fruits/vegetables and street-side raw salads</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:20px;">
+      <div class="card">
+        <div class="icon-badge">🚶‍♀️</div>
+        <h4>Walking &amp; daily rhythm</h4>
+        <p style="font-size:.92rem;color:#4a3835;">Two short walks (morning and evening) are usually easier on the body than one long one. Walk on even ground, wear comfortable footwear, and always carry water. Stop and rest if you feel breathless, dizzy, or notice tightening in your belly.</p>
+      </div>
+      <div class="card">
+        <div class="icon-badge">🤱</div>
+        <h4>Preparing for a normal delivery</h4>
+        <p style="font-size:.92rem;color:#4a3835;">Staying active, practising slow breathing daily, attending antenatal/birth-prep classes, and keeping realistic expectations all help. But remember — however your baby arrives, vaginally or via C-section, you will have done the hardest, bravest thing. There is no "better" way to become a mother.</p>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top:60px;">
+      <span class="sticker-pill sun">🎯 pain &amp; discomfort, eased</span>
+      <h3 style="margin-top:14px;">Common Aches — And What Actually Helps</h3>
+      <p>Pregnancy discomfort is real. Here's what to do about the big three.</p>
+    </div>
+    <div class="grid3">
+      <div class="card glass-card" style="text-align:center;">
+        <div class="section-anim" style="margin-bottom:10px;">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <circle class="pillow-glow" cx="30" cy="34" r="20" fill="#6E8B5E"/>
+            <ellipse class="pillow-shape" cx="30" cy="34" rx="18" ry="12" fill="#DCE6D3" stroke="#6E8B5E" stroke-width="2"/>
+          </svg>
+        </div>
+        <h4>Back pain</h4>
+        <p style="font-size:.88rem;color:#4a3835;">Sleep on your side with a pillow between your knees and one supporting your belly. A warm (not hot) compress on the lower back and gentle cat-cow stretches both help through the day.</p>
+      </div>
+      <div class="card glass-card" style="text-align:center;">
+        <div class="section-anim" style="margin-bottom:10px;">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <path d="M18 44h24v6H18z" fill="#6E8B5E" opacity="0.3"/>
+            <g class="leg-shape">
+              <rect x="22" y="18" width="7" height="26" rx="3" fill="#7A2E3B"/>
+              <rect x="31" y="18" width="7" height="26" rx="3" fill="#D98B96"/>
+            </g>
+          </svg>
+        </div>
+        <h4>Swollen feet &amp; ankles</h4>
+        <p style="font-size:.88rem;color:#4a3835;">Elevate your legs above heart level for 15–20 minutes a few times a day, avoid standing for long stretches, stay hydrated, and go easy on salty snacks. Sudden or one-sided swelling needs a doctor's check.</p>
+      </div>
+      <div class="card glass-card" style="text-align:center;">
+        <div class="section-anim" style="margin-bottom:10px;">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <path class="flame-shape" d="M30 12c6 8 10 13 10 20a10 10 0 0 1-20 0c0-3 1-5 3-8 0 3 2 4 3 3-1-6 1-11 4-15z" fill="#FF8A5B"/>
+          </svg>
+        </div>
+        <h4>Heartburn &amp; acidity</h4>
+        <p style="font-size:.88rem;color:#4a3835;">Eat smaller, more frequent meals instead of large ones, skip spicy/fried food in the evening, and stay upright for at least 30 minutes after eating. Ask your doctor before taking any antacid.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MIND & CALM SECTION -->
+<section id="mind-calm" class="band-maroon">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="26" fill="rgba(255,255,255,0.1)"/>
+          <path class="anim-float" d="M38 18a14 14 0 1 0 4 20 11 11 0 0 1-4-20z" fill="var(--gold-light)"/>
+          <circle class="anim-twinkle" cx="16" cy="20" r="2" fill="#fff"/>
+          <circle class="anim-twinkle" cx="44" cy="42" r="1.6" fill="#fff" style="animation-delay:.6s;"/>
+          <circle class="anim-twinkle" cx="46" cy="16" r="1.4" fill="#fff" style="animation-delay:1.1s;"/>
+        </svg>
+      </div>
+      <span class="eyebrow">Mind &amp; calm</span>
+      <h2>For the Quiet Moments</h2>
+      <p style="color:var(--on-dark-band);opacity:.9;">Pregnancy comes with a lot of waiting, worrying, and wondering. Here's what can help your mind feel as cared for as your body.</p>
+    </div>
+
+    <div class="grid3">
+      <div class="card" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15);">
+        <div class="icon-badge" style="background:rgba(232,199,126,0.25);">📺</div>
+        <h4 style="color:var(--on-dark-band);">Gentle web series</h4>
+        <ul style="color:var(--on-dark-band);opacity:.85;">
+          <li>Comfort sitcoms (Friends, The Big Bang Theory)</li>
+          <li>Light family dramas over intense thrillers</li>
+          <li>Nature/travel documentaries — calming visuals, no plot stress</li>
+          <li>Old, familiar favourites you can half-watch while resting</li>
+        </ul>
+      </div>
+      <div class="card" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15);">
+        <div class="icon-badge" style="background:rgba(232,199,126,0.25);">🎙️</div>
+        <h4 style="color:var(--on-dark-band);">Podcasts worth a listen</h4>
+        <ul style="color:var(--on-dark-band);opacity:.85;">
+          <li>Pregnancy &amp; birth-prep podcasts by certified doulas or OB-GYNs</li>
+          <li>Calm storytelling or "sleep story" style podcasts</li>
+          <li>Light comedy podcasts for a mood lift on hard days</li>
+          <li>Guided meditation and breathing audio series</li>
+        </ul>
+      </div>
+      <div class="card" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15);">
+        <div class="icon-badge" style="background:rgba(232,199,126,0.25);">🕉️</div>
+        <h4 style="color:var(--on-dark-band);">Mantras &amp; quiet rituals</h4>
+        <ul style="color:var(--on-dark-band);opacity:.85;">
+          <li>Om chanting or the Gayatri Mantra, softly, for 5–10 minutes</li>
+          <li>Simple affirmations: "My body knows how to do this"</li>
+          <li>Slow belly-breathing (inhale 4 counts, exhale 6 counts)</li>
+          <li>A short daily gratitude note — even one line</li>
+        </ul>
+      </div>
+      <div class="card" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15);">
+        <div class="icon-badge" style="background:rgba(232,199,126,0.25);">🎵</div>
+        <h4 style="color:var(--on-dark-band);">Songs for calm</h4>
+        <ul style="color:var(--on-dark-band);opacity:.85;">
+          <li>Soft instrumental or lo-fi playlists for background calm</li>
+          <li>Classical ragas known for a soothing effect (evening ragas work well)</li>
+          <li>Gentle devotional bhajans, if that brings you peace</li>
+          <li>Old melodic Bollywood songs that feel like a hug</li>
+        </ul>
+      </div>
+      <div class="card" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15);">
+        <div class="icon-badge" style="background:rgba(232,199,126,0.25);">📖</div>
+        <h4 style="color:var(--on-dark-band);">Reading for the mind</h4>
+        <ul style="color:var(--on-dark-band);opacity:.85;">
+          <li>Light fiction or short stories over heavy, tense plots</li>
+          <li>A trusted pregnancy week-by-week guide</li>
+          <li>Journaling — even three lines a day about how you feel</li>
+          <li>Letters to your baby, to read together someday</li>
+        </ul>
+      </div>
+      <div class="card" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15);">
+        <div class="icon-badge" style="background:rgba(232,199,126,0.25);">💛</div>
+        <h4 style="color:var(--on-dark-band);">If worry feels heavy</h4>
+        <ul style="color:var(--on-dark-band);opacity:.85;">
+          <li>Talk to your partner, mother, or a close friend — don't carry it silently</li>
+          <li>Persistent sadness, anxiety, or hopelessness deserves a conversation with your doctor — it's common and treatable, not a weakness</li>
+          <li>Antenatal classes often connect you with other women going through the same thing, at the same time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REAL STORIES -->
+<section id="stories" class="band-sage">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="26" fill="#DCE6D3"/>
+          <path d="M16 22h28a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H30l-8 7v-7h-6a4 4 0 0 1-4-4V26a4 4 0 0 1 4-4z" fill="#fff"/>
+          <path class="anim-pulse" d="M30 30c-3-2-6-1-6 2s3 5 6 6c3-1 6-3 6-6s-3-4-6-2z" fill="#D98B96"/>
+        </svg>
+      </div>
+      <span class="eyebrow">You are not alone</span>
+      <h2>Real Stories, Shared Anonymously</h2>
+      <p>Other girls and women who once felt exactly what you might be feeling right now.</p>
+    </div>
+    <div class="grid3">
+      <div class="storycard">
+        <div class="who">16, Ahmedabad</div>
+        <p>"My period was 10 days late and I panicked for a week straight, convinced I was pregnant. It turned out to be exam stress. I wish I'd just taken a test and talked to someone instead of losing sleep over it."</p>
+      </div>
+      <div class="storycard">
+        <div class="who">27, first pregnancy</div>
+        <p>"Everyone kept telling me pregnancy would be magical every single day. Some days I just cried for no reason and felt guilty about it. Turns out that's completely normal — I just needed someone to say so."</p>
+      </div>
+      <div class="storycard">
+        <div class="who">21, diagnosed with PCOD</div>
+        <p>"I thought irregular periods meant something was permanently 'wrong' with me. Two years of small lifestyle changes later, my cycles are far more regular. It just took patience, not perfection."</p>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:30px;font-size:.85rem;color:#3d5230;">Want to share your own story anonymously so it can help someone else? <a href="#ask-sakhi" style="text-decoration:underline;font-weight:600;">Send it in here</a>.</p>
+  </div>
+</section>
+
+<!-- TALK BY VOICE -->
+<section id="voice-support" class="band-maroon">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="26" fill="rgba(255,255,255,0.1)"/>
+          <path d="M22 20c-2 6 1 15 8 21s15 9 20 6c1-3 0-6-2-7l-5-2c-2-1-3 0-4 1l-2 2c-4-2-8-6-9-9l2-2c1-1 2-2 1-4l-2-5c-1-2-4-3-7-1z" fill="var(--gold-light)"/>
+          <path class="anim-pulse" d="M40 16c4 3 6 8 5 13" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path class="anim-pulse" d="M45 12c6 4 8 12 6 19" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none" style="animation-delay:.3s;"/>
+        </svg>
+      </div>
+      <span class="eyebrow" style="color:var(--gold-light);">You don't have to carry it alone</span>
+      <h2 style="color:var(--on-dark-band);">Talk It Out, By Voice</h2>
+      <p style="color:var(--on-dark-band);opacity:.9;">No boyfriend, husband, or friend to call right now? These are real, trained volunteers in India who exist just to listen — free, confidential, and one tap away. Not just for crises — loneliness and a bad day count too.</p>
+    </div>
+
+    <div class="grid2">
+      <a href="tel:18602662345" style="text-decoration:none;">
+        <div class="card" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.18);">
+          <div class="icon-badge" style="background:rgba(232,199,126,0.25);">📞</div>
+          <h4 style="color:var(--on-dark-band);">Vandrevala Foundation</h4>
+          <p style="color:var(--on-dark-band);opacity:.85;font-size:.88rem;margin:0;">1860-266-2345 · 24×7 · English, Hindi &amp; regional languages</p>
+        </div>
+      </a>
+      <a href="tel:02225521111" style="text-decoration:none;">
+        <div class="card" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.18);">
+          <div class="icon-badge" style="background:rgba(232,199,126,0.25);">📞</div>
+          <h4 style="color:var(--on-dark-band);">iCall (TISS)</h4>
+          <p style="color:var(--on-dark-band);opacity:.85;font-size:.88rem;margin:0;">022-2552-1111 · Mon–Sat, 8am–10pm · everyday stress &amp; loneliness, not just crisis</p>
+        </div>
+      </a>
+      <a href="tel:+919820466726" style="text-decoration:none;">
+        <div class="card" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.18);">
+          <div class="icon-badge" style="background:rgba(232,199,126,0.25);">📞</div>
+          <h4 style="color:var(--on-dark-band);">AASRA</h4>
+          <p style="color:var(--on-dark-band);opacity:.85;font-size:.88rem;margin:0;">+91 98204 66726 · 24×7 confidential listening</p>
+        </div>
+      </a>
+      <a href="tel:14416" style="text-decoration:none;">
+        <div class="card" style="background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.18);">
+          <div class="icon-badge" style="background:rgba(232,199,126,0.25);">📞</div>
+          <h4 style="color:var(--on-dark-band);">Tele-MANAS (Govt of India)</h4>
+          <p style="color:var(--on-dark-band);opacity:.85;font-size:.88rem;margin:0;">14416 or 1-800-891-4416 · 24×7 · all states, multilingual</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="finder-box askform" style="margin-top:46px;">
+      <h4 style="color:var(--maroon-deep);">Prefer someone calls you instead?</h4>
+      <p style="font-size:.85rem;color:#5a4744;margin-top:-6px;">Leave your number and a good time, and a trained volunteer will try to call you back. This is not instant — please use the numbers above if you need to talk right now.</p>
+      <label for="cbName">Name (or just a nickname)</label>
+      <input type="text" id="cbName" placeholder="Can be anything, doesn't need to be real">
+      <label for="cbPhone">Phone number</label>
+      <input type="tel" id="cbPhone" placeholder="For the callback only">
+      <label for="cbTime">Best time to call</label>
+      <select id="cbTime">
+        <option>Morning (8am–12pm)</option>
+        <option>Afternoon (12pm–4pm)</option>
+        <option>Evening (4pm–8pm)</option>
+        <option>Night (8pm–11pm)</option>
+      </select>
+      <label for="cbNote">What would help to mention? (optional)</label>
+      <textarea id="cbNote" placeholder="Just a line or two, so the volunteer isn't calling in blind — totally optional"></textarea>
+      <button class="btn btn-primary" onclick="submitCallback()">Request a callback →</button>
+      <div class="tool-result" id="cbResultMsg"></div>
+      <p class="mini-note">This request is only useful once a real volunteer or partner NGO is set up to receive and act on it — see the note below the form in the page source for how to connect that.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ASK SAKHI -->
+<section id="ask-sakhi" class="band-cream">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="26" fill="#F5E7C6"/>
+          <g class="anim-bounce">
+            <rect x="14" y="20" width="32" height="22" rx="4" fill="#7A2E3B"/>
+            <path d="M14 22l16 12 16-12" stroke="#F5E7C6" stroke-width="2.5" fill="none"/>
+          </g>
+        </svg>
+      </div>
+      <span class="eyebrow">Still have a question?</span>
+      <h2>Ask Sakhi, Anonymously</h2>
+      <p>No name, no login, no judgement. Type your question exactly as it's in your head.</p>
+    </div>
+    <div class="finder-box askform">
+      <label for="askCategory">What's this about?</label>
+      <select id="askCategory">
+        <option>Periods</option>
+        <option>PCOD/PCOS</option>
+        <option>Pregnancy</option>
+        <option>Postpartum</option>
+        <option>Contraception</option>
+        <option>Something else</option>
+      </select>
+      <label for="askQuestion">Your question</label>
+      <textarea id="askQuestion" placeholder="Type it exactly as you'd say it to a friend..."></textarea>
+      <label for="askContact">Email or phone, only if you want a personal reply (optional)</label>
+      <input type="text" id="askContact" placeholder="Leave blank to stay fully anonymous">
+      <button class="btn btn-primary" onclick="submitQuestion()">Send my question →</button>
+      <div class="tool-result" id="askResultMsg"></div>
+      <p class="mini-note">Questions are reviewed and answered in our weekly FAQ update — sensitive details are never published. If something needs urgent attention, please use the helplines below instead of waiting for a reply.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FIND A DOCTOR -->
+<section id="find-doctor" class="band-paper">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <ellipse cx="30" cy="46" rx="10" ry="3" fill="rgba(122,46,59,0.15)"/>
+          <path class="anim-bounce" d="M30 10c-8 0-14 6-14 14 0 10 14 24 14 24s14-14 14-24c0-8-6-14-14-14z" fill="#7A2E3B"/>
+          <circle class="anim-bounce" cx="30" cy="24" r="6" fill="#F5E7C6"/>
+        </svg>
+      </div>
+      <span class="eyebrow">Take the next step</span>
+      <h2>Find a Gynecologist Near You</h2>
+      <p>Type your city or area, and we'll open real, nearby clinics on the map so you can call and book an appointment.</p>
+    </div>
+
+    <div class="finder-box">
+      <div class="finder-row">
+        <input type="text" id="cityInput" placeholder="Enter your city, area, or pincode (e.g. Ahmedabad)">
+        <button class="btn btn-primary" onclick="findDoctor()">Search nearby →</button>
+      </div>
+      <div class="quickpicks">
+        <button class="chip" onclick="quickFind('Ahmedabad')">Ahmedabad</button>
+        <button class="chip" onclick="quickFind('Mumbai')">Mumbai</button>
+        <button class="chip" onclick="quickFind('Delhi')">Delhi</button>
+        <button class="chip" onclick="quickFind('Bengaluru')">Bengaluru</button>
+        <button class="chip" onclick="useMyLocation()">📍 Use my location</button>
+      </div>
+      <p style="font-size:.8rem;color:#7a6a67;margin-top:16px;">This opens Google Maps with real, currently-listed gynecologists and clinics near the place you enter — always check reviews and call ahead to confirm availability.</p>
+      <div class="verify-badge">✓ Look for doctors with an MBBS/MD-OBGYN qualification listed on their profile</div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top:20px;">
+    <div class="disclaimer">
+      This platform shares general educational information and is not a medical diagnosis. If something feels seriously wrong, please contact a doctor or the numbers below right away.
+    </div>
+  </div>
+</section>
+
+<!-- HELPLINES -->
+<section class="band-maroon" style="padding-top:50px;">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow" style="color:var(--gold-light);">Save these</span>
+      <h3 style="color:var(--on-dark-band);">India's Official Health &amp; Women's Helplines</h3>
+      <p style="color:var(--on-dark-band);opacity:.85;">Free, government-run, and available right now — no appointment needed.</p>
+    </div>
+    <div class="helpline-strip">
+      <div class="helpline-card"><div class="num">104</div><div class="lbl">24×7 health advice helpline</div></div>
+      <div class="helpline-card"><div class="num">102</div><div class="lbl">Free ambulance for pregnant women</div></div>
+      <div class="helpline-card"><div class="num">108</div><div class="lbl">Emergency ambulance</div></div>
+      <div class="helpline-card"><div class="num">181</div><div class="lbl">Women's helpline (also 14490)</div></div>
+      <div class="helpline-card"><div class="num">112</div><div class="lbl">National emergency number</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="band-paper">
+  <div class="container" style="max-width:760px;">
+    <div class="section-head">
+      <div class="section-anim">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle class="anim-pulse" cx="30" cy="30" r="24" fill="#F6DFE1"/>
+          <path d="M30 38c-6-4-11-8-11-14a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 6-5 10-11 14z" fill="#7A2E3B"/>
+        </svg>
+      </div>
+      <span class="eyebrow">Meet Sakhi</span>
+      <h2>Why This Platform Exists</h2>
+    </div>
+    <p style="text-align:center;color:#4a3835;">Shree Sakhi was built on one simple belief: a girl or woman should never have to sit alone with a scary question about her own body. Too many of us learned about periods from whispered rumours, and about pregnancy from fear rather than facts. This platform brings together plain-language answers, real government resources, and a judgement-free space — so the next generation doesn't have to overthink in silence the way many of us did.</p>
+    <div class="disclaimer" style="margin-top:26px;">
+      <strong>Your privacy matters here.</strong> Nothing you type in the FAQ search, tools, or Ask Sakhi form is tracked, sold, or shared. The optional contact field is used only to send you a personal reply, never for marketing.
+    </div>
+  </div>
+</section>
+
+<!-- FLOATING TALK TO SOMEONE BUTTON -->
+<button class="floatbtn" onclick="toggleFloatMenu()">💬 Talk to someone</button>
+<div class="floatmenu" id="floatMenu">
+  <a href="tel:18602662345">📞 Vandrevala Foundation (24×7)</a>
+  <a href="tel:14416">📞 Tele-MANAS (24×7)</a>
+  <a href="tel:181">📞 Women's Helpline — 181</a>
+  <a href="#voice-support">🎧 More ways to talk</a>
+  <a href="#ask-sakhi">✍️ Ask Sakhi privately</a>
+</div>
+
+<footer>
+  <div class="brand" style="justify-content:center;">
+    <svg class="mark" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="19" stroke="#C9973F" stroke-width="1.5"/>
+      <path d="M20 8c3 5 8 7 8 12a8 8 0 1 1-16 0c0-5 5-7 8-12z" fill="#F6DFE1"/>
+      <circle cx="20" cy="21" r="2.4" fill="#7A2E3B"/>
+    </svg>
+    <div class="brand-text" style="color:var(--on-dark-band);">Shree <span>Sakhi</span></div>
+  </div>
+  <p>Built so that no girl or woman has to feel afraid, alone, or ashamed of asking about her own body.</p>
+  <p>Educational content only — always confirm anything urgent or unusual with a qualified doctor.</p>
+</footer>
+
+<script>
+  // Tabs
+  document.querySelectorAll('.tabbtn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.faqgroup').forEach(g=>g.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Accordion
+  document.querySelectorAll('.accordion-q').forEach(q=>{
+    q.addEventListener('click',()=>{
+      q.parentElement.classList.toggle('open');
+    });
+  });
+
+  // Doctor finder
+  function findDoctor(){
+    const city = document.getElementById('cityInput').value.trim();
+    if(!city){ alert('Please type your city or area first.'); return; }
+    const url = 'https://www.google.com/maps/search/' + encodeURIComponent('gynecologist near ' + city);
+    window.open(url, '_blank');
+  }
+  function quickFind(city){
+    document.getElementById('cityInput').value = city;
+    findDoctor();
+  }
+  function useMyLocation(){
+    if(!navigator.geolocation){ alert('Location is not supported on this device/browser.'); return; }
+    navigator.geolocation.getCurrentPosition(pos=>{
+      const url = 'https://www.google.com/maps/search/gynecologist+near+me/@'+pos.coords.latitude+','+pos.coords.longitude+',14z';
+      window.open(url, '_blank');
+    }, ()=>{
+      alert('Could not access your location. Please type your city instead.');
+    });
+  }
+
+  /* ---------- TOOL TABS ---------- */
+  document.querySelectorAll('.toolbtn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.toolbtn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.toolpanel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tool-'+btn.dataset.tool).classList.add('active');
+    });
+  });
+
+  /* ---------- CYCLE TRACKER ---------- */
+  function getCycleHistory(){
+    try{ return JSON.parse(localStorage.getItem('ss_cycles')||'[]'); }catch(e){ return []; }
+  }
+  function logCycle(){
+    const dateVal = document.getElementById('cycleDate').value;
+    const len = parseInt(document.getElementById('cycleLen').value)||28;
+    if(!dateVal){ alert('Please pick the first day of your last period.'); return; }
+    let hist = getCycleHistory();
+    hist.push({date:dateVal, len:len});
+    hist = hist.slice(-6);
+    localStorage.setItem('ss_cycles', JSON.stringify(hist));
+    renderCycle();
+  }
+  function clearCycle(){
+    localStorage.removeItem('ss_cycles');
+    document.getElementById('cycleResult').classList.remove('show');
+    document.getElementById('cycleHistory').innerHTML='';
+  }
+  function renderCycle(){
+    const hist = getCycleHistory();
+    if(hist.length===0) return;
+    const last = hist[hist.length-1];
+    const start = new Date(last.date+'T00:00:00');
+    const next = new Date(start); next.setDate(next.getDate()+last.len);
+    const ovulation = new Date(next); ovulation.setDate(ovulation.getDate()-14);
+    const fertileStart = new Date(ovulation); fertileStart.setDate(fertileStart.getDate()-5);
+    const fmt = d => d.toLocaleDateString('en-IN',{day:'numeric',month:'long'});
+    document.getElementById('cycleResult').innerHTML =
+      '<strong>Next period expected around '+fmt(next)+'</strong><br>'+
+      'Estimated fertile window: '+fmt(fertileStart)+' – '+fmt(ovulation)+'<br>'+
+      '<span style="font-size:.8rem;">(based on a '+last.len+'-day cycle)</span>';
+    document.getElementById('cycleResult').classList.add('show');
+    document.getElementById('cycleHistory').innerHTML =
+      '<strong style="color:var(--maroon-deep);">Recent logs:</strong> '+
+      hist.map(h=>new Date(h.date+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short'})).join(' · ');
+    window.lastCycleInfo = { cycleLen:last.len, nextPeriod:fmt(next), fertileWindow:fmt(fertileStart)+' to '+fmt(ovulation) };
+  }
+  renderCycle();
+
+  // Shared helper: calls Sakhi AI and automatically retries once if the model
+  // comes back empty (OpenRouter's free router occasionally returns nothing).
+  async function askSakhiAIRaw(context){
+    for(let attempt = 0; attempt < 2; attempt++){
+      try{
+        const res = await fetch(SAKHI_AI_ENDPOINT, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ system: SAKHI_SYSTEM_PROMPT, message: context })
+        });
+        if(!res.ok) throw new Error('bad status');
+        const data = await res.json();
+        const reply = (data.reply || '').trim();
+        const looksEmpty = !reply || reply.toLowerCase().startsWith("i'm not sure how to answer");
+        if(!looksEmpty) return reply;
+        // otherwise loop and try once more
+      }catch(err){
+        if(attempt === 1) throw err;
+      }
+    }
+    return "Sakhi AI didn't have a clear answer this time — please tap the button again, it usually works on a second try.";
+  }
+
+  async function getCycleAIInsight(){
+    const resultEl = document.getElementById('cycleAIResult');
+    const dateVal = document.getElementById('cycleDate').value;
+    const age = document.getElementById('cycleAge').value;
+    const height = document.getElementById('cycleHeight').value;
+    const weight = document.getElementById('cycleWeight').value;
+    const cycleLen = parseInt(document.getElementById('cycleLen').value) || 28;
+
+    if(!dateVal){
+      alert('Please enter the first day of your most recent period above first — Sakhi AI needs that to give a real answer.');
+      return;
+    }
+
+    // Compute fresh, directly from what's in the fields right now — doesn't
+    // depend on whether "Save & predict" was clicked first.
+    const start = new Date(dateVal+'T00:00:00');
+    const next = new Date(start); next.setDate(next.getDate()+cycleLen);
+    const ovulation = new Date(next); ovulation.setDate(ovulation.getDate()-14);
+    const fertileStart = new Date(ovulation); fertileStart.setDate(fertileStart.getDate()-5);
+    const fmt = d => d.toLocaleDateString('en-IN',{day:'numeric',month:'long'});
+
+    let context = `My last period started on ${fmt(start)}. My usual cycle length is ${cycleLen} days, so my next period is expected around ${fmt(next)}, with an estimated fertile window of ${fmt(fertileStart)} to ${fmt(ovulation)}.`;
+    if(age) context += ` I am ${age} years old.`;
+    if(height) context += ` My height is ${height} cm.`;
+    if(weight) context += ` My current weight is ${weight} kg.`;
+    context += ` Based on this real data, give me a short, warm, personalized note about my cycle — reference the actual dates above, add one encouraging line, one gentle lifestyle tip, and mention if these numbers suggest anything worth asking a doctor about (e.g. a very irregular cycle length, or an age/height/weight combination that could relate to PCOD risk) — but do NOT diagnose anything.`;
+
+    resultEl.innerHTML = '<div class="ai-loading"><span></span><span></span><span></span></div>';
+    resultEl.classList.add('show');
+    try{
+      resultEl.textContent = await askSakhiAIRaw(context);
+    }catch(err){
+      resultEl.textContent = "Sakhi AI isn't reachable right now — please try again in a moment, or ask in the Ask Sakhi AI section above.";
+    }
+  }
+
+  /* ---------- PREGNANCY WEEK TRACKER ---------- */
+  const babySizes = [
+    {w:4,size:'a poppy seed'},{w:6,size:'a lentil'},{w:8,size:'a raspberry'},
+    {w:10,size:'a strawberry'},{w:12,size:'a lime'},{w:14,size:'a lemon'},
+    {w:16,size:'an avocado'},{w:18,size:'a bell pepper'},{w:20,size:'a banana'},
+    {w:22,size:'a papaya'},{w:24,size:'an ear of corn'},{w:26,size:'a cabbage'},
+    {w:28,size:'an eggplant'},{w:30,size:'a large cabbage'},{w:32,size:'a coconut'},
+    {w:34,size:'a cantaloupe'},{w:36,size:'a papaya-large'},{w:38,size:'a small pumpkin'},
+    {w:40,size:'a small watermelon'}
+  ];
+  function calcPregWeek(){
+    const lmp = document.getElementById('lmpDate').value;
+    if(!lmp){ alert('Please enter the first day of your last period.'); return; }
+    const start = new Date(lmp+'T00:00:00');
+    const today = new Date();
+    const diffDays = Math.floor((today-start)/(1000*60*60*24));
+    const week = Math.floor(diffDays/7);
+    if(week<0 || week>44){
+      document.getElementById('pregWeekResult').innerHTML = 'That date seems out of range — please double check it.';
+      document.getElementById('pregWeekResult').classList.add('show');
+      return;
+    }
+    let closest = babySizes[0];
+    for(const b of babySizes){ if(week>=b.w) closest=b; }
+    const trimester = week<13?'First':week<27?'Second':'Third';
+    document.getElementById('pregWeekResult').innerHTML =
+      '<strong>You are approximately '+week+' weeks pregnant</strong><br>'+
+      'Your baby is roughly the size of '+closest.size+' right now.<br>'+
+      '<span style="font-size:.8rem;">Trimester: '+trimester+'</span>';
+    document.getElementById('pregWeekResult').classList.add('show');
+    window.lastPregWeekInfo = { week, trimester, babySize: closest.size };
+  }
+
+  async function getPregAIInsight(){
+    const resultEl = document.getElementById('pregAIResult');
+    const lmp = document.getElementById('lmpDate').value;
+    const age = document.getElementById('pregAge').value;
+    const height = document.getElementById('pregHeight').value;
+    const weight = document.getElementById('pregWeight').value;
+
+    if(!lmp){
+      alert('Please enter the first day of your last period above first — Sakhi AI needs that to know which week you\'re in.');
+      return;
+    }
+
+    const start = new Date(lmp+'T00:00:00');
+    const today = new Date();
+    const diffDays = Math.floor((today-start)/(1000*60*60*24));
+    const week = Math.floor(diffDays/7);
+    let closest = babySizes[0];
+    for(const b of babySizes){ if(week>=b.w) closest=b; }
+    const trimester = week<13?'First':week<27?'Second':'Third';
+
+    let context = `I am approximately ${week} weeks pregnant (${trimester} trimester), baby is about the size of ${closest.size}.`;
+    if(age) context += ` I am ${age} years old.`;
+    if(height) context += ` My height is ${height} cm.`;
+    if(weight) context += ` My current weight is ${weight} kg.`;
+    context += ` Based on this real data, give me a short, warm, personalized note for this exact stage of pregnancy — reference the week number, add general encouragement, one relevant tip for this week (movement, food, or rest), and if my height/weight/age combination is worth mentioning to my doctor at my next visit (like healthy weight gain ranges), say so gently — but do NOT diagnose anything or give exact medical targets.`;
+
+    resultEl.innerHTML = '<div class="ai-loading"><span></span><span></span><span></span></div>';
+    resultEl.classList.add('show');
+    try{
+      resultEl.textContent = await askSakhiAIRaw(context);
+    }catch(err){
+      resultEl.textContent = "Sakhi AI isn't reachable right now — please try again in a moment, or ask in the Ask Sakhi AI section above.";
+    }
+  }
+
+  /* ---------- DUE DATE CALCULATOR ---------- */
+  function calcDueDate(){
+    const lmp = document.getElementById('lmpDate2').value;
+    if(!lmp){ alert('Please enter the first day of your last period.'); return; }
+    const start = new Date(lmp+'T00:00:00');
+    const due = new Date(start); due.setDate(due.getDate()+280);
+    document.getElementById('dueDateResult').innerHTML =
+      '<strong>Estimated due date: '+due.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})+'</strong><br>'+
+      '<span style="font-size:.8rem;">Most babies arrive within 2 weeks either side of this date.</span>';
+    document.getElementById('dueDateResult').classList.add('show');
+  }
+
+  /* ---------- SYMPTOM CHECKER ---------- */
+  function checkSymptoms(){
+    const boxes = document.querySelectorAll('#symptomList input[type="checkbox"]');
+    let urgent=0, common=0;
+    boxes.forEach(b=>{ if(b.checked){ if(b.dataset.level==='urgent') urgent++; else common++; } });
+    const el = document.getElementById('symptomResult');
+    if(urgent>0){
+      el.innerHTML = '<strong style="color:#7a3038;">Please call a doctor now</strong><br>One or more of what you selected needs prompt medical attention — this is not something to wait out. Use the helplines in the footer or the 💬 button on this page.';
+    } else if(common>0){
+      el.innerHTML = '<strong>This sounds within the range of common symptoms</strong><br>Keep an eye on it, rest, and stay hydrated. If anything changes or worsens, don\'t hesitate to check with a doctor anyway — trust your own sense of your body.';
+    } else {
+      el.innerHTML = 'Tick anything you\'re feeling above, then check again.';
+    }
+    el.classList.add('show');
+  }
+
+  /* ---------- KICK COUNTER ---------- */
+  let kickCount=0, kickStart=null, kickTimerInt=null;
+  function addKick(){
+    if(!kickStart){ kickStart=Date.now(); kickTimerInt=setInterval(updateKickTimer,1000); }
+    kickCount++;
+    document.getElementById('kickCount').textContent = kickCount;
+    if(kickCount===10){
+      document.getElementById('kickResult').innerHTML = '<strong>10 kicks logged 🎉</strong><br>That\'s a healthy sign within this session. You can stop or keep tapping if baby keeps moving.';
+      document.getElementById('kickResult').classList.add('show');
+    }
+  }
+  function updateKickTimer(){
+    const secs = Math.floor((Date.now()-kickStart)/1000);
+    const m = Math.floor(secs/60), s = secs%60;
+    document.getElementById('kickTime').textContent = m+':'+(s<10?'0':'')+s;
+    if(secs >= 7200 && kickCount<10){
+      document.getElementById('kickResult').innerHTML = '<strong style="color:#7a3038;">Fewer than 10 kicks in 2 hours</strong><br>Please contact your doctor to check on baby.';
+      document.getElementById('kickResult').classList.add('show');
+    }
+  }
+  function resetKicks(){
+    kickCount=0; kickStart=null; clearInterval(kickTimerInt);
+    document.getElementById('kickCount').textContent='0';
+    document.getElementById('kickTime').textContent='0:00';
+    document.getElementById('kickResult').classList.remove('show');
+  }
+
+  /* ---------- ASK SAKHI ---------- */
+  function submitQuestion(){
+    const cat = document.getElementById('askCategory').value;
+    const q = document.getElementById('askQuestion').value.trim();
+    const contact = document.getElementById('askContact').value.trim();
+    if(!q){ alert('Please type your question first.'); return; }
+    try{
+      let saved = JSON.parse(localStorage.getItem('ss_questions')||'[]');
+      saved.push({cat:cat, q:q, contact:contact, date:new Date().toISOString()});
+      localStorage.setItem('ss_questions', JSON.stringify(saved));
+    }catch(e){}
+    const subject = encodeURIComponent('New question for Shree Sakhi: '+cat);
+    const body = encodeURIComponent('Category: '+cat+'\nQuestion: '+q+'\nContact (optional): '+(contact||'anonymous'));
+    document.getElementById('askResultMsg').innerHTML =
+      'Thank you — your question has been noted. <a href="mailto:hello@shreesakhi.in?subject='+subject+'&body='+body+'" style="text-decoration:underline;font-weight:600;">Click here to send it in</a> so our team actually receives it (replace this email with your real inbox).';
+    document.getElementById('askResultMsg').classList.add('show');
+    document.getElementById('askQuestion').value='';
+    document.getElementById('askContact').value='';
+  }
+
+  /* ---------- CALLBACK REQUEST ---------- */
+  function submitCallback(){
+    const name = document.getElementById('cbName').value.trim();
+    const phone = document.getElementById('cbPhone').value.trim();
+    const time = document.getElementById('cbTime').value;
+    const note = document.getElementById('cbNote').value.trim();
+    if(!phone){ alert('Please enter a phone number so someone can call you back.'); return; }
+    try{
+      let saved = JSON.parse(localStorage.getItem('ss_callbacks')||'[]');
+      saved.push({name:name||'anonymous', phone:phone, time:time, note:note, date:new Date().toISOString()});
+      localStorage.setItem('ss_callbacks', JSON.stringify(saved));
+    }catch(e){}
+    const subject = encodeURIComponent('Callback request — Shree Sakhi');
+    const body = encodeURIComponent('Name: '+(name||'anonymous')+'\nPhone: '+phone+'\nBest time: '+time+'\nNote: '+(note||'none'));
+    document.getElementById('cbResultMsg').innerHTML =
+      'Request noted. <a href="mailto:hello@shreesakhi.in?subject='+subject+'&body='+body+'" style="text-decoration:underline;font-weight:600;">Click here to actually send it</a> to your volunteer team\'s inbox (swap in the real email once you have one).';
+    document.getElementById('cbResultMsg').classList.add('show');
+    document.getElementById('cbName').value='';
+    document.getElementById('cbPhone').value='';
+    document.getElementById('cbNote').value='';
+  }
+
+  /* ---------- FLOATING MENU ---------- */
+  function toggleFloatMenu(){
+    document.getElementById('floatMenu').classList.toggle('show');
+  }
+
+  /* ---------- DARK MODE ---------- */
+  function applyTheme(theme){
+    if(theme === 'dark'){
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.getElementById('themeToggle').textContent = '☀️';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      document.getElementById('themeToggle').textContent = '🌙';
+    }
+  }
+  function toggleTheme(){
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    applyTheme(next);
+    try{ localStorage.setItem('ss_theme', next); }catch(e){}
+  }
+  (function initTheme(){
+    let saved = null;
+    try{ saved = localStorage.getItem('ss_theme'); }catch(e){}
+    if(saved){
+      applyTheme(saved);
+    } else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+      applyTheme('dark');
+    } else {
+      applyTheme('light');
+    }
+  })();
+
+  /* ---------- ASK SAKHI AI (VOICE) ---------- */
+  /*
+    HOW THIS WORKS
+    1. The browser's own Speech Recognition turns her voice into text (no API needed for this part).
+    2. That text is sent to SAKHI_AI_ENDPOINT, which should be YOUR backend proxy — not DeepSeek directly.
+       The proxy holds your real DeepSeek API key server-side and forwards the request.
+       Never put your real DeepSeek key in this file — anyone can view it in the page source.
+    3. The reply text comes back and the browser's own Speech Synthesis reads it aloud (no API needed for this part either).
+
+    TODO before going live:
+    - Deploy the companion proxy (a small Cloudflare Worker / Netlify Function) — see the separate
+      "sakhi-ai-proxy" file for ready-to-use code.
+    - Replace the placeholder URL below with your deployed proxy's URL.
+  */
+  const SAKHI_AI_ENDPOINT = 'https://sakhi-ai-proxy.bhattmeet2113.workers.dev/'; // <-- your deployed proxy
+
+  const SAKHI_SYSTEM_PROMPT = `You are Sakhi, a warm, non-judgemental friend inside the Shree Sakhi platform for girls and women in India, on topics like periods, PCOD/PCOS, pregnancy, and general wellbeing.
+Rules you always follow:
+- Speak simply and warmly, like a caring elder sister — short sentences, no jargon, 3-5 sentences max since this will be read aloud.
+- You are not a doctor. Never diagnose. Never give specific medicine names, dosages, or prescriptions.
+- For anything that sounds urgent or severe (heavy bleeding, severe pain, pregnancy complications, thoughts of self-harm), gently but clearly tell her to contact a doctor or one of the platform's helplines right away, instead of only relying on you.
+- Never assume she is an adult; if her question suggests she may be a minor, keep the answer extra gentle, age-appropriate, and encourage she also talks to a trusted adult or doctor.
+- If she seems distressed, be comforting first, information second.
+- Keep every answer short enough to comfortably read aloud in under 30 seconds.`;
+
+  let recognition = null;
+  let isListening = false;
+  let replyTexts = {}; // bubbleId -> text, for replay
+
+  function setupRecognition(){
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR){ return null; }
+    const r = new SR();
+    r.lang = 'en-IN';
+    r.interimResults = false;
+    r.maxAlternatives = 1;
+    r.onresult = (e)=>{
+      const text = e.results[0][0].transcript;
+      addBubble('user', text);
+      askSakhiAI(text);
+    };
+    r.onerror = ()=>{
+      setListeningUI(false);
+      setLiveStatus('ready', 'ready to listen');
+    };
+    r.onend = ()=>{ setListeningUI(false); };
+    return r;
+  }
+
+  function setLiveStatus(state, label){
+    const el = document.getElementById('vwLiveStatus');
+    el.className = state; // 'ready' | 'listening' | 'thinking' | 'speaking'
+    el.innerHTML = '<span class="vw-dot"></span> ' + label;
+  }
+
+  function setListeningUI(listening){
+    isListening = listening;
+    document.getElementById('micBtn').classList.toggle('listening', listening);
+    document.getElementById('micRing').classList.toggle('pulsing', listening);
+    document.getElementById('micRing2').classList.toggle('pulsing', listening);
+    document.getElementById('waveBars').classList.toggle('active', listening);
+    setLiveStatus(listening ? 'listening' : 'ready', listening ? 'listening...' : 'ready to listen');
+  }
+
+  function toggleListening(){
+    if(!recognition) recognition = setupRecognition();
+    if(!recognition){
+      alert('Voice input isn\'t supported in this browser — please try Chrome or Edge, or type your question below.');
+      return;
+    }
+    if(isListening){ recognition.stop(); return; }
+    window.speechSynthesis && window.speechSynthesis.cancel();
+    setListeningUI(true);
+    recognition.start();
+  }
+
+  function askTyped(){
+    const val = document.getElementById('typedQuestion').value.trim();
+    if(!val) return;
+    addBubble('user', val);
+    document.getElementById('typedQuestion').value = '';
+    askSakhiAI(val);
+  }
+
+  function hideEmptyState(){
+    const empty = document.getElementById('vwEmpty');
+    if(empty) empty.style.display = 'none';
+  }
+
+  function addBubble(role, text){
+    hideEmptyState();
+    const thread = document.getElementById('vwThread');
+    const bubble = document.createElement('div');
+    const id = 'b' + Date.now() + Math.floor(Math.random()*1000);
+    bubble.id = id;
+    bubble.className = 'vw-bubble ' + (role==='user' ? 'user' : 'ai');
+    if(role==='user'){
+      bubble.textContent = text;
+    } else if(role==='thinking'){
+      bubble.innerHTML = '<div class="vw-typing"><span></span><span></span><span></span></div>';
+    } else {
+      bubble.innerHTML = escapeHtml(text) + '<br><button class="vw-replay" onclick="replaySpeech(\''+id+'\')">🔊 Replay</button>';
+      replyTexts[id] = text;
+    }
+    thread.appendChild(bubble);
+    thread.scrollTop = thread.scrollHeight;
+    return id;
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  async function askSakhiAI(userText){
+    setLiveStatus('thinking', 'thinking...');
+    const thinkingId = addBubble('thinking', '');
+    try{
+      const reply = await askSakhiAIRaw(userText);
+      document.getElementById(thinkingId).remove();
+      const bubbleId = addBubble('ai', reply);
+      speak(reply, bubbleId);
+    }catch(err){
+      document.getElementById(thinkingId).remove();
+      const msg = "Sakhi AI isn't connected right now — please try the FAQs above or the human helplines.";
+      addBubble('ai', msg);
+      setLiveStatus('ready', 'ready to listen');
+    }
+  }
+
+  /* ---------- VOICE SELECTION (better-than-default TTS) ---------- */
+  let availableVoices = [];
+  let preferredGender = 'female';
+  let selectedVoice = null;
+
+  // Names commonly used by higher-quality browser/OS voices, by likely gender.
+  // Browsers vary a lot here, so we search by keyword rather than an exact match.
+  const FEMALE_HINTS = ['female','zira','samantha','victoria','karen','moira','tessa','fiona','susan','heera','veena','priya','google us english','google uk english female','aria','jenny','neerja','swara'];
+  const MALE_HINTS = ['male','david','mark','daniel','fred','alex','tom','james','ravi','guy','george','ryan','christopher','google uk english male'];
+
+  function loadVoices(){
+    return new Promise(resolve=>{
+      let voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+      if(voices.length){ resolve(voices); return; }
+      if(window.speechSynthesis){
+        window.speechSynthesis.onvoiceschanged = ()=> resolve(window.speechSynthesis.getVoices());
+        // Fallback in case the event never fires on some browsers
+        setTimeout(()=> resolve(window.speechSynthesis.getVoices()), 800);
+      } else {
+        resolve([]);
+      }
+    });
+  }
+
+  function scoreVoice(voice, hints){
+    const name = voice.name.toLowerCase();
+    let score = 0;
+    if(hints.some(h => name.includes(h))) score += 10;
+    if(voice.lang && voice.lang.toLowerCase().startsWith('en-in')) score += 4; // prefer Indian English if it matches gender
+    if(voice.lang && voice.lang.toLowerCase().startsWith('en')) score += 2;
+    if(name.includes('natural') || name.includes('neural') || name.includes('online')) score += 5; // modern high-quality voices
+    if(name.includes('google')) score += 3;
+    return score;
+  }
+
+  function pickBestVoice(gender){
+    if(!availableVoices.length) return null;
+    const hints = gender === 'male' ? MALE_HINTS : FEMALE_HINTS;
+    let best = null, bestScore = -1;
+    availableVoices.forEach(v=>{
+      const s = scoreVoice(v, hints);
+      if(s > bestScore){ bestScore = s; best = v; }
+    });
+    // If nothing matched any hint at all, just fall back to the first English voice
+    if(bestScore <= 0){
+      best = availableVoices.find(v => v.lang && v.lang.toLowerCase().startsWith('en')) || availableVoices[0];
+    }
+    return best;
+  }
+
+  function chooseVoiceGender(gender){
+    preferredGender = gender;
+    selectedVoice = pickBestVoice(gender);
+    document.querySelectorAll('.vp-btn').forEach(b=> b.classList.toggle('active', b.dataset.gender === gender));
+    try{ localStorage.setItem('ss_voice_gender', gender); }catch(e){}
+    // Give a tiny preview so she can hear the change immediately
+    speak(gender === 'male' ? "Hi, this is how I'll sound now." : "Hi, this is how I'll sound now.");
+  }
+
+  (async function initVoices(){
+    availableVoices = await loadVoices();
+    let saved = 'female';
+    try{ saved = localStorage.getItem('ss_voice_gender') || 'female'; }catch(e){}
+    preferredGender = saved;
+    selectedVoice = pickBestVoice(saved);
+    document.querySelectorAll('.vp-btn').forEach(b=> b.classList.toggle('active', b.dataset.gender === saved));
+  })();
+
+  function speak(text, bubbleId){
+    if(!window.speechSynthesis){ setLiveStatus('ready', 'ready to listen'); return; }
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if(selectedVoice){
+      u.voice = selectedVoice;
+      u.lang = selectedVoice.lang;
+    } else {
+      u.lang = 'en-IN';
+    }
+    u.rate = 0.96;
+    u.pitch = preferredGender === 'male' ? 0.92 : 1.05;
+    document.getElementById('micBtn').classList.add('speaking');
+    setLiveStatus('speaking', 'speaking...');
+    u.onend = ()=>{
+      document.getElementById('micBtn').classList.remove('speaking');
+      setLiveStatus('ready', 'ready to listen');
+    };
+    window.speechSynthesis.speak(u);
+  }
+
+  function replaySpeech(bubbleId){
+    if(replyTexts[bubbleId]) speak(replyTexts[bubbleId], bubbleId);
+  }
+
+  /* ---------- LANGUAGE TOGGLE ---------- */
+  const i18n = {
+    en:{
+      'nav.faqs':'FAQs','nav.tools':'Tools','nav.myths':'Myths vs Facts','nav.periods':'Periods Care',
+      'nav.pregnancy':'Pregnancy Care','nav.calm':'Mind & Calm','nav.stories':'Stories','nav.ask':'Ask Sakhi',
+      'nav.doctor':'Find a Doctor','nav.about':'About',
+      'hero.eyebrow':'A letter from your sakhi',
+      'hero.title':'No question is too small. No feeling is too silly.',
+      'hero.p1':"Periods, PCOD, pregnancy, mood swings, cramps, fear, confusion — whatever it is, you can ask it here, plainly, without shame and without judgement. Shree Sakhi exists so that no girl or woman has to lie awake overthinking alone.",
+      'hero.p2':"Read the answers, take what helps, and please — when something feels serious, sit with a real doctor too. We're a sakhi, a friend who points you in the right direction, not a replacement for one.",
+      'hero.cta1':'Ask your question →','hero.cta2':'Find a gynecologist','hero.sign':'— with love, Shree Sakhi'
+    },
+    hi:{
+      'nav.faqs':'सवाल-जवाब','nav.tools':'टूल्स','nav.myths':'भ्रम बनाम सच','nav.periods':'पीरियड्स केयर',
+      'nav.pregnancy':'प्रेगनेंसी केयर','nav.calm':'मन की शांति','nav.stories':'कहानियाँ','nav.ask':'सखी से पूछें',
+      'nav.doctor':'डॉक्टर खोजें','nav.about':'हमारे बारे में',
+      'hero.eyebrow':'आपकी सखी की तरफ से एक चिट्ठी',
+      'hero.title':'कोई भी सवाल छोटा नहीं, कोई भी एहसास बेवकूफी नहीं।',
+      'hero.p1':'पीरियड्स, PCOD, प्रेगनेंसी, मूड स्विंग्स, दर्द, डर, उलझन — जो भी हो, यहाँ बिना शर्म और बिना जज हुए पूछ सकती हैं। श्री सखी इसलिए है ताकि कोई भी लड़की या महिला अकेले रातभर परेशान न रहे।',
+      'hero.p2':'जवाब पढ़िए, जो मदद करे वो अपनाइए, और जब बात गंभीर लगे तो असली डॉक्टर से भी ज़रूर मिलिए। हम एक सखी हैं, सही दिशा दिखाने वाली दोस्त — डॉक्टर की जगह नहीं।',
+      'hero.cta1':'अपना सवाल पूछें →','hero.cta2':'स्त्री रोग विशेषज्ञ खोजें','hero.sign':'— प्यार से, श्री सखी'
+    },
+    gu:{
+      'nav.faqs':'પ્રશ્નો','nav.tools':'ટૂલ્સ','nav.myths':'ભ્રમ વિ સત્ય','nav.periods':'પીરિયડ્સ કેર',
+      'nav.pregnancy':'પ્રેગનેન્સી કેર','nav.calm':'મન ની શાંતિ','nav.stories':'વાર્તાઓ','nav.ask':'સખી ને પૂછો',
+      'nav.doctor':'ડૉક્ટર શોધો','nav.about':'અમારા વિશે',
+      'hero.eyebrow':'તમારી સખી તરફથી એક પત્ર',
+      'hero.title':'કોઈ પ્રશ્ન નાનો નથી. કોઈ લાગણી મૂર્ખામીભરી નથી.',
+      'hero.p1':'પીરિયડ્સ, PCOD, પ્રેગનેન્સી, મૂડ સ્વિંગ્સ, દુખાવો, ડર, મૂંઝવણ — જે પણ હોય, અહીં શરમ કે જજમેન્ટ વગર પૂછી શકો છો. શ્રી સખી એટલા માટે છે કે કોઈ પણ છોકરી કે સ્ત્રીએ એકલા રાત્રે ચિંતા ન કરવી પડે.',
+      'hero.p2':'જવાબો વાંચો, જે મદદરૂપ લાગે તે અપનાવો, અને જ્યારે વાત ગંભીર લાગે ત્યારે ખરેખરા ડૉક્ટરને પણ મળો. અમે એક સખી છીએ, સાચી દિશા બતાવતી મિત્ર — ડૉક્ટરનો વિકલ્પ નહીં.',
+      'hero.cta1':'તમારો પ્રશ્ન પૂછો →','hero.cta2':'સ્ત્રીરોગ નિષ્ણાત શોધો','hero.sign':'— પ્રેમ સાથે, શ્રી સખી'
+    }
+  };
+  document.querySelectorAll('#langswitch button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('#langswitch button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const lang = btn.dataset.lang;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.dataset.i18n;
+        if(i18n[lang] && i18n[lang][key]) el.innerHTML = i18n[lang][key];
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
