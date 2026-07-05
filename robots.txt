@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shreesakhiiiii.vercel.app/sitemap.xml
