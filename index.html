@@ -23,6 +23,11 @@
 <meta name="twitter:description" content="Judgement-free answers on periods, PCOD, and pregnancy for girls and women in India.">
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='19' fill='%23FBF2E7' stroke='%23C9973F' stroke-width='1.5'/%3E%3Cpath d='M20 8c3 5 8 7 8 12a8 8 0 1 1-16 0c0-5 5-7 8-12z' fill='%237A2E3B'/%3E%3Ccircle cx='20' cy='21' r='2.4' fill='%23F5E7C6'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7A2E3B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Shree Sakhi">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Poppins:wght@300;400;500;600;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
 
@@ -53,6 +58,54 @@
     --on-dark-band:#FBF2E7; /* constant light text color for maroon/dark bands — never changes with theme */
   }
   *{box-sizing:border-box;}
+
+  /* ---------- ACCESSIBILITY ---------- */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:3px solid var(--gold) !important;
+    outline-offset:2px;
+  }
+  [data-theme="dark"] a:focus-visible, [data-theme="dark"] button:focus-visible,
+  [data-theme="dark"] input:focus-visible, [data-theme="dark"] select:focus-visible{
+    outline-color:#F5D9A8 !important;
+  }
+  .sr-only{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+    clip:rect(0,0,0,0);white-space:nowrap;border:0;
+  }
+  html.text-large{font-size:112.5%;} /* scales every rem-based size up ~12% site-wide */
+  .a11y-toggle{
+    width:38px;height:38px;border-radius:50%;border:1.5px solid var(--cream-deep);background:var(--paper);
+    cursor:pointer;font-size:.85rem;font-weight:800;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 10px -4px rgba(0,0,0,0.2);color:var(--maroon-deep);
+  }
+  [data-theme="dark"] .a11y-toggle{background:#241922;border-color:#3a2830;color:#EDE3DD;}
+  .faq-listen-btn{
+    display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:var(--sage-light);
+    color:#2f4023;border:none;padding:7px 14px;border-radius:18px;font-size:.78rem;font-weight:700;
+    cursor:pointer;font-family:'Poppins',sans-serif;
+  }
+  .faq-listen-btn:hover{background:#c9dab8;}
+  [data-theme="dark"] .faq-listen-btn{background:#20301f;color:#cfe8c9;}
+
+  .tip-of-day-wrap{max-width:1080px;margin:0 auto;padding:0 24px 50px;position:relative;z-index:1;}
+  .tip-of-day{
+    max-width:640px;margin:0 auto;background:linear-gradient(135deg,var(--gz-sun),#f2a93b);
+    border-radius:20px;padding:20px 26px;text-align:center;box-shadow:0 16px 32px -16px rgba(255,200,87,0.5);
+  }
+  .tip-badge{font-family:'Fredoka',sans-serif;font-weight:700;font-size:.78rem;color:#4a2f00;display:block;margin-bottom:6px;}
+  .tip-of-day p{margin:0;color:#3d2600;font-weight:500;font-size:.95rem;}
+
+  .faq-feedback{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .faq-feedback-label{font-size:.78rem;color:#7a6a67;}
+  .faq-fb-btn{
+    background:var(--cream-deep);border:none;border-radius:50%;width:32px;height:32px;
+    cursor:pointer;font-size:.95rem;transition:transform .15s;
+  }
+  .faq-fb-btn:hover{transform:scale(1.15);}
+  .faq-fb-btn:disabled{opacity:.4;cursor:default;transform:none;}
+  .faq-fb-thanks{font-size:.78rem;color:#3d5230;font-weight:600;}
+  [data-theme="dark"] .faq-fb-btn{background:#3a2830;}
+  [data-theme="dark"] .faq-feedback-label{color:#a89a95;}
   html{scroll-behavior:smooth;}
   @media(max-width:768px){
     /* iOS Safari zooms the whole page in if a focused input's font is under 16px — this keeps every field at a safe size on phones/tablets without changing how they look on desktop */
@@ -858,6 +911,7 @@
         <button data-lang="gu">ગુ</button>
       </div>
       <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button>
+      <button class="a11y-toggle" id="textSizeToggle" onclick="toggleTextSize()" aria-label="Toggle larger text size" title="Larger text">A+</button>
       <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -909,6 +963,12 @@
         <circle cx="140" cy="205" r="20" fill="#FBF2E7"/>
         <path d="M140 20c10 20 26 24 26 42a26 26 0 1 1-52 0c0-18 16-22 26-42z" fill="#6E8B5E"/>
       </svg>
+    </div>
+  </div>
+  <div class="tip-of-day-wrap">
+    <div class="tip-of-day" id="tipOfDay">
+      <span class="tip-badge">✨ Tip of the day</span>
+      <p id="tipOfDayText">Loading today's tip...</p>
     </div>
   </div>
 </section>
@@ -970,7 +1030,7 @@
           <div class="wavebars" id="waveBars">
             <span></span><span></span><span></span><span></span><span></span>
           </div>
-          <button class="micbtn" id="micBtn" onclick="toggleListening()">🎙️</button>
+          <button class="micbtn" id="micBtn" onclick="toggleListening()" aria-label="Tap to ask a question by voice">🎙️</button>
         </div>
         <div class="voice-typed">
           <input type="text" id="typedQuestion" placeholder="Or type your question instead..." onkeydown="if(event.key==='Enter')askTyped()">
@@ -1932,6 +1992,8 @@
     <p style="text-align:center;font-size:.8rem;margin-top:30px;">
       <a href="blog.html" style="color:var(--maroon);font-weight:600;">Read our blog</a> ·
       <a href="pregnancy-guide.html" style="color:var(--maroon);font-weight:600;">Printable pregnancy guide</a> ·
+      <a href="parents.html" style="color:var(--maroon);font-weight:600;">For parents & teachers</a> ·
+      <a href="poster.html" style="color:var(--maroon);font-weight:600;">Printable poster</a> ·
       <a href="privacy.html" style="color:var(--maroon);font-weight:600;">Privacy Policy</a> ·
       <a href="terms.html" style="color:var(--maroon);font-weight:600;">Terms of Use</a>
     </p>
@@ -1962,6 +2024,8 @@
   <p style="margin-top:16px;font-size:.78rem;">
     <a href="blog.html" style="color:var(--on-dark-band);opacity:.8;">Blog</a> ·
     <a href="pregnancy-guide.html" style="color:var(--on-dark-band);opacity:.8;">Pregnancy Guide (PDF)</a> ·
+    <a href="parents.html" style="color:var(--on-dark-band);opacity:.8;">For Parents & Teachers</a> ·
+    <a href="poster.html" style="color:var(--on-dark-band);opacity:.8;">Printable Poster</a> ·
     <a href="privacy.html" style="color:var(--on-dark-band);opacity:.8;">Privacy Policy</a> ·
     <a href="terms.html" style="color:var(--on-dark-band);opacity:.8;">Terms of Use</a>
   </p>
@@ -1984,6 +2048,66 @@
       q.parentElement.classList.toggle('open');
     });
   });
+
+  // Read-aloud button + feedback on every FAQ answer
+  document.querySelectorAll('.accordion-a').forEach((ans, idx)=>{
+    const originalText = ans.textContent.trim(); // capture BEFORE adding buttons below, so we don't read button labels aloud
+
+    const btn = document.createElement('button');
+    btn.className = 'faq-listen-btn';
+    btn.textContent = '🔊 Listen to this answer';
+    btn.setAttribute('aria-label', 'Read this answer aloud');
+    btn.onclick = (e)=>{
+      e.stopPropagation();
+      readAloudGeneric(originalText, btn);
+    };
+    ans.appendChild(btn);
+
+    const faqId = 'faq_' + idx;
+    const feedback = document.createElement('div');
+    feedback.className = 'faq-feedback';
+    feedback.innerHTML =
+      '<span class="faq-feedback-label">Was this helpful?</span>' +
+      '<button class="faq-fb-btn" data-vote="up" aria-label="Yes, this was helpful">👍</button>' +
+      '<button class="faq-fb-btn" data-vote="down" aria-label="No, this was not helpful">👎</button>' +
+      '<span class="faq-fb-thanks" style="display:none;">Thanks for letting us know!</span>';
+    ans.appendChild(feedback);
+
+    feedback.querySelectorAll('.faq-fb-btn').forEach(fbBtn=>{
+      fbBtn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        const vote = fbBtn.dataset.vote;
+        try{
+          const key = 'ss_faq_feedback';
+          const all = JSON.parse(localStorage.getItem(key) || '{}');
+          all[faqId] = vote;
+          localStorage.setItem(key, JSON.stringify(all));
+        }catch(err){}
+        feedback.querySelectorAll('.faq-fb-btn').forEach(b=> b.disabled = true);
+        feedback.querySelector('.faq-fb-thanks').style.display = 'inline';
+      });
+    });
+  });
+
+  function readAloudGeneric(text, btn){
+    if(!window.speechSynthesis){ return; }
+    if(window.speechSynthesis.speaking){
+      window.speechSynthesis.cancel();
+      btn.textContent = '🔊 Listen to this answer';
+      return;
+    }
+    const u = new SpeechSynthesisUtterance(text);
+    try{
+      const lang = typeof detectReplyLang === 'function' ? detectReplyLang(text) : 'en-IN';
+      const gender = typeof preferredGender !== 'undefined' ? preferredGender : 'female';
+      const voice = typeof pickVoiceForLang === 'function' ? pickVoiceForLang(lang, gender) : null;
+      if(voice){ u.voice = voice; u.lang = voice.lang; } else { u.lang = lang; }
+    }catch(e){ u.lang = 'en-IN'; }
+    u.rate = 0.96;
+    btn.textContent = '⏸️ Stop';
+    u.onend = ()=>{ btn.textContent = '🔊 Listen to this answer'; };
+    window.speechSynthesis.speak(u);
+  }
 
   // Doctor finder
   function findDoctor(){
@@ -2306,6 +2430,52 @@
       document.getElementById('navlinksRow').classList.remove('open');
     });
   });
+
+  /* ---------- TIP OF THE DAY ---------- */
+  const DAILY_TIPS = [
+    "Track your cycle for 2-3 months before assuming something is 'wrong' — a little variation month to month is completely normal.",
+    "Iron-rich foods like spinach, dates, and jaggery genuinely help replace what periods take out of your body.",
+    "A warm water bottle on your lower belly works as well as most people expect a painkiller to.",
+    "PCOD is manageable, not permanent — small consistent changes in movement and food make a real difference over months.",
+    "During pregnancy, two short walks a day are usually easier on your body than one long one.",
+    "You don't need to justify resting extra during your period — your body is doing real work.",
+    "Emergency contraception works best the sooner it's taken — don't wait if you think you need it.",
+    "A missed period isn't automatically a pregnancy — stress, travel, and illness can delay it too.",
+    "Folic acid before and during early pregnancy is one of the simplest, most protective things you can take.",
+    "It's okay to cry, feel irritated, or want to be alone during your period — that's hormonal, not dramatic.",
+    "A C-section is not a lesser way to give birth — both paths bring your baby into the world just as validly.",
+    "If period pain stops you from standing up most months, that's worth mentioning to a doctor, not just enduring.",
+    "Drinking warm ajwain or ginger water can genuinely ease cramps, not just as a placebo.",
+    "Baby movements becoming less frequent after 28 weeks is always worth a same-day call to your doctor.",
+    "You are allowed to ask your doctor to explain things again if you didn't understand the first time.",
+  ];
+  /* ---------- PWA: SERVICE WORKER REGISTRATION ---------- */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').catch(() => {
+        // Silently ignore — the site works fine without offline support, this is a bonus
+      });
+    });
+  }
+
+  (function showTipOfDay(){
+    const el = document.getElementById('tipOfDayText');
+    if(!el) return;
+    const dayIndex = Math.floor(Date.now() / 86400000); // changes once per calendar day
+    const tip = DAILY_TIPS[dayIndex % DAILY_TIPS.length];
+    el.textContent = tip;
+  })();
+
+  /* ---------- TEXT SIZE (ACCESSIBILITY) ---------- */
+  function toggleTextSize(){
+    const isLarge = document.documentElement.classList.toggle('text-large');
+    try{ localStorage.setItem('ss_text_large', isLarge ? '1' : '0'); }catch(e){}
+  }
+  (function initTextSize(){
+    let saved = '0';
+    try{ saved = localStorage.getItem('ss_text_large') || '0'; }catch(e){}
+    if(saved === '1') document.documentElement.classList.add('text-large');
+  })();
 
   function toggleTheme(){
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
