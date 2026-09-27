@@ -1,0 +1,12 @@
+/* Shared editorial styling for supporting Shree Sakhi pages. */
+:root{--maroon:#5d255b;--maroon-deep:#351739;--gold:#ed9878;--cream:#f8f5ff;--cream-deep:#e8e0fa;--ink:#291e38;--paper:#fff;}
+*{box-sizing:border-box;}
+body{background:radial-gradient(circle at 95% 0,#ffe5ef,transparent 24%),radial-gradient(circle at 0 22%,#e1f7ed,transparent 20%),#f8f5ff;color:#291e38;}
+h1,h2,h3{font-family:'Fredoka','Poppins',sans-serif;letter-spacing:-.025em;}
+h1{font-size:clamp(2.5rem,5vw,4rem);line-height:1.08;margin:14px 0 24px;}
+h2{font-size:clamp(1.4rem,3vw,2rem);}
+.wrap{max-width:900px;padding:50px 24px 100px;}
+.back{display:inline-flex;align-items:center;background:#fff;padding:9px 16px;border-radius:12px;border:1px solid #e7d9f0;box-shadow:0 5px 15px rgba(65,30,75,.06);}
+.card,article,.post,.guide-card{border-radius:21px;box-shadow:0 12px 35px rgba(65,30,75,.07);}
+a{color:#5d255b;}
+@media(max-width:600px){.wrap{padding:25px 18px 70px;}h1{font-size:2.4rem;}}

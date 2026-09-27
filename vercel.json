@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/api/sakhi-ai",
+      "destination": "https://sakhi-ai-proxy.bhattmeet2113.workers.dev/"
+    }
+  ]
+}

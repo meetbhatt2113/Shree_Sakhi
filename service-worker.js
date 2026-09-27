@@ -13,9 +13,21 @@
  * If you rename or add pages, update CACHE_FILES below to match.
  */
 
-const CACHE_NAME = 'shree-sakhi-v1';
+const CACHE_NAME = 'shree-sakhi-v6';
 const CACHE_FILES = [
   '/index.html',
+  '/refresh.css',
+  '/portal.css',
+  '/site.js',
+  '/periods.html',
+  '/pregnancy.html',
+  '/tools.html',
+  '/faqs.html',
+  '/wellbeing.html',
+  '/care.html',
+  '/about.html',
+  '/studio.css',
+  '/refresh-pages.css',
   '/blog.html',
   '/pregnancy-guide.html',
   '/privacy.html',
@@ -46,13 +58,15 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   // Only handle simple GET page requests — never intercept the AI proxy or other POST calls
   if (event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+  if (url.origin !== self.location.origin || !CACHE_FILES.includes(url.pathname)) return;
 
   event.respondWith(
     fetch(event.request)
       .then((response) => {
         // Got a fresh copy from the network — update the cache for next time
         const copy = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        if (response.ok) caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
         return response;
       })
       .catch(() => caches.match(event.request)) // offline fallback to last cached version
