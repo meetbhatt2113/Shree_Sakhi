@@ -1,6 +1,7 @@
 // Cloudflare Worker for the existing Shree Sakhi website.
 // Set GROQ_API_KEY as a Cloudflare Secret. Do not put it in the website.
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+const GROQ_SPEECH_URL = 'https://api.groq.com/openai/v1/audio/speech';
 const DEFAULT_MODEL = 'qwen/qwen3.8-27b';
 const ALLOWED_ORIGINS = new Set(['https://shreesakhiiiii.vercel.app']);
 const QUESTION_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
@@ -94,6 +95,37 @@ function respond(data, status, origin) {
   return new Response(JSON.stringify(data), { status, headers });
 }
 
+async function generateSpeech(request, env, origin) {
+  if (!env.GROQ_API_KEY) return respond({ error: 'Voice service unavailable' }, 503, origin);
+  if (!(request.headers.get('Content-Type') || '').includes('application/json')) return respond({ error: 'Send JSON' }, 415, origin);
+  let input;
+  try { input = await request.json(); } catch { return respond({ error: 'Invalid JSON' }, 400, origin); }
+  const text = input?.text;
+  if (typeof text !== 'string' || !text.trim() || text.length > 200 || /[\u0900-\u097F\u0A80-\u0AFF]/u.test(text)) {
+    return respond({ error: 'English speech text must be 1-200 characters' }, 400, origin);
+  }
+  const voice = input?.voice === 'male' ? 'austin' : 'hannah';
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 20000);
+  try {
+    const upstream = await fetch(GROQ_SPEECH_URL, {
+      method: 'POST', signal: controller.signal,
+      headers: { Authorization: `Bearer ${env.GROQ_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'canopylabs/orpheus-v1-english', input: text.trim(), voice, response_format: 'wav' })
+    });
+    if (!upstream.ok) {
+      console.error('Speech service status:', upstream.status);
+      return respond({ error: 'Voice service unavailable' }, 502, origin);
+    }
+    const headers = new Headers({ 'Content-Type': 'audio/wav', 'Cache-Control': 'no-store', 'Vary': 'Origin' });
+    if (origin && ALLOWED_ORIGINS.has(origin)) headers.set('Access-Control-Allow-Origin', origin);
+    return new Response(upstream.body, { status: 200, headers });
+  } catch (error) {
+    console.error('Speech service request failed:', error?.name || 'unknown');
+    return respond({ error: 'Voice service unavailable' }, 502, origin);
+  } finally { clearTimeout(timer); }
+}
+
 function canned(kind, lang, origin) {
   return respond({ reply: fixed[kind][lang] }, 200, origin);
 }
@@ -115,6 +147,10 @@ export default {
     const origin = request.headers.get('Origin');
     if (origin && !ALLOWED_ORIGINS.has(origin)) return respond({ error: 'Origin not allowed' }, 403, origin);
     if (request.method === 'OPTIONS') return respond({}, 200, origin);
+    if (new URL(request.url).pathname === '/speech') {
+      if (request.method !== 'POST') return respond({ error: 'Method not allowed' }, 405, origin);
+      return generateSpeech(request, env, origin);
+    }
     if (request.method === 'GET') return respond({ status: 'Sakhi AI running', hasKey: Boolean(env.GROQ_API_KEY) }, 200, origin);
     if (request.method !== 'POST' && request.method !== 'DELETE') return respond({ error: 'Method not allowed' }, 405, origin);
     const type = request.headers.get('Content-Type') || '';

@@ -13,7 +13,7 @@
  * If you rename or add pages, update CACHE_FILES below to match.
  */
 
-const CACHE_NAME = 'shree-sakhi-v10';
+const CACHE_NAME = 'shree-sakhi-v11';
 const CACHE_FILES = [
   '/index.html',
   '/refresh.css',

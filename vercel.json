@@ -4,6 +4,10 @@
     {
       "source": "/api/sakhi-ai",
       "destination": "https://sakhi-ai-proxy.bhattmeet2113.workers.dev/"
+    },
+    {
+      "source": "/api/sakhi-voice",
+      "destination": "https://sakhi-ai-proxy.bhattmeet2113.workers.dev/speech"
     }
   ]
 }

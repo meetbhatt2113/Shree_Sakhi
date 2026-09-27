@@ -727,6 +727,8 @@ Rules you always follow:
   })();
 
   let currentSpeech = 0;
+  let currentAudio = null;
+  let speechController = null;
   function speechFriendlyText(text){
     return text.replace(/\[([^\]]+)\]\(https?:\/\/[^)]+\)/g, '$1')
       .replace(/https?:\/\/\S+/g, '')
@@ -734,9 +736,28 @@ Rules you always follow:
       .replace(/\s*\n+\s*/g, ' ')
       .replace(/\s+/g, ' ').replace(/\.{2,}/g, '.').trim();
   }
-  function speak(text, bubbleId){
+  function splitSpeech(text){
+    const parts = [];
+    let left = text;
+    while(left.length > 190){
+      let at = left.lastIndexOf(' ', 190);
+      if(at < 80) at = 190;
+      parts.push(left.slice(0, at).trim());
+      left = left.slice(at).trim();
+    }
+    if(left) parts.push(left);
+    return parts;
+  }
+  function stopSpeech(){
+    currentSpeech++;
+    speechController?.abort();
+    speechController = null;
+    if(currentAudio){ currentAudio.pause(); currentAudio.onended?.(); currentAudio.src = ''; currentAudio = null; }
+    window.speechSynthesis?.cancel();
+    document.getElementById('micBtn').classList.remove('speaking');
+  }
+  function speakWithDevice(text, request){
     if(!window.speechSynthesis){ setLiveStatus('ready', 'ready to listen'); return; }
-    const request = ++currentSpeech;
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(speechFriendlyText(text));
     const replyLang = detectReplyLang(text);
@@ -760,6 +781,53 @@ Rules you always follow:
     u.onend = finish;
     u.onerror = finish;
     window.speechSynthesis.speak(u);
+  }
+
+  async function speak(text){
+    stopSpeech();
+    const request = currentSpeech;
+    const clean = speechFriendlyText(text);
+    if(detectReplyLang(clean) !== 'en-IN' || speechLang === 'hi-IN' || speechLang === 'gu-IN'){
+      speakWithDevice(clean, request);
+      return;
+    }
+    speechController = new AbortController();
+    document.getElementById('micBtn').classList.add('speaking');
+    setLiveStatus('speaking', 'preparing voice...');
+    let playedParts = 0;
+    try{
+      for(const part of splitSpeech(clean)){
+        const response = await fetch('/api/sakhi-voice', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({text:part,voice:preferredGender}), signal:speechController.signal
+        });
+        if(!response.ok || !(response.headers.get('Content-Type') || '').includes('audio/')) throw new Error('Voice unavailable');
+        const blob = await response.blob();
+        if(request !== currentSpeech) return;
+        const url = URL.createObjectURL(blob);
+        try{
+          await new Promise((resolve,reject)=>{
+            const player = new Audio(url);
+            currentAudio = player;
+            player.onended = resolve;
+            player.onerror = reject;
+            setLiveStatus('speaking', 'speaking...');
+            player.play().catch(reject);
+          });
+        } finally { URL.revokeObjectURL(url); }
+        if(request !== currentSpeech) return;
+        playedParts++;
+      }
+      document.getElementById('micBtn').classList.remove('speaking');
+      setLiveStatus('ready', 'ready to listen');
+    }catch(error){
+      if(request !== currentSpeech) return;
+      document.getElementById('micBtn').classList.remove('speaking');
+      if(playedParts) { setLiveStatus('ready', 'voice paused — tap Replay'); return; }
+      speakWithDevice(clean, request);
+    }finally{
+      if(request === currentSpeech){ currentAudio = null; speechController = null; }
+    }
   }
 
   function replaySpeech(bubbleId){
