@@ -149,33 +149,19 @@
 
   // Shared helper for the AI proxy. Show a useful error when its model or
   // credentials fail, without sending a second billable request automatically.
-  async function askSakhiAIRaw(context, saveForReview=false){
+  async function askSakhiAIRaw(context){
     const controller = new AbortController();
     const timeout = setTimeout(()=>controller.abort(), 25000);
     try{
       const res = await fetch(SAKHI_AI_ENDPOINT, {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ system: SAKHI_SYSTEM_PROMPT, message: context,
-          saveForReview, adultConfirmed: saveForReview }),
+        body: JSON.stringify({ system: SAKHI_SYSTEM_PROMPT, message: context }),
         signal: controller.signal
       });
       const data = await res.json();
       if(!res.ok) throw new Error(data.detail || data.error || 'Service unavailable');
       if(typeof data.reply !== 'string' || !data.reply.trim()) throw new Error('Empty AI response');
-      if(saveForReview){
-        const status = document.getElementById('saveQuestionStatus');
-        if(data.savedId && data.deleteCode){
-          try{
-            const receipts = JSON.parse(localStorage.getItem('ss_saved_receipts') || '[]');
-            receipts.push({id:data.savedId, deleteCode:data.deleteCode});
-            localStorage.setItem('ss_saved_receipts', JSON.stringify(receipts));
-            if(status) status.textContent = 'Question saved for up to 30 days. You can delete it below.';
-          }catch(e){
-            if(status) status.textContent = 'Question saved, but this browser could not keep its deletion receipt.';
-          }
-        }else if(status){ status.textContent = data.saveError || 'Question was not saved.'; }
-      }
       return data.reply.trim();
     }finally{
       clearTimeout(timeout);
@@ -607,7 +593,7 @@ Rules you always follow:
     setLiveStatus('thinking', 'thinking...');
     const thinkingId = addBubble('thinking', '');
     try{
-      const reply = await askSakhiAIRaw(userText, document.getElementById('saveQuestionConsent')?.checked === true);
+      const reply = await askSakhiAIRaw(userText);
       document.getElementById(thinkingId).remove();
       const bubbleId = addBubble('ai', reply);
       speak(reply, bubbleId);
@@ -620,23 +606,6 @@ Rules you always follow:
       addBubble('ai', msg);
       setLiveStatus('ready', 'ready to listen');
     }
-  }
-
-  async function deleteSavedQuestions(){
-    const status = document.getElementById('saveQuestionStatus');
-    let receipts;
-    try{ receipts = JSON.parse(localStorage.getItem('ss_saved_receipts') || '[]'); }
-    catch(e){ receipts = []; }
-    if(!receipts.length){ status.textContent = 'No saved-question receipts on this device.'; return; }
-    const remaining = [];
-    for(const receipt of receipts){
-      try{
-        const res = await fetch(SAKHI_AI_ENDPOINT, {method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify(receipt)});
-        if(!res.ok) remaining.push(receipt);
-      }catch(e){ remaining.push(receipt); }
-    }
-    localStorage.setItem('ss_saved_receipts', JSON.stringify(remaining));
-    status.textContent = remaining.length ? 'Some questions could not be deleted. Please retry.' : 'Saved questions from this device have been deleted.';
   }
 
   /* ---------- VOICE SELECTION (better-than-default TTS) ---------- */

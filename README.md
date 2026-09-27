@@ -24,25 +24,9 @@ The Worker uses deterministic replies for privacy, self-harm concerns, selected 
 
 Before using the service at scale, add Cloudflare rate limiting and a Groq spending limit. Review every fixed health response and translation with a qualified professional. Test the 20 representative questions again after deployment; a local mock response cannot establish medical accuracy.
 
-## Optional saved questions
+## Question saving is disabled on the website
 
-The chat has an unchecked contribution option for adults. Only selected questions are saved; urgent questions are excluded. A deletion receipt is kept in that visitor's browser, and the Worker offers a `DELETE` request with that receipt. No admin read endpoint is exposed publicly. The D1 table stores the question, detected language, date, and a hash of the deletion code; it does not store the AI reply, name, phone, or IP address.
-
-1. Create a D1 database named `sakhi-questions` in Cloudflare. In its **Console**, run the SQL in `questions-schema.sql`.
-2. Bind the database to the existing Worker with the exact binding name `QUESTIONS_DB` (Workers & Pages → Worker → Settings → Bindings).
-3. Replace the Worker code with `sakhi-ai-worker.mjs` and deploy. Keep `GROQ_API_KEY` as a Secret.
-4. Add a daily Cron Trigger (`0 3 * * *`, UTC) to the same Worker. Its `scheduled()` handler deletes records older than 30 days. Until the Cron Trigger is active, the promised automatic expiry does not happen.
-5. Deploy the updated website files to Vercel. The checkbox and deletion button send requests to `/api/sakhi-ai`, which `vercel.json` forwards to the Worker.
-6. Test an unchecked question (no database row), an opted-in adult question (one row), deletion (row removed), and daily cleanup. Review your privacy policy and collection flow with a qualified adviser before using real health questions.
-
-You can review consented questions in the D1 Console, for example:
-
-```sql
-SELECT id, question, language, datetime(created_at/1000, 'unixepoch') AS created_utc
-FROM contributed_questions ORDER BY created_at DESC LIMIT 50;
-```
-
-Restrict access to the Cloudflare account: these questions may contain sensitive health information. Do not publish raw questions as testimonials or FAQs without separate permission and editorial review.
+The site does not show a question-saving checkbox or deletion button and sends no save request. The D1 schema and dormant Worker support remain in the repository for a future opt-in launch, but no D1 database is required for the current website. Before enabling saving later, set up D1, retention cleanup, privacy review, and consent controls together.
 
 Before enabling paid features or human support:
 
@@ -58,7 +42,7 @@ Start with free, medically reviewed information and measure whether users return
 
 ## Home page redesign (September 2026)
 
-The homepage now loads `studio.css` after `refresh.css`. Deploy **both** the updated `index.html` and new `studio.css`; the service worker version was also raised so returning visitors receive the new styling. The redesign adds direct paths to AI, periods, pregnancy, and tools, as well as a clearly labeled future ideas section. Existing AI, consent, tools, and support sections remain in place.
+The home page now loads `portal.css` after `refresh.css`. Deploy the updated `index.html`, `portal.css`, and `site.js` together; the service worker version was also raised so returning visitors receive the new styling. The redesign adds direct paths to AI, periods, pregnancy, and tools, as well as a clearly labeled future ideas section. Existing AI, tools, and support sections remain in place.
 
 The future section describes concepts under consideration, not available services. Review the English-only new path cards and future section before advertising the site as fully translated. Check the layout on physical iOS Safari and Android Chrome, especially the voice flow, because voice recognition depends on device and browser support.
 

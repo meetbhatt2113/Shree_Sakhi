@@ -960,11 +960,6 @@
           <input type="text" id="typedQuestion" placeholder="Or type your question instead..." onkeydown="if(event.key==='Enter')askTyped()">
           <button class="btn btn-primary" onclick="askTyped()">Send</button>
         </div>
-        <div class="chat-contribution">
-          <label><input type="checkbox" id="saveQuestionConsent"> I am 18 or older and agree to save my question for up to 30 days to help improve Sakhi AI. Urgent questions are not saved.</label>
-          <button type="button" class="chat-delete" onclick="deleteSavedQuestions()">Delete my saved questions from this device</button>
-          <p id="saveQuestionStatus" role="status" aria-live="polite"></p>
-        </div>
       </div>
       <p class="mini-note" style="margin-top:16px;">Sakhi AI is not a doctor. For urgent concerns, contact a clinician or a helpline. Speech recognition is handled by your browser or device; the recognized text is processed by a third-party AI service for a reply. Avoid sharing identifying details.</p>
     </div>
