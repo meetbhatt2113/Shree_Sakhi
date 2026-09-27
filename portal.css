@@ -14,3 +14,6 @@ main>section:not(#ai-voice):not(.home-intro):not(.portal-paths):not(.home-assura
 @media(max-width:520px){.brand-text{font-size:1.15rem}.brand-symbol{width:32px;height:32px;font-size:1.25rem}.home-intro{padding:29px 17px 10px}.home-intro h1{font-size:clamp(2.85rem,12vw,3.8rem)}.home-intro p{font-size:.92rem}.home-actions{flex-direction:column}.home-actions .btn{text-align:center}#ai-voice{padding:22px 15px 60px}#ai-voice .container{padding:0}.path-grid{gap:9px}.path-card{min-height:185px;padding:15px}.path-card strong{font-size:1.1rem;margin:30px 0 5px}.path-card small{font-size:.7rem}.path-card span{font-size:.52rem}.footer-grid{grid-template-columns:1fr;gap:30px}.page-banner{padding:45px 17px}.page-banner h1{font-size:2.8rem}.home-assurance .container{gap:9px 18px;justify-content:flex-start}.home-assurance span{font-size:.68rem}}
 @media(max-width:350px){.path-grid{grid-template-columns:1fr}.path-card{min-height:145px}}
 @media(prefers-reduced-motion:reduce){.path-card{transition:none}}
+
+.doctor-search-status{min-height:1.4em;margin:8px 0;color:var(--maroon-deep);font-size:.84rem;font-weight:600}
+[data-theme="dark"] .doctor-search-status{color:#f1d5ff}

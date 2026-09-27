@@ -915,10 +915,12 @@
     </div>
 
     <div class="finder-box">
-      <div class="finder-row">
-        <input type="text" id="cityInput" placeholder="Enter your city, area, or pincode (e.g. Ahmedabad)">
-        <button class="btn btn-primary" onclick="findDoctor()">Search nearby →</button>
-      </div>
+      <form class="finder-row" onsubmit="findDoctor(event)">
+        <label class="sr-only" for="cityInput">City, area, or pincode</label>
+        <input type="text" id="cityInput" placeholder="Enter your city, area, or pincode (e.g. Ahmedabad)" autocomplete="address-level2">
+        <button type="submit" class="btn btn-primary">Search nearby →</button>
+      </form>
+      <p id="doctorSearchStatus" role="status" aria-live="polite" class="doctor-search-status"></p>
       <div class="quickpicks">
         <button class="chip" onclick="quickFind('Ahmedabad')">Ahmedabad</button>
         <button class="chip" onclick="quickFind('Mumbai')">Mumbai</button>

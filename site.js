@@ -76,25 +76,34 @@
     window.speechSynthesis.speak(u);
   }
 
-  // Doctor finder
-  function findDoctor(){
+  // Doctor finder: navigate in the current tab so mobile popup blockers cannot hide the result.
+  function doctorMapsUrl(place){
+    return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('gynecologist near ' + place);
+  }
+  function doctorSearchStatus(message){
+    const el = document.getElementById('doctorSearchStatus');
+    if(el) el.textContent = message;
+  }
+  function findDoctor(event){
+    if(event) event.preventDefault();
     const city = document.getElementById('cityInput').value.trim();
-    if(!city){ alert('Please type your city or area first.'); return; }
-    const url = 'https://www.google.com/maps/search/' + encodeURIComponent('gynecologist near ' + city);
-    window.open(url, '_blank');
+    if(!city){ doctorSearchStatus('Please enter a city, area, or pincode.'); document.getElementById('cityInput').focus(); return; }
+    doctorSearchStatus('Opening Google Maps for ' + city + '…');
+    window.location.assign(doctorMapsUrl(city));
   }
   function quickFind(city){
     document.getElementById('cityInput').value = city;
     findDoctor();
   }
   function useMyLocation(){
-    if(!navigator.geolocation){ alert('Location is not supported on this device/browser.'); return; }
+    if(!navigator.geolocation){ doctorSearchStatus('Location is unavailable. Please type your city instead.'); return; }
+    doctorSearchStatus('Getting your location…');
     navigator.geolocation.getCurrentPosition(pos=>{
-      const url = 'https://www.google.com/maps/search/gynecologist+near+me/@'+pos.coords.latitude+','+pos.coords.longitude+',14z';
-      window.open(url, '_blank');
+      doctorSearchStatus('Opening nearby results in Google Maps…');
+      window.location.assign(doctorMapsUrl(pos.coords.latitude + ',' + pos.coords.longitude));
     }, ()=>{
-      alert('Could not access your location. Please type your city instead.');
-    });
+      doctorSearchStatus('Location could not be accessed. Please type your city instead.');
+    }, {timeout:10000, maximumAge:60000});
   }
 
   /* ---------- TOOL TABS ---------- */
