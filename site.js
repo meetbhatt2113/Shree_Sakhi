@@ -76,7 +76,7 @@
     window.speechSynthesis.speak(u);
   }
 
-  // Doctor finder: navigate in the current tab so mobile popup blockers cannot hide the result.
+  // Doctor finder: open Maps from the user's click in a new tab.
   function doctorMapsUrl(place){
     return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('gynecologist near ' + place);
   }
@@ -84,12 +84,16 @@
     const el = document.getElementById('doctorSearchStatus');
     if(el) el.textContent = message;
   }
+  function openDoctorMaps(place){
+    const tab = window.open(doctorMapsUrl(place), '_blank');
+    if(tab) tab.opener = null;
+    doctorSearchStatus(tab === null ? 'Your browser blocked the new tab. Allow popups for this site and try again.' : 'Google Maps opened in a new tab.');
+  }
   function findDoctor(event){
     if(event) event.preventDefault();
     const city = document.getElementById('cityInput').value.trim();
     if(!city){ doctorSearchStatus('Please enter a city, area, or pincode.'); document.getElementById('cityInput').focus(); return; }
-    doctorSearchStatus('Opening Google Maps for ' + city + '…');
-    window.location.assign(doctorMapsUrl(city));
+    openDoctorMaps(city);
   }
   function quickFind(city){
     document.getElementById('cityInput').value = city;
@@ -97,11 +101,18 @@
   }
   function useMyLocation(){
     if(!navigator.geolocation){ doctorSearchStatus('Location is unavailable. Please type your city instead.'); return; }
+    // Reserve the tab during the click; opening it after the location callback may be blocked.
+    const tab = window.open('', '_blank');
+    if(!tab){ doctorSearchStatus('Your browser blocked the new tab. Allow popups for this site and try again.'); return; }
+    tab.opener = null;
+    tab.document.title = 'Finding nearby gynecologists…';
+    tab.document.body.textContent = 'Getting your location…';
     doctorSearchStatus('Getting your location…');
     navigator.geolocation.getCurrentPosition(pos=>{
-      doctorSearchStatus('Opening nearby results in Google Maps…');
-      window.location.assign(doctorMapsUrl(pos.coords.latitude + ',' + pos.coords.longitude));
+      doctorSearchStatus('Google Maps opened in a new tab.');
+      tab.location.replace(doctorMapsUrl(pos.coords.latitude + ',' + pos.coords.longitude));
     }, ()=>{
+      tab.close();
       doctorSearchStatus('Location could not be accessed. Please type your city instead.');
     }, {timeout:10000, maximumAge:60000});
   }
