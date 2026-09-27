@@ -927,27 +927,25 @@
           <div class="vw-name">Sakhi AI</div>
           <div class="vw-status" id="vwLiveStatus"><span class="vw-dot"></span> ready to listen</div>
         </div>
+        <span class="vw-header-tag">YOUR SPACE TO ASK ✳</span>
       </div>
 
+      <div class="sakhi-chat-main">
       <div class="vw-thread" id="vwThread">
         <div class="vw-empty" id="vwEmpty">
-          <div class="vw-empty-orb"></div>
-          <p>Tap the mic and ask anything — periods, PCOD, pregnancy, or just how you're feeling today.</p>
+          <span class="vw-empty-kicker">A LITTLE SPACE FOR BIG QUESTIONS</span>
+          <h3>What’s on your mind<span>?</span></h3>
+          <p>Ask about your body, your cycle, or anything you’ve been wondering. Start wherever you are.</p>
+          <div class="vw-suggestions" aria-label="Example questions">
+            <button type="button" onclick="document.getElementById('typedQuestion').value='Why is my period late?';document.getElementById('typedQuestion').focus()">Why is my period late? <span>↗</span></button>
+            <button type="button" onclick="document.getElementById('typedQuestion').value='What are common PCOS symptoms?';document.getElementById('typedQuestion').focus()">What is PCOS? <span>↗</span></button>
+            <button type="button" onclick="document.getElementById('typedQuestion').value='How can I manage period pain?';document.getElementById('typedQuestion').focus()">Period pain tips <span>↗</span></button>
+          </div>
         </div>
       </div>
 
       <div class="vw-controls">
-        <div class="voice-picker" id="voicePicker">
-          <span class="vp-label">Voice:</span>
-          <button class="vp-btn active" data-gender="female" onclick="chooseVoiceGender('female')">👩 Female</button>
-          <button class="vp-btn" data-gender="male" onclick="chooseVoiceGender('male')">👨 Male</button>
-        </div>
-        <div class="voice-picker" id="speechLangPicker" style="margin-top:8px;">
-          <span class="vp-label">Speak in:</span>
-          <button class="vp-btn active" data-slang="en-IN" onclick="chooseSpeechLang('en-IN')">English</button>
-          <button class="vp-btn" data-slang="hi-IN" onclick="chooseSpeechLang('hi-IN')">हिन्दी</button>
-          <button class="vp-btn" data-slang="gu-IN" onclick="chooseSpeechLang('gu-IN')">ગુજરાતી</button>
-        </div>
+        <div class="vw-control-heading"><span class="vw-control-icon" aria-hidden="true">✦</span><div><strong>Speak your mind</strong><small>Tap below to ask out loud</small></div></div>
         <div class="mic-wrap">
           <div class="mic-ring r1" id="micRing"></div>
           <div class="mic-ring r2" id="micRing2"></div>
@@ -956,10 +954,23 @@
           </div>
           <button class="micbtn" id="micBtn" onclick="toggleListening()" aria-label="Tap to ask a question by voice">🎙️</button>
         </div>
-        <div class="voice-typed">
-          <input type="text" id="typedQuestion" placeholder="Or type your question instead..." onkeydown="if(event.key==='Enter')askTyped()">
-          <button class="btn btn-primary" onclick="askTyped()">Send</button>
+        <div class="voice-picker" id="voicePicker">
+          <span class="vp-label">Voice:</span>
+          <button class="vp-btn active" data-gender="female" onclick="chooseVoiceGender('female')">👩 Female</button>
+          <button class="vp-btn" data-gender="male" onclick="chooseVoiceGender('male')">👨 Male</button>
         </div>
+        <div class="voice-picker" id="speechLangPicker">
+          <span class="vp-label">Speak in:</span>
+          <button class="vp-btn active" data-slang="en-IN" onclick="chooseSpeechLang('en-IN')">English</button>
+          <button class="vp-btn" data-slang="hi-IN" onclick="chooseSpeechLang('hi-IN')">हिन्दी</button>
+          <button class="vp-btn" data-slang="gu-IN" onclick="chooseSpeechLang('gu-IN')">ગુજરાતી</button>
+        </div>
+      </div>
+      </div>
+      <div class="voice-typed">
+        <label class="sr-only" for="typedQuestion">Your question for Sakhi AI</label>
+        <input type="text" id="typedQuestion" placeholder="Ask anything on your mind..." onkeydown="if(event.key==='Enter')askTyped()">
+        <button class="btn btn-primary" onclick="askTyped()">Send <span aria-hidden="true">↗</span></button>
       </div>
       <p class="mini-note" style="margin-top:16px;">Sakhi AI is not a doctor. For urgent concerns, contact a clinician or a helpline. Speech recognition is handled by your browser or device; the recognized text is processed by a third-party AI service for a reply. Avoid sharing identifying details.</p>
     </div>

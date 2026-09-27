@@ -17,3 +17,51 @@ main>section:not(#ai-voice):not(.home-intro):not(.portal-paths):not(.home-assura
 
 .doctor-search-status{min-height:1.4em;margin:8px 0;color:var(--maroon-deep);font-size:.84rem;font-weight:600}
 [data-theme="dark"] .doctor-search-status{color:#f1d5ff}
+
+/* Sakhi AI conversation card */
+#ai-voice .voicewidget.premium{max-width:1050px;padding:0;background:#fffdfb;border:1px solid #eee6e7;border-radius:30px;box-shadow:0 28px 70px rgba(58,32,54,.11);overflow:hidden}
+#ai-voice .voicewidget.premium::before,#ai-voice .voicewidget.premium::after{display:none}
+#ai-voice .vw-header{padding:21px 30px;margin:0;border-bottom:1px solid #f1e9e9;background:#fffdfb;gap:12px}
+#ai-voice .vw-avatar{width:43px;height:43px;background:#f7e8ed;border:1px solid #f2dce5;box-shadow:none}
+#ai-voice .vw-name{font-family:'Fredoka',sans-serif;font-size:1.08rem;color:#3a2944}
+#ai-voice .vw-status{font-family:'Poppins',sans-serif;color:#766a76;font-size:.72rem}
+#ai-voice .vw-header-tag{margin-left:auto;font-size:.64rem;font-weight:800;letter-spacing:.13em;color:#8a5376;background:#fbf0f4;padding:10px 12px;border-radius:100px}
+#ai-voice .sakhi-chat-main{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(275px,.9fr);min-height:365px}
+#ai-voice .vw-thread{min-height:365px;max-height:460px;margin:0;padding:25px 30px;overflow-y:auto;background:radial-gradient(circle at 5% 95%,#fdf0f0,transparent 48%),#fffdfb}
+#ai-voice .vw-empty{text-align:left;padding:15px 3px}
+#ai-voice .vw-empty-kicker{display:inline-block;font-size:.66rem;font-weight:800;letter-spacing:.16em;color:#ac6c84}
+#ai-voice .vw-empty h3{font-family:'Fraunces',serif;font-size:clamp(2.15rem,3.5vw,3.3rem);font-weight:600;letter-spacing:-.045em;line-height:1.06;color:#35283d;margin:15px 0}
+#ai-voice .vw-empty h3 span{color:#d383a1}
+#ai-voice .vw-empty p{margin:0;max-width:420px;color:#726773;font-size:.88rem;line-height:1.75}
+#ai-voice .vw-suggestions{display:flex;flex-wrap:wrap;gap:9px;margin-top:32px}
+#ai-voice .vw-suggestions button{font:600 .75rem 'Poppins',sans-serif;color:#53364f;border:1px solid #eadde5;background:#fff;border-radius:12px;padding:10px 13px;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+#ai-voice .vw-suggestions button:hover{transform:translateY(-2px);border-color:#cf9bb6;background:#fff6f9}
+#ai-voice .vw-suggestions span{color:#ba719b;margin-left:6px}
+#ai-voice .vw-controls{padding:25px 24px;text-align:left;background:#f8f0f3;border-left:1px solid #f0e2e9;display:flex;flex-direction:column;align-items:stretch}
+#ai-voice .vw-control-heading{display:flex;align-items:center;gap:10px}
+#ai-voice .vw-control-icon{width:34px;height:34px;display:grid;place-items:center;background:#fff;border-radius:11px;color:#af6b91}
+#ai-voice .vw-control-heading strong{display:block;font:600 1rem 'Fredoka',sans-serif;color:#3c2b44}
+#ai-voice .vw-control-heading small{display:block;font-size:.69rem;color:#776a75}
+#ai-voice .mic-wrap{margin:22px auto 25px;width:112px;height:112px}
+#ai-voice .micbtn{box-shadow:0 13px 30px rgba(157,83,134,.24)}
+#ai-voice .voice-picker{justify-content:flex-start;margin:0 0 12px;gap:6px}
+#ai-voice .vp-label{width:100%;font-size:.67rem;text-transform:uppercase;letter-spacing:.1em;color:#84747e}
+#ai-voice .vp-btn{border-radius:9px;padding:7px 10px;background:#fff;font-size:.7rem;border:1px solid #e7dbe2}
+#ai-voice .vp-btn.active{background:#4a285d;color:#fff;border-color:#4a285d}
+#ai-voice .voice-typed{position:relative;z-index:1;margin:0 30px 0;padding:18px 0;display:flex;flex-direction:row;gap:10px;border-top:1px solid #f0e7eb}
+#ai-voice .voice-typed input{min-width:0;flex:1;border:1px solid #e9dce5;background:#fff;border-radius:13px;padding:14px 17px;font-family:'Poppins',sans-serif;font-size:.86rem}
+#ai-voice .voice-typed .btn{width:auto;white-space:nowrap;border-radius:13px;padding:11px 20px;font-size:.82rem}
+#ai-voice .voice-typed .btn span{margin-left:8px}
+#ai-voice .mini-note{position:relative;z-index:1;margin:0!important;padding:10px 30px 20px;color:#867984;font-size:.7rem;line-height:1.6}
+#ai-voice .micbtn{width:104px;height:104px}
+[data-theme="dark"] #ai-voice .voicewidget.premium,[data-theme="dark"] #ai-voice .vw-header,[data-theme="dark"] #ai-voice .vw-thread{background:#271f2c;border-color:#4b394d}
+[data-theme="dark"] #ai-voice .vw-controls{background:#302537;border-color:#4b394d}
+[data-theme="dark"] #ai-voice .vw-empty h3,[data-theme="dark"] #ai-voice .vw-name,[data-theme="dark"] #ai-voice .vw-control-heading strong{color:#f8ecf5}
+[data-theme="dark"] #ai-voice .vw-empty p,[data-theme="dark"] #ai-voice .vw-control-heading small,[data-theme="dark"] #ai-voice .mini-note{color:#cabbca}
+[data-theme="dark"] #ai-voice .vw-suggestions button,[data-theme="dark"] #ai-voice .vp-btn:not(.active),[data-theme="dark"] #ai-voice .voice-typed input{background:#3b2c40;color:#f8ecf5;border-color:#5e4960}
+@media(max-width:760px){#ai-voice .sakhi-chat-main{grid-template-columns:1fr}#ai-voice .vw-thread{min-height:270px;max-height:390px;padding:25px}#ai-voice .vw-controls{border-left:0;border-top:1px solid #f0e2e9;padding:22px 25px;display:grid;grid-template-columns:125px 1fr;gap:6px 18px;align-items:center}#ai-voice .vw-control-heading{grid-column:1/-1}#ai-voice .mic-wrap{grid-row:2/4;margin:8px auto;width:95px;height:95px}#ai-voice .voice-picker{grid-column:2;margin:0}#ai-voice .voice-typed{margin:0 25px}}
+#ai-voice .micbtn{width:104px;height:104px}
+@media(max-width:760px){#ai-voice .micbtn{width:88px;height:88px}}
+@media(max-width:480px){#ai-voice .voicewidget.premium{border-radius:22px}#ai-voice .vw-header{padding:17px 18px}#ai-voice .vw-header-tag{display:none}#ai-voice .vw-thread{min-height:275px;padding:18px}#ai-voice .vw-empty{padding:15px 0}#ai-voice .vw-empty h3{font-size:2.45rem}#ai-voice .vw-suggestions{margin-top:23px}#ai-voice .vw-suggestions button{font-size:.69rem;padding:8px 10px}#ai-voice .vw-controls{padding:17px 18px;grid-template-columns:95px 1fr;gap:4px 11px}#ai-voice .mic-wrap{width:82px;height:82px}#ai-voice .vp-btn{font-size:.66rem;padding:6px 8px}#ai-voice .voice-typed{margin:0 18px;gap:7px;padding:15px 0}#ai-voice .voice-typed input{padding:11px;font-size:.78rem}#ai-voice .voice-typed .btn{padding:10px 12px}#ai-voice .voice-typed .btn span{display:none}#ai-voice .mini-note{padding:8px 18px 18px;font-size:.65rem}}
+@media(prefers-reduced-motion:reduce){#ai-voice .vw-suggestions button{transition:none}}
+@media(max-width:480px){#ai-voice .micbtn{width:78px;height:78px}}
