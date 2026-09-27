@@ -70,7 +70,8 @@
       const voice = typeof pickVoiceForLang === 'function' ? pickVoiceForLang(lang, gender) : null;
       if(voice){ u.voice = voice; u.lang = voice.lang; } else { u.lang = lang; }
     }catch(e){ u.lang = 'en-IN'; }
-    u.rate = 0.96;
+    u.rate = 0.9;
+    u.pitch = 1;
     btn.textContent = '⏸️ Stop';
     u.onend = ()=>{ btn.textContent = '🔊 Listen to this answer'; };
     window.speechSynthesis.speak(u);
@@ -656,6 +657,9 @@ Rules you always follow:
     const name = voice.name.toLowerCase();
     let score = 0;
     if(hints.some(h => name.includes(h))) score += 10;
+    // "female" contains "male"; do not pick a female voice for the male setting.
+    if(hints === MALE_HINTS && name.includes('female')) score -= 12;
+    if(hints === FEMALE_HINTS && /\bmale\b/.test(name) && !name.includes('female')) score -= 12;
     if(voice.lang && voice.lang.toLowerCase().startsWith('en-in')) score += 4; // prefer Indian English if it matches gender
     if(voice.lang && voice.lang.toLowerCase().startsWith('en')) score += 2;
     if(name.includes('natural') || name.includes('neural') || name.includes('online')) score += 5; // modern high-quality voices
@@ -700,8 +704,8 @@ Rules you always follow:
       });
       return best;
     }
-    // No voice for that language installed on this device — fall back to the usual English pick
-    return pickBestVoice(gender);
+    // Let the browser choose a matching voice instead of forcing English for Hindi/Gujarati.
+    return langPrefix === 'en' ? pickBestVoice(gender) : null;
   }
 
   function chooseVoiceGender(gender){
@@ -722,10 +726,19 @@ Rules you always follow:
     document.querySelectorAll('.vp-btn').forEach(b=> b.classList.toggle('active', b.dataset.gender === saved));
   })();
 
+  let currentSpeech = 0;
+  function speechFriendlyText(text){
+    return text.replace(/\[([^\]]+)\]\(https?:\/\/[^)]+\)/g, '$1')
+      .replace(/https?:\/\/\S+/g, '')
+      .replace(/[*_#`]/g, '')
+      .replace(/\s*\n+\s*/g, ' ')
+      .replace(/\s+/g, ' ').replace(/\.{2,}/g, '.').trim();
+  }
   function speak(text, bubbleId){
     if(!window.speechSynthesis){ setLiveStatus('ready', 'ready to listen'); return; }
+    const request = ++currentSpeech;
     window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
+    const u = new SpeechSynthesisUtterance(speechFriendlyText(text));
     const replyLang = detectReplyLang(text);
     const voiceForThisReply = replyLang === 'en-IN' ? selectedVoice : pickVoiceForLang(replyLang, preferredGender);
     if(voiceForThisReply){
@@ -734,14 +747,18 @@ Rules you always follow:
     } else {
       u.lang = replyLang;
     }
-    u.rate = 0.96;
-    u.pitch = preferredGender === 'male' ? 0.92 : 1.05;
+    u.rate = 0.88;
+    u.pitch = 1;
+    u.volume = 1;
     document.getElementById('micBtn').classList.add('speaking');
     setLiveStatus('speaking', 'speaking...');
-    u.onend = ()=>{
+    const finish = ()=>{
+      if(request !== currentSpeech) return;
       document.getElementById('micBtn').classList.remove('speaking');
       setLiveStatus('ready', 'ready to listen');
     };
+    u.onend = finish;
+    u.onerror = finish;
     window.speechSynthesis.speak(u);
   }
 
