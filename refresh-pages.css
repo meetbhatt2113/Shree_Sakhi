@@ -10,3 +10,4 @@ h2{font-size:clamp(1.4rem,3vw,2rem);}
 .card,article,.post,.guide-card{border-radius:21px;box-shadow:0 12px 35px rgba(65,30,75,.07);}
 a{color:#5d255b;}
 @media(max-width:600px){.wrap{padding:25px 18px 70px;}h1{font-size:2.4rem;}}
+.copyright-simple{padding:20px 18px 30px;text-align:center;color:#715d72;font:500 .78rem 'Poppins',sans-serif;border-top:1px solid #eadde6}
