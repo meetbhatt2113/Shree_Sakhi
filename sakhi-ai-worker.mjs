@@ -2,6 +2,7 @@
 // Set GROQ_API_KEY as a Cloudflare Secret. Do not put it in the website.
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const GROQ_SPEECH_URL = 'https://api.groq.com/openai/v1/audio/speech';
+const GROQ_TRANSCRIBE_URL = 'https://api.groq.com/openai/v1/audio/transcriptions';
 const DEFAULT_MODEL = 'qwen/qwen3.8-27b';
 const ALLOWED_ORIGINS = new Set(['https://shreesakhiiiii.vercel.app']);
 
@@ -57,6 +58,46 @@ function respond(data, status, origin) {
   return new Response(JSON.stringify(data), { status, headers });
 }
 
+async function transcribeSpeech(request, env, origin) {
+  if (!env.GROQ_API_KEY) return respond({ error: 'Voice service unavailable' }, 503, origin);
+  if (!(request.headers.get('Content-Type') || '').includes('multipart/form-data')) return respond({ error: 'Send audio data' }, 415, origin);
+  if (Number(request.headers.get('Content-Length') || 0) > 4_200_000) return respond({ error: 'Recording too large' }, 413, origin);
+  let input;
+  try { input = await request.formData(); } catch { return respond({ error: 'Invalid audio data' }, 400, origin); }
+  const audio = input.get('audio');
+  if (!(audio instanceof File) || audio.size < 100 || audio.size > 4_000_000 || !/\.(webm|ogg|mp4|m4a|wav)$/i.test(audio.name)) {
+    return respond({ error: 'Recording must be a short audio file' }, 400, origin);
+  }
+  const selected = input.get('language');
+  const lang = { 'en-IN':'en', 'hi-IN':'hi', 'gu-IN':'gu' }[selected];
+  const body = new FormData();
+  body.append('file', audio, audio.name);
+  body.append('model', 'whisper-large-v3');
+  body.append('response_format', 'verbose_json');
+  if (lang) body.append('language', lang);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 20000);
+  try {
+    const upstream = await fetch(GROQ_TRANSCRIBE_URL, {
+      method:'POST', signal:controller.signal,
+      headers:{ Authorization:`Bearer ${env.GROQ_API_KEY}` }, body
+    });
+    if (!upstream.ok) {
+      console.error('Transcription status:', upstream.status);
+      return respond({ error:'Voice transcription unavailable' }, 502, origin);
+    }
+    const data = await upstream.json();
+    const text = data?.text?.trim();
+    if (!text) return respond({ error:'No speech detected' }, 422, origin);
+    const detected = String(data.language || '').toLowerCase();
+    const language = lang || (detected.startsWith('gujarati') || detected === 'gu' ? 'gu' : detected.startsWith('hindi') || detected === 'hi' ? 'hi' : 'auto');
+    return respond({ text, language }, 200, origin);
+  } catch (error) {
+    console.error('Transcription failed:', error?.name || 'unknown');
+    return respond({ error:'Voice transcription unavailable' }, 502, origin);
+  } finally { clearTimeout(timer); }
+}
+
 async function generateSpeech(request, env, origin) {
   if (!env.GROQ_API_KEY) return respond({ error: 'Voice service unavailable' }, 503, origin);
   if (!(request.headers.get('Content-Type') || '').includes('application/json')) return respond({ error: 'Send JSON' }, 415, origin);
@@ -109,7 +150,12 @@ export default {
     const origin = request.headers.get('Origin');
     if (origin && !ALLOWED_ORIGINS.has(origin)) return respond({ error: 'Origin not allowed' }, 403, origin);
     if (request.method === 'OPTIONS') return respond({}, 200, origin);
-    if (new URL(request.url).pathname === '/speech') {
+    const path = new URL(request.url).pathname;
+    if (path === '/transcribe') {
+      if (request.method !== 'POST') return respond({ error:'Method not allowed' }, 405, origin);
+      return transcribeSpeech(request, env, origin);
+    }
+    if (path === '/speech') {
       if (request.method !== 'POST') return respond({ error: 'Method not allowed' }, 405, origin);
       return generateSpeech(request, env, origin);
     }
@@ -123,7 +169,8 @@ export default {
     const message = input?.message;
     if (typeof message !== 'string' || !message.trim() || message.length > 4000) return respond({ error: 'Message must be 1-4000 characters' }, 400, origin);
     const q = message.trim();
-    const lang = languageOf(q);
+    const forced = { 'en-IN':'en', 'hi-IN':'hi', 'gu-IN':'gu', en:'en', hi:'hi', gu:'gu', hinglish:'hinglish' }[input?.language];
+    const lang = forced || languageOf(q);
     const category = classify(q);
     if (category) return respond({ reply: fixed[category][lang] }, 200, origin);
     const language = { en: 'English only', hi: 'natural, grammatically correct Hindi in Devanagari', gu: 'natural, grammatically correct Gujarati in Gujarati script', hinglish: 'natural Hinglish using Latin letters only' }[lang];

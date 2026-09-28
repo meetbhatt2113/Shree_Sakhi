@@ -170,14 +170,14 @@
 
   // Shared helper for the AI proxy. Show a useful error when its model or
   // credentials fail, without sending a second billable request automatically.
-  async function askSakhiAIRaw(context){
+  async function askSakhiAIRaw(context, language){
     const controller = new AbortController();
     const timeout = setTimeout(()=>controller.abort(), 25000);
     try{
       const res = await fetch(SAKHI_AI_ENDPOINT, {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ system: SAKHI_SYSTEM_PROMPT, message: context }),
+        body: JSON.stringify({ system: SAKHI_SYSTEM_PROMPT, message: context, language: language || 'auto' }),
         signal: controller.signal
       });
       const data = await res.json();
@@ -467,7 +467,9 @@ Rules you always follow:
   let recognition = null;
   let isListening = false;
   let replyTexts = {}; // bubbleId -> text, for replay
-  let speechLang = 'en-IN'; // language the mic listens for
+  let speechLang = 'auto'; // automatic detection unless a language is selected
+  let mediaRecorder = null;
+  let recordingTimer = null;
 
   function isIOS(){
     return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
@@ -475,6 +477,7 @@ Rules you always follow:
   }
 
   function chooseSpeechLang(lang){
+    if(isListening) return;
     speechLang = lang;
     document.querySelectorAll('#speechLangPicker .vp-btn').forEach(b=>{
       b.classList.toggle('active', b.dataset.slang === lang);
@@ -485,8 +488,9 @@ Rules you always follow:
   }
 
   (function initSpeechLang(){
-    let saved = 'en-IN';
-    try{ saved = localStorage.getItem('ss_speech_lang') || 'en-IN'; }catch(e){}
+    let saved = 'auto';
+    try{ saved = localStorage.getItem('ss_speech_lang') || 'auto'; }catch(e){}
+    if(!['auto','en-IN','hi-IN','gu-IN'].includes(saved)) saved = 'auto';
     speechLang = saved;
     document.querySelectorAll('#speechLangPicker .vp-btn').forEach(b=>{
       b.classList.toggle('active', b.dataset.slang === saved);
@@ -497,13 +501,13 @@ Rules you always follow:
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if(!SR){ return null; }
     const r = new SR();
-    r.lang = speechLang;
+    r.lang = speechLang === 'auto' ? 'en-IN' : speechLang;
     r.interimResults = false;
     r.maxAlternatives = 1;
     r.onresult = (e)=>{
       const text = e.results[0][0].transcript;
       addBubble('user', text);
-      askSakhiAI(text);
+      askSakhiAI(text, speechLang);
     };
     r.onerror = (e)=>{
       setListeningUI(false);
@@ -536,7 +540,54 @@ Rules you always follow:
     setLiveStatus(listening ? 'listening' : 'ready', listening ? 'listening...' : 'ready to listen');
   }
 
+  async function recordAndTranscribe(){
+    if(isListening && mediaRecorder){ mediaRecorder.stop(); return; }
+    try{
+      const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
+      const mime = ['audio/webm','audio/mp4','audio/ogg'].find(type=>MediaRecorder.isTypeSupported(type));
+      const recorder = mime ? new MediaRecorder(stream,{mimeType:mime}) : new MediaRecorder(stream);
+      const chunks = [];
+      mediaRecorder = recorder;
+      recorder.ondataavailable = event=>{ if(event.data.size) chunks.push(event.data); };
+      recorder.onstop = async ()=>{
+        clearTimeout(recordingTimer);
+        stream.getTracks().forEach(track=>track.stop());
+        mediaRecorder = null;
+        setListeningUI(false);
+        if(!chunks.length){ setLiveStatus('ready', 'No speech detected — tap to try again'); return; }
+        setLiveStatus('thinking', 'understanding your voice...');
+        const ext = recorder.mimeType.includes('mp4') ? 'mp4' : recorder.mimeType.includes('ogg') ? 'ogg' : 'webm';
+        const data = new FormData();
+        data.append('audio',new Blob(chunks,{type:recorder.mimeType}), 'question.'+ext);
+        data.append('language',speechLang);
+        try{
+          const response = await fetch('/api/sakhi-transcribe',{ method:'POST',body:data });
+          const result = await response.json();
+          if(!response.ok || !result.text) throw new Error('Could not understand the recording');
+          addBubble('user',result.text);
+          const detected = speechLang === 'auto' ? result.language : speechLang;
+          const answerLang = detected === 'hi' && !/[\u0900-\u097F]/.test(result.text) ? 'hinglish' : detected;
+          askSakhiAI(result.text, answerLang);
+        }catch(error){
+          setLiveStatus('ready', 'voice unavailable — type your question instead');
+          addBubble('ai', 'I could not understand that recording. Please try again or type your question.');
+        }
+      };
+      recorder.start();
+      setListeningUI(true);
+      recordingTimer = setTimeout(()=>{ if(recorder.state === 'recording') recorder.stop(); }, 9000);
+    }catch(error){
+      setListeningUI(false);
+      addBubble('ai', 'Microphone access is unavailable. Please allow it in your browser settings, or type your question instead.');
+    }
+  }
+
   function toggleListening(){
+    if(window.MediaRecorder && navigator.mediaDevices?.getUserMedia){ recordAndTranscribe(); return; }
+    if(speechLang === 'auto'){
+      addBubble('ai', 'Automatic voice language detection is unavailable in this browser. Choose English, हिन्दी, or ગુજરાતી, or type your question.');
+      return;
+    }
     if(!recognition) recognition = setupRecognition();
     if(!recognition){
       const msg = isIOS()
@@ -560,7 +611,7 @@ Rules you always follow:
   // Let her know upfront on unsupported browsers, rather than only after tapping the mic
   (function checkVoiceSupportOnLoad(){
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if(!SR){
+    if(!SR && !(window.MediaRecorder && navigator.mediaDevices?.getUserMedia)){
       const micBtn = document.getElementById('micBtn');
       if(micBtn){
         micBtn.style.opacity = '0.5';
@@ -576,7 +627,7 @@ Rules you always follow:
     if(!val) return;
     addBubble('user', val);
     document.getElementById('typedQuestion').value = '';
-    askSakhiAI(val);
+    askSakhiAI(val, speechLang);
   }
 
   function hideEmptyState(){
@@ -610,11 +661,11 @@ Rules you always follow:
     return d.innerHTML;
   }
 
-  async function askSakhiAI(userText){
+  async function askSakhiAI(userText, language){
     setLiveStatus('thinking', 'thinking...');
     const thinkingId = addBubble('thinking', '');
     try{
-      const reply = await askSakhiAIRaw(userText);
+      const reply = await askSakhiAIRaw(userText, language);
       document.getElementById(thinkingId).remove();
       const bubbleId = addBubble('ai', reply);
       speak(reply, bubbleId);
@@ -768,7 +819,7 @@ Rules you always follow:
     } else {
       u.lang = replyLang;
     }
-    u.rate = 0.88;
+    u.rate = 1.02;
     u.pitch = 1;
     u.volume = 1;
     document.getElementById('micBtn').classList.add('speaking');
@@ -808,6 +859,7 @@ Rules you always follow:
         try{
           await new Promise((resolve,reject)=>{
             const player = new Audio(url);
+            player.playbackRate = 1.08;
             currentAudio = player;
             player.onended = resolve;
             player.onerror = reject;
