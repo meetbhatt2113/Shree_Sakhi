@@ -4,44 +4,6 @@ const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const GROQ_SPEECH_URL = 'https://api.groq.com/openai/v1/audio/speech';
 const DEFAULT_MODEL = 'qwen/qwen3.8-27b';
 const ALLOWED_ORIGINS = new Set(['https://shreesakhiiiii.vercel.app']);
-const QUESTION_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
-
-async function hashCode(code) {
-  const bytes = new TextEncoder().encode(code);
-  const digest = await crypto.subtle.digest('SHA-256', bytes);
-  return Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function saveQuestion(env, question, language, input, category) {
-  if (input?.saveForReview !== true) return {};
-  if (input?.adultConfirmed !== true) return { saveError: 'Confirm that you are 18 or older before saving.' };
-  if (category === 'crisis' || category === 'emergency') return { saveError: 'Urgent questions are not saved.' };
-  if (!env.QUESTIONS_DB) return { saveError: 'Question saving is not set up yet.' };
-  const id = crypto.randomUUID();
-  const random = crypto.getRandomValues(new Uint8Array(24));
-  const deleteCode = Array.from(random, b => b.toString(16).padStart(2, '0')).join('');
-  try {
-    await env.QUESTIONS_DB.prepare(
-      'INSERT INTO contributed_questions (id, question, language, created_at, delete_code_hash) VALUES (?, ?, ?, ?, ?)'
-    ).bind(id, question, language, Date.now(), await hashCode(deleteCode)).run();
-    return { savedId: id, deleteCode };
-  } catch (error) {
-    console.error('Question save failed:', error?.name || 'unknown');
-    return { saveError: 'Question could not be saved.' };
-  }
-}
-
-async function deleteQuestion(env, input, origin) {
-  if (!env.QUESTIONS_DB) return respond({ error: 'Question storage is unavailable' }, 503, origin);
-  if (typeof input?.id !== 'string' || typeof input?.deleteCode !== 'string' ||
-      !/^[0-9a-f-]{36}$/i.test(input.id) || !/^[0-9a-f]{48}$/i.test(input.deleteCode)) {
-    return respond({ error: 'Invalid deletion receipt' }, 400, origin);
-  }
-  const result = await env.QUESTIONS_DB.prepare(
-    'DELETE FROM contributed_questions WHERE id = ? AND delete_code_hash = ?'
-  ).bind(input.id, await hashCode(input.deleteCode)).run();
-  return respond({ deleted: result.meta?.changes === 1 }, 200, origin);
-}
 
 function languageOf(value) {
   if (/[\u0A80-\u0AFF]/u.test(value)) return 'gu';
@@ -52,10 +14,10 @@ function languageOf(value) {
 
 const fixed = {
   privacy: {
-    en: 'We do not save your chat history by default. If an adult selects the save option, that question is kept for up to 30 days and can be deleted from this device. Questions are processed by a third-party AI service to generate an answer. Please avoid sharing personal details.',
-    hi: 'हम आपकी चैट डिफ़ॉल्ट रूप से सेव नहीं करते। यदि कोई वयस्क सेव करने का विकल्प चुनता है, तो वह सवाल अधिकतम 30 दिनों तक रखा जाता है और इस डिवाइस से हटाया जा सकता है। जवाब के लिए सवाल बाहरी AI सेवा को भेजा जाता है। निजी जानकारी न लिखें।',
-    gu: 'અમે તમારી ચેટ સામાન્ય રીતે સાચવતા નથી. જો પુખ્ત વયની વ્યક્તિ પ્રશ્ન સાચવવાનો વિકલ્પ પસંદ કરે, તો તે વધુમાં વધુ 30 દિવસ રાખવામાં આવે છે અને આ ઉપકરણથી દૂર કરી શકાય છે. જવાબ માટે પ્રશ્ન બહારની AI સેવાને મોકલાય છે. વ્યક્તિગત માહિતી ન લખશો.',
-    hinglish: 'Hum aapki chat default se save nahi karte. Agar koi adult save option chunta hai, sawaal 30 din tak rakha jata hai aur is device se delete kiya ja sakta hai. Jawab ke liye sawaal third-party AI service ko bheja jata hai. Personal details mat likhiye.'
+    en: 'Shree Sakhi does not save your questions or chat history for future use, and we do not sell your information. To answer you, your question is sent to an external AI service. Please avoid sharing names, phone numbers, or other personal details.',
+    hi: 'Shree Sakhi आपके सवाल या चैट हिस्ट्री को भविष्य के उपयोग के लिए सेव नहीं करता और आपकी जानकारी बेचता नहीं है। जवाब देने के लिए आपका सवाल एक बाहरी AI सेवा को भेजा जाता है। कृपया नाम, फ़ोन नंबर या दूसरी निजी जानकारी न लिखें।',
+    gu: 'Shree Sakhi તમારા પ્રશ્નો કે ચેટ હિસ્ટ્રી ભવિષ્યના ઉપયોગ માટે સાચવતું નથી અને તમારી માહિતી વેચતું નથી. જવાબ આપવા માટે તમારો પ્રશ્ન બહારની AI સેવાને મોકલવામાં આવે છે. કૃપા કરીને નામ, ફોન નંબર કે અન્ય વ્યક્તિગત માહિતી ન લખશો.',
+    hinglish: 'Shree Sakhi aapke sawaal ya chat history future use ke liye save nahi karta aur aapki information bechta nahi hai. Jawab dene ke liye sawaal ek external AI service ko bheja jata hai. Naam, phone number ya personal details mat likhiye.'
   },
   crisis: {
     en: 'I am sorry you are feeling this way. If you might hurt yourself tonight, please call emergency services now (112 in India), move away from anything you could use to hurt yourself, and ask a trusted person to stay with you. In India, you can also call the government Tele-MANAS mental health line at 14416.',
@@ -87,7 +49,7 @@ function respond(data, status, origin) {
   const headers = new Headers({
     'Content-Type': 'application/json; charset=utf-8',
     'Cache-Control': 'no-store',
-    'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Vary': 'Origin'
   });
@@ -152,19 +114,18 @@ export default {
       return generateSpeech(request, env, origin);
     }
     if (request.method === 'GET') return respond({ status: 'Sakhi AI running', hasKey: Boolean(env.GROQ_API_KEY) }, 200, origin);
-    if (request.method !== 'POST' && request.method !== 'DELETE') return respond({ error: 'Method not allowed' }, 405, origin);
+    if (request.method !== 'POST') return respond({ error: 'Method not allowed' }, 405, origin);
     const type = request.headers.get('Content-Type') || '';
     if (!type.includes('application/json')) return respond({ error: 'Send JSON' }, 415, origin);
     let input;
     try { input = await request.json(); } catch { return respond({ error: 'Invalid JSON' }, 400, origin); }
-    if (request.method === 'DELETE') return deleteQuestion(env, input, origin);
     if (!env.GROQ_API_KEY) return respond({ error: 'AI service key is missing' }, 503, origin);
     const message = input?.message;
     if (typeof message !== 'string' || !message.trim() || message.length > 4000) return respond({ error: 'Message must be 1-4000 characters' }, 400, origin);
     const q = message.trim();
     const lang = languageOf(q);
     const category = classify(q);
-    if (category) return respond({ reply: fixed[category][lang], ...await saveQuestion(env, q, lang, input, category) }, 200, origin);
+    if (category) return respond({ reply: fixed[category][lang] }, 200, origin);
     const language = { en: 'English only', hi: 'natural, grammatically correct Hindi in Devanagari', gu: 'natural, grammatically correct Gujarati in Gujarati script', hinglish: 'natural Hinglish using Latin letters only' }[lang];
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 18000);
@@ -189,17 +150,12 @@ export default {
           (lang === 'hi' && !/[\u0900-\u097F]/u.test(reply)) ||
           (lang === 'gu' && !/[\u0A80-\u0AFF]/u.test(reply)) ||
           /(?:\+?\d[\d\s-]{7,}\d)/u.test(reply)) {
-        return respond({ reply: lang === 'gu' ? 'હું આનો સ્પષ્ટ જવાબ આપી શકી નથી. કૃપા કરીને ફરી પૂછો અથવા ડૉક્ટર સાથે વાત કરો.' : lang === 'hi' ? 'मैं इसका स्पष्ट जवाब नहीं दे सकी। कृपया दोबारा पूछें या डॉक्टर से बात करें।' : lang === 'hinglish' ? 'Main is baar saaf jawab nahi de paayi. Kripya dobara poochhein ya doctor se baat karein.' : 'I could not give a clear answer this time. Please ask again or speak with a clinician.', ...await saveQuestion(env, q, lang, input, category) }, 200, origin);
+        return respond({ reply: lang === 'gu' ? 'હું આનો સ્પષ્ટ જવાબ આપી શકી નથી. કૃપા કરીને ફરી પૂછો અથવા ડૉક્ટર સાથે વાત કરો.' : lang === 'hi' ? 'मैं इसका स्पष्ट जवाब नहीं दे सकी। कृपया दोबारा पूछें या डॉक्टर से बात करें।' : lang === 'hinglish' ? 'Main is baar saaf jawab nahi de paayi. Kripya dobara poochhein ya doctor se baat karein.' : 'I could not give a clear answer this time. Please ask again or speak with a clinician.' }, 200, origin);
       }
-      return respond({ reply, ...await saveQuestion(env, q, lang, input, category) }, 200, origin);
+      return respond({ reply }, 200, origin);
     } catch (error) {
       console.error('AI request failed:', error?.name || 'unknown');
       return respond({ error: 'AI service timed out or could not be reached' }, 502, origin);
     } finally { clearTimeout(timer); }
-  },
-  async scheduled(_event, env) {
-    if (!env.QUESTIONS_DB) return;
-    await env.QUESTIONS_DB.prepare('DELETE FROM contributed_questions WHERE created_at < ?')
-      .bind(Date.now() - QUESTION_RETENTION_MS).run();
   }
 };
