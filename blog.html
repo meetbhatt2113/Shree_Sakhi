@@ -39,6 +39,11 @@
   article p, article li{color:#4a3835;}
   .meta{font-size:.8rem;color:#7a6a67;margin-bottom:30px;}
   .disclaimer{background:var(--rose-light);border-radius:12px;padding:16px 20px;font-size:.85rem;color:#5a2b32;margin-top:30px;}
+  .comparison{width:100%;border-collapse:collapse;margin:20px 0 26px;font-size:.88rem;}
+  .comparison th,.comparison td{text-align:left;padding:13px;border-bottom:1px solid var(--cream-deep);vertical-align:top;}
+  .comparison th{background:#f8edf0;color:var(--maroon-deep);}
+  .source-list{font-size:.85rem;overflow-wrap:anywhere;}
+  @media(max-width:600px){.wrap{padding:30px 16px 65px}article{padding:25px 19px}.comparison{display:block;overflow-x:auto;white-space:normal}.comparison th,.comparison td{min-width:135px}}
 </style>
 <link rel="stylesheet" href="refresh-pages.css">
 </head>
@@ -64,11 +69,11 @@
         <h3>Your First Period: Everything You Actually Need to Know</h3>
         <p>A complete, calm guide for the day it happens for the first time — what to expect, what to keep in your bag, and what's normal.</p>
       </a>
-      <div class="postcard disabled">
-        <span class="tag">Coming soon</span>
+      <a class="postcard" href="#article-pcod-pcos" onclick="showArticle(event,'pcod-pcos')">
+        <span class="tag">Periods · PCOS</span>
         <h3>PCOD vs PCOS: What's the Actual Difference?</h3>
-        <p>We'll add this article soon — check back, or ask Sakhi AI in the meantime.</p>
-      </div>
+        <p>What the two names mean, which symptoms matter, and why an ultrasound alone cannot give you the whole answer.</p>
+      </a>
       <div class="postcard disabled">
         <span class="tag">Coming soon</span>
         <h3>Your Trimester-by-Trimester Nutrition Guide</h3>
@@ -111,21 +116,73 @@
       <div class="disclaimer">This article is educational and general in nature. For specific concerns about your own periods, please talk to a trusted adult and a qualified doctor.</div>
     </article>
   </div>
+
+  <div id="article-pcod-pcos" style="display:none;">
+    <a href="#listing" class="back" onclick="showListing(event)">← All articles</a>
+    <article>
+      <span class="tag" style="color:var(--gold);font-weight:700;font-size:.75rem;text-transform:uppercase;">Periods · PCOS</span>
+      <h1 style="margin-top:10px;">PCOD vs PCOS: What’s the Actual Difference?</h1>
+      <p class="meta">6 min read · Shree Sakhi Editorial · Updated September 2026</p>
+      <p>If you have irregular periods, acne, or an ultrasound report mentioning “polycystic ovaries,” you may hear both <strong>PCOD</strong> and <strong>PCOS</strong>. It is easy to think one must be a mild version of the other. The names are often used inconsistently, though, so the label on its own does not tell you what is happening in your body.</p>
+
+      <h2>The short answer</h2>
+      <p><strong>PCOS</strong> stands for polycystic ovary syndrome. It is the name used in international medical guidance for a pattern that can involve irregular ovulation, signs of higher androgen levels (such as excess facial hair or persistent acne), and sometimes a characteristic appearance of the ovaries. It can also affect metabolic health.</p>
+      <p><strong>PCOD</strong> is commonly expanded as “polycystic ovarian disease” and is a familiar term in India. Unlike PCOS, it is not a separate diagnosis with one universally agreed set of criteria in the major international PCOS guideline. Some people use it to describe an ultrasound finding; others use it as another name for PCOS. Ask your clinician what they mean in your case rather than assuming “PCOD is mild, PCOS is severe.”</p>
+
+      <table class="comparison">
+        <thead><tr><th>Question</th><th>PCOD</th><th>PCOS</th></tr></thead>
+        <tbody>
+          <tr><td>What does the label tell me?</td><td>The meaning may vary between clinics and reports.</td><td>It refers to a syndrome assessed using clinical criteria.</td></tr>
+          <tr><td>Do I need ovarian “cysts”?</td><td>An ultrasound may be what prompted the term, but clarify the report.</td><td>No. Someone can have PCOS without that ultrasound appearance.</td></tr>
+          <tr><td>Is one always more serious?</td><td colspan="2">No. Symptoms and health needs vary from person to person; the label alone does not measure severity.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>How is PCOS assessed?</h2>
+      <p>A clinician asks about your period pattern, skin or hair changes, and medical history. They may recommend blood tests to check androgen levels and rule out other causes of irregular periods or similar symptoms. In adults, current guidance generally uses two of three features after other causes are excluded: irregular ovulation, clinical or blood-test signs of higher androgens, or polycystic ovarian morphology on ultrasound (or an appropriate AMH test in adults). When irregular cycles and hyperandrogenism are already present, an ultrasound is not needed for diagnosis.</p>
+      <p><strong>For teenagers, the approach is different:</strong> both irregular cycles and signs of higher androgens are needed. Ultrasound and AMH are not recommended to diagnose PCOS in adolescence because they can mislead. Periods can also be irregular soon after the first period, so a clinician looks at how long it has been since periods began.</p>
+
+      <h2>What symptoms are worth discussing?</h2>
+      <ul>
+        <li>Periods that are frequently absent, very far apart, or unpredictable.</li>
+        <li>Persistent acne, increased facial or body hair, or thinning hair on the scalp.</li>
+        <li>Difficulty becoming pregnant, if that is relevant to you.</li>
+        <li>Concerns about blood sugar, sleep, mood, or other changes affecting daily life.</li>
+      </ul>
+      <p>These signs can have other causes. You do not need to collect every symptom before asking for help, and an ultrasound image alone should not be treated as a self-diagnosis.</p>
+
+      <h2>What happens after an assessment?</h2>
+      <p>Care is based on your symptoms and goals. A clinician may discuss regular movement, eating patterns, sleep, emotional wellbeing, and treatment options for periods, skin symptoms, metabolic health, or fertility when relevant. There is no single plan that everyone with PCOS must follow. You can ask which finding led to the diagnosis, what other conditions were ruled out, and what follow-up is right for you.</p>
+
+      <div class="disclaimer">This article is general education, not a diagnosis. If your periods have stopped, symptoms are changing, or you are worried about your health, speak with a qualified clinician. Seek urgent care for severe pain, fainting, or very heavy bleeding.</div>
+      <h2>Sources</h2>
+      <ul class="source-list">
+        <li><a href="https://www.who.int/news-room/fact-sheets/detail/polycystic-ovary-syndrome" target="_blank" rel="noopener noreferrer">World Health Organization: Polycystic ovary syndrome</a></li>
+        <li><a href="https://www.asrm.org/practice-guidance/practice-committee-documents/recommendations-from-the-2023-international-evidence-based-guideline-for-the-assessment-and-management-of-polycystic-ovary-syndrome/" target="_blank" rel="noopener noreferrer">2023 International Evidence-Based PCOS Guideline</a></li>
+        <li><a href="https://www.nichd.nih.gov/health/topics/pcos" target="_blank" rel="noopener noreferrer">US National Institute of Child Health and Human Development: PCOS</a></li>
+      </ul>
+    </article>
+  </div>
 </div>
 
 <script>
   function showArticle(e, id){
     e.preventDefault();
     document.getElementById('listing').style.display = 'none';
+    document.querySelectorAll('[id^="article-"]').forEach(article => article.style.display = 'none');
     document.getElementById('article-' + id).style.display = 'block';
+    history.replaceState(null, '', '#article-' + id);
     window.scrollTo(0,0);
   }
   function showListing(e){
     e.preventDefault();
-    document.getElementById('article-first-period').style.display = 'none';
+    document.querySelectorAll('[id^="article-"]').forEach(article => article.style.display = 'none');
     document.getElementById('listing').style.display = 'block';
+    history.replaceState(null, '', location.pathname);
     window.scrollTo(0,0);
   }
+  const articleFromHash = location.hash.match(/^#article-(first-period|pcod-pcos)$/);
+  if(articleFromHash) showArticle(new Event('load'), articleFromHash[1]);
 </script>
 </body>
 </html>
