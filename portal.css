@@ -66,3 +66,7 @@ main>section:not(#ai-voice):not(.home-intro):not(.portal-paths):not(.home-assura
 @media(prefers-reduced-motion:reduce){#ai-voice .vw-suggestions button{transition:none}}
 @media(max-width:480px){#ai-voice .micbtn{width:78px;height:78px}}
 .portal-footer .copyright-line{margin-top:38px;padding-top:18px;border-top:1px solid rgba(255,255,255,.2);text-align:center;color:#d7c7de;font-size:.76rem;letter-spacing:.02em}
+.resource-note h2{color:#30213e}.resource-note p{color:#4d4054}
+[data-theme="dark"] .resource-note{background:#20342e}
+[data-theme="dark"] .resource-note h2{color:#f3d5a6}
+[data-theme="dark"] .resource-note p{color:#eef4ee}
