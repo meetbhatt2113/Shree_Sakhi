@@ -13,14 +13,14 @@
  * If you rename or add pages, update CACHE_FILES below to match.
  */
 
-const CACHE_NAME = 'shree-sakhi-v17-genz-relief';
+const CACHE_NAME = 'shree-sakhi-v18-health-3d';
 const CACHE_FILES = [
   '/index.html',
   '/refresh.css',
   '/portal.css',
   '/atelier.css',
   '/genz-3d.css',
-  '/genz-3d.js',
+  '/health-3d.js',
   '/shree-sakhi-logo.svg',
   '/shree-sakhi-icon.svg',
   '/site.js',
