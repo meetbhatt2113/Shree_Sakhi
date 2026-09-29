@@ -7,10 +7,11 @@
     wellbeing: {title:'Make space for how you feel.', text:'Explore emotional wellbeing and ways to find support. The heart is a symbol of care, not an anatomical model.', link:'wellbeing.html', action:'Explore wellbeing', name:'Three dimensional heart symbol'}
   };
   const pink=[.88,.38,.57], blush=[1,.67,.73], plum=[.57,.35,.79], cream=[1,.84,.65];
-  function geometry(mode){
+  function geometry(mode, lightweight=false){
     const a=[];
     const add=(p,n,c)=>a.push(...p,...n,...c);
     function mesh(fn,c,U=36,V=22){
+      if(lightweight){U=Math.max(10,Math.round(U*.45));V=Math.max(8,Math.round(V*.45));}
       const point=(u,v)=>fn(u,v);
       function vertex(u,v){
         const p=point(u,v),e=.0001,pu=point(u+e,v),pv=point(u,v+e);
@@ -59,28 +60,40 @@
   document.querySelectorAll('[data-health-3d]').forEach(root=>{
     const canvas=root.querySelector('canvas'),status=root.querySelector('.health-status');
     const gl=canvas.getContext('webgl',{alpha:true,antialias:true,preserveDrawingBuffer:true});
+    const soft=gl?null:canvas.getContext('2d');
     let mode=root.getAttribute('data-health-3d')||'cycle';if(!topics[mode])mode='cycle';
     function text(){const t=topics[mode];root.querySelector('.health-title').textContent=t.title;root.querySelector('.health-description').textContent=t.text;const link=root.querySelector('.health-link');link.href=t.link;link.textContent=t.action+' ↗';canvas.setAttribute('aria-label',t.name+'. Drag horizontally or use the rotation buttons.');root.querySelectorAll('[data-topic]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.topic===mode)))}
     text();
-    if(!gl){status.textContent='3D is unavailable on this browser. You can still explore every topic below.';root.classList.add('health-fallback');root.querySelectorAll('[data-topic]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.topic;text()}));return}
+    if(!gl && !soft){status.textContent='3D is unavailable on this browser. You can still explore every topic below.';root.classList.add('health-fallback');root.querySelectorAll('[data-topic]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.topic;text()}));return}
     function shader(type,source){const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s}
     let prog;
-    try{
+    if(gl)try{
       prog=gl.createProgram();gl.attachShader(prog,shader(gl.VERTEX_SHADER,`attribute vec3 p,n,c;uniform mat3 rot;uniform float aspect,zoom;varying vec3 N,C,P;void main(){vec3 q=rot*p;N=rot*n;C=c;P=q;q.z-=zoom;gl_Position=vec4(q.x*1.95/aspect,q.y*1.95,-1.002*q.z-.2002,-q.z);}`));
       gl.attachShader(prog,shader(gl.FRAGMENT_SHADER,`precision mediump float;varying vec3 N,C,P;void main(){vec3 normal=normalize(N);if(!gl_FrontFacing)normal=-normal;vec3 light=normalize(vec3(-.6,1.,2.));float d=max(dot(normal,light),0.);vec3 view=normalize(vec3(0.,0.,6.)-P);float spec=pow(max(dot(normal,normalize(light+view)),0.),36.);vec3 col=C*(.55+.52*d)+vec3(.22)*spec;gl_FragColor=vec4(col,1.);}`));gl.linkProgram(prog);if(!gl.getProgramParameter(prog,gl.LINK_STATUS))throw Error('Could not link 3D renderer');
     }catch(e){status.textContent='3D could not load. Topic guides remain available.';root.classList.add('health-fallback');return}
-    gl.useProgram(prog);gl.enable(gl.DEPTH_TEST);gl.clearColor(0,0,0,0);
-    const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
-    for(const [i,name] of ['p','n','c'].entries()){const at=gl.getAttribLocation(prog,name);gl.enableVertexAttribArray(at);gl.vertexAttribPointer(at,3,gl.FLOAT,false,36,i*12)}
-    const uniforms=Object.fromEntries(['rot','aspect','zoom'].map(n=>[n,gl.getUniformLocation(prog,n)]));
+    if(gl){gl.useProgram(prog);gl.enable(gl.DEPTH_TEST);gl.clearColor(0,0,0,0);}
+    const buf=gl?gl.createBuffer():null;if(gl)gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+    if(gl)for(const [i,name] of ['p','n','c'].entries()){const at=gl.getAttribLocation(prog,name);gl.enableVertexAttribArray(at);gl.vertexAttribPointer(at,3,gl.FLOAT,false,36,i*12)}
+    const uniforms=gl?Object.fromEntries(['rot','aspect','zoom'].map(n=>[n,gl.getUniformLocation(prog,n)])):{};
+    let meshData=null;root.dataset.renderer=gl?'webgl':'software-3d';
     let count=0,yaw=-.18,pitch=.06,zoom=5.4,frame=0,visible=true,last=0;
     const reduced=matchMedia('(prefers-reduced-motion: reduce)');let spin=false;
-    function upload(){const data=geometry(mode);gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);count=data.length/9;root.dataset.rendered=mode;draw()}
+    function upload(){meshData=geometry(mode,!gl);if(gl)gl.bufferData(gl.ARRAY_BUFFER,meshData,gl.STATIC_DRAW);count=meshData.length/9;root.dataset.rendered=mode;draw()}
     function draw(){
       const b=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,1.75),w=Math.max(1,Math.round(b.width*dpr)),h=Math.max(1,Math.round(b.height*dpr));
-      if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}gl.viewport(0,0,w,h);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+      if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}if(gl){gl.viewport(0,0,w,h);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT)}
       const c=Math.cos(yaw),s=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+      if(!gl){paintSoftware(meshData,w,h,yaw,pitch,zoom);return}
       gl.uniformMatrix3fv(uniforms.rot,false,new Float32Array([c,sp*s,-cp*s,0,cp,sp,s,-sp*c,cp*c]));gl.uniform1f(uniforms.aspect,w/h);gl.uniform1f(uniforms.zoom,zoom);gl.drawArrays(gl.TRIANGLES,0,count);
+    }
+    function paintSoftware(data,w,h,yaw,pitch,zoom){
+      if(!data)return;soft.clearRect(0,0,w,h);
+      const c=Math.cos(yaw),s=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+      const rotate=(x,y,z)=>[c*x+s*z,sp*s*x+cp*y-sp*c*z,-cp*s*x+sp*y+cp*c*z];
+      const vertices=[];
+      for(let i=0;i<data.length;i+=9){const q=rotate(data[i],data[i+1],data[i+2]);vertices.push({x:w/2+q[0]*.975*h/(zoom-q[2]),y:h/2-q[1]*.975*h/(zoom-q[2]),z:q[2],p:q,n:rotate(data[i+3],data[i+4],data[i+5]),c:[data[i+6],data[i+7],data[i+8]]})}
+      const faces=[];for(let i=0;i<vertices.length;i+=3){const a=vertices[i],b=vertices[i+1],c=vertices[i+2];faces.push({a,b,c,z:(a.z+b.z+c.z)/3})}faces.sort((a,b)=>a.z-b.z);
+      for(const f of faces){let n=f.a.n.map((v,i)=>(v+f.b.n[i]+f.c.n[i])/3);let len=Math.hypot(...n)||1;n=n.map(v=>v/len);if(n[2]<0)n=n.map(v=>-v);const d=Math.max(0,(-.6*n[0]+n[1]+2*n[2])/Math.sqrt(5.36)),light=.55+.52*d;const rgb=f.a.c.map(v=>Math.round(Math.min(1,v*light)*255));soft.fillStyle=`rgb(${rgb.join(',')})`;soft.beginPath();soft.moveTo(f.a.x,f.a.y);soft.lineTo(f.b.x,f.b.y);soft.lineTo(f.c.x,f.c.y);soft.closePath();soft.fill();}
     }
     function tick(t){frame=0;if(!spin||!visible||document.hidden)return;yaw+=Math.min(t-last,40)*.00025;last=t;draw();frame=requestAnimationFrame(tick)}
     function schedule(){if(spin&&visible&&!document.hidden&&!frame){last=performance.now();frame=requestAnimationFrame(tick)}}
