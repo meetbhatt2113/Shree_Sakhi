@@ -13,7 +13,7 @@
  * If you rename or add pages, update CACHE_FILES below to match.
  */
 
-const CACHE_NAME = 'shree-sakhi-v20-new-wordmark';
+const CACHE_NAME = 'shree-sakhi-v21-ai-wording';
 const CACHE_FILES = [
   '/index.html',
   '/refresh.css',
