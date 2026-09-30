@@ -906,6 +906,14 @@
 <h2 id="visit-title">Make room for every question.</h2>
 <p class="release-intro">Organise what you want to discuss with a clinician. This is your own account of your symptoms, not an AI diagnosis. All fields are optional.</p>
 <div class="visit-layout"><form id="visitForm" autocomplete="off">
+<fieldset class="visit-booking-fields"><legend>Appointment details</legend><p class="visit-privacy">Enter an appointment you have arranged with your clinic. Shree Sakhi does not book or confirm appointments.</p>
+<label for="visitDoctor">Doctor’s name (optional)</label><input id="visitDoctor" name="doctor" type="text" maxlength="120" placeholder="Dr. …">
+<label for="visitClinic">Clinic / hospital (optional)</label><input id="visitClinic" name="clinic" type="text" maxlength="240" placeholder="Clinic name and location">
+<div class="visit-pair"><div><label for="visitAppointmentDate">Appointment date</label><input id="visitAppointmentDate" name="appointmentDate" type="date"></div><div><label for="visitAppointmentTime">Appointment time (IST)</label><input id="visitAppointmentTime" name="appointmentTime" type="time"></div></div>
+<p class="visit-privacy">Time zone: India Standard Time (UTC+05:30). Your calendar may display the equivalent time in its own time zone.</p>
+<label for="visitDuration">Calendar time reserved</label><select id="visitDuration" name="duration"><option value="15">15 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">1 hour</option></select>
+<p class="visit-privacy">This is the length of your calendar reminder, not a clinic-confirmed consultation duration.</p></fieldset>
+
 <label for="visitReason">What would you like help with?</label><textarea id="visitReason" name="reason" rows="3" maxlength="1200" placeholder="For example: changes in my cycle, pain, or a pregnancy question"></textarea>
 <div class="visit-pair"><div><label for="visitStart">When did it start?</label><input id="visitStart" name="start" type="date"></div><div><label for="visitPeriod">Last period start (if relevant)</label><input id="visitPeriod" name="period" type="date"></div></div>
 <label for="visitImpact">How does it affect your day? What has changed?</label><textarea id="visitImpact" name="impact" rows="3" maxlength="1200" placeholder="Describe timing, severity, sleep, work or school, and anything that helps."></textarea>
@@ -918,9 +926,10 @@
 <div class="visit-doc-header"><img src="shree-sakhi-logo.svg" width="174" height="40" alt="Shree Sakhi"><div class="visit-doc-label">PERSONAL HEALTH NOTES<br><span>For discussion with your clinician</span></div></div>
 <div class="visit-doc-title"><span class="visit-doc-kicker">APPOINTMENT PREPARATION</span><h3>Appointment summary</h3><p>A clear record of what you would like to discuss.</p></div>
 <div class="visit-doc-meta"><div><span>PREPARED ON</span><p id="visitDate">—</p></div><div><span>DOCUMENT TYPE</span><p>Self-reported visit notes</p></div></div>
+<div id="visitAppointment" class="visit-doc-appointment" hidden><h4>APPOINTMENT DETAILS</h4><dl id="visitAppointmentDetails"></dl><p class="visit-booking-notice">Appointment details entered by you—confirm directly with your clinic.</p></div>
 <div id="visitOutput"><p class="visit-doc-empty">Complete any fields and choose Preview my summary to prepare your document.</p></div>
 <div class="visit-doc-footer"><strong>For your appointment</strong><p class="visit-disclaimer">Prepared from your own entries. This is not a prescription, diagnosis or clinician-issued medical record. Review these notes with your clinician.</p><div class="visit-doc-footer-line"><span>SHREE SAKHI · YOUR HEALTH, YOUR QUESTIONS</span><span>Personal copy</span></div></div>
-</div><button type="button" id="visitPrintButton" class="btn btn-primary" disabled>Print / save as PDF</button><p class="visit-privacy">Printing opens your device’s print dialog. Choose your printer or PDF option. Keep exported copies somewhere private.</p></aside></div>
+</div><button type="button" id="visitPrintButton" class="btn btn-primary" disabled>Print / save as PDF</button><button type="button" id="visitCalendarButton" class="btn btn-ghost" disabled>Download calendar reminder</button><p id="visitCalendarStatus" role="status" aria-live="polite" class="visit-privacy">Add a future appointment date and time to download a calendar file (.ics). It includes a 15-minute reminder; your calendar’s notification settings control alerts.</p><p class="visit-privacy">The calendar file includes doctor, clinic, date and time only—not your symptom notes. Open or import the downloaded file in your calendar to add the reminder. No invitation is sent to the doctor.</p><p class="visit-privacy">Printing opens your device’s print dialog. Choose your printer or PDF option. Keep exported copies somewhere private.</p></aside></div>
 <p class="visit-sources">Planning reference: <a href="https://www.acog.org/womens-health/infographics/10-telehealth-tips-for-an-ob-gyn-visit" target="_blank" rel="noopener noreferrer">ACOG: preparing for an appointment</a>. This tool does not assess urgency. If you need urgent care, seek help rather than completing this form.</p>
 <noscript><p>Enable JavaScript to preview, save or print a summary. You can also write your notes on paper.</p></noscript>
 </div></section>
@@ -1066,6 +1075,8 @@
 </main>
 <footer class="portal-footer"><div class="container footer-grid"><div><a href="index.html" class="footer-brand"><img class="footer-logo" src="shree-sakhi-logo.svg" alt="Shree Sakhi" width="190" height="50"></a><p>Good questions deserve clear, kind answers.</p><p class="footer-note">Educational information only. Sakhi AI cannot diagnose or replace a clinician.</p></div><div><strong>Explore</strong><a href="periods.html">Periods &amp; PCOS</a><a href="pregnancy.html">Pregnancy</a><a href="tools.html">Tools</a><a href="faqs.html">FAQs &amp; myths</a></div><div><strong>More</strong><a href="care.html">Find care</a><a href="about.html">About Sakhi</a><a href="blog.html">Blog</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></div><div class="container copyright-line">Copyright © 2026 Voice Technology. All rights reserved.</div></footer>
 <script src="site.js" defer></script>
+<script src="calendar-reminder.js" defer></script>
 <script src="visit-summary.js" defer></script>
 </body>
 </html>
+

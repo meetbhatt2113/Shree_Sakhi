@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
+import {webcrypto} from 'node:crypto';
 import worker from '../sakhi-ai-worker.mjs';
 const base = 'https://sakhi-ai-proxy.bhattmeet2113.workers.dev';
 const post = (body,path='/',headers={}) => new Request(base+path,{method:'POST',headers:{'Content-Type':'application/json',...headers},body});
@@ -23,11 +24,12 @@ class Element {
   addEventListener(name,fn){this.listeners[name]=fn;}
   fire(name){this.listeners[name]?.({preventDefault(){}});}
 }
-const inputs=Object.fromEntries(['reason','start','period','impact','medicines','questions'].map(key=>[key,new Element()]));
-const ids=Object.fromEntries(['visitForm','visitStatus','visitOutput','visitPrintButton','visitDate','visitSave','visitErase'].map(key=>[key,new Element()]));
+const inputs=Object.fromEntries(['reason','start','period','impact','medicines','questions','doctor','clinic','appointmentDate','appointmentTime','duration'].map(key=>[key,new Element()]));
+const ids=Object.fromEntries(['visitForm','visitStatus','visitOutput','visitPrintButton','visitDate','visitSave','visitErase','visitCalendarButton','visitCalendarStatus','visitAppointment','visitAppointmentDetails'].map(key=>[key,new Element()]));
 ids.visitForm.elements={namedItem:key=>inputs[key]};ids.visitForm.reset=()=>Object.values(inputs).forEach(el=>el.value='');
 const saved=new Map();let writes=0,printed=0;
-const env={document:{getElementById:id=>ids[id],createElement:()=>new Element()},localStorage:{getItem:key=>saved.get(key)||null,setItem:(key,value)=>{writes++;saved.set(key,value)},removeItem:key=>saved.delete(key)},window:{print:()=>printed++},Date,JSON};
+const env={document:{getElementById:id=>ids[id],createElement:()=>new Element()},localStorage:{getItem:key=>saved.get(key)||null,setItem:(key,value)=>{writes++;saved.set(key,value)},removeItem:key=>saved.delete(key)},window:{print:()=>printed++},Date,JSON,crypto:webcrypto,TextEncoder};
+vm.runInNewContext(readFileSync(new URL('../calendar-reminder.js',import.meta.url),'utf8'),env);
 vm.runInNewContext(readFileSync(new URL('../visit-summary.js',import.meta.url),'utf8'),env);
 inputs.reason.value='<img src=x onerror=alert(1)> Sample notes';
 ids.visitForm.fire('input');assert.equal(writes,0,'Typing must not persist notes');
@@ -53,3 +55,28 @@ assert.equal(voiceElements.sendQuestion.disabled,true);
 vm.runInContext('stopSakhiActivity()',scope);resolveReply('Must not show');await pending;
 assert.equal(bubbles.filter(b=>b.role==='ai').length,0);assert.equal(spoken,0);assert.equal(voiceElements.sendQuestion.disabled,false);
 console.log('PASS: cancelling a reply suppresses late answers and speech and restores Send.');
+
+
+// Calendar times are India Standard Time, regardless of the device time zone.
+const calendar=env.window.SakhiCalendar;
+const appointment={doctor:'Dr. Example',clinic:'Clinic, East; Wing\nBEGIN:VEVENT',appointmentDate:'2030-01-02',appointmentTime:'00:15',duration:'30',reason:'PRIVATE SYMPTOM NOTE'};
+const ics=calendar.build(appointment,'test-event',new Date('2029-01-01T00:00:00Z'));
+const unfolded=ics.replace(/\r\n /g,'');
+assert.match(unfolded,/DTSTART:20300101T184500Z/);
+assert.match(unfolded,/DTEND:20300101T191500Z/);
+assert.match(unfolded,/TRIGGER:-PT15M/);
+assert.match(unfolded,/STATUS:TENTATIVE/);
+assert.ok(!ics.includes('PRIVATE SYMPTOM NOTE'));
+assert.equal(unfolded.split('\r\n').filter(line=>line==='BEGIN:VEVENT').length,1,'User text cannot inject calendar components');
+assert.ok(unfolded.includes('LOCATION:Clinic\\, East\\; Wing\\nBEGIN:VEVENT'));
+for(const invalid of [{appointmentDate:'2030-02-31',appointmentTime:'10:00'},{appointmentDate:'',appointmentTime:''},{appointmentDate:'2030-01-01',appointmentTime:'25:00'}])assert.equal(calendar.startDate(invalid),null);
+assert.throws(()=>calendar.build({...appointment,appointmentDate:'2000-01-01'},'test-event'),/future/);
+assert.throws(()=>calendar.build({...appointment,duration:'999'},'test-event'),/duration/);
+const unicode=calendar.build({...appointment,clinic:'ગુજરાતી ક્લિનિક '.repeat(12)},'unicode-event',new Date('2029-01-01'));
+for(const line of unicode.split('\r\n'))assert.ok(Buffer.byteLength(line,'utf8')<=75);
+assert.match(unicode.replace(/\r\n /g,''),/ગુજરાતી ક્લિનિક/);
+inputs.doctor.value='Dr. Test';inputs.appointmentDate.value='2030-01-02';inputs.appointmentTime.value='10:00';inputs.duration.value='30';
+ids.visitForm.fire('input');assert.equal(ids.visitCalendarButton.disabled,false);assert.equal(ids.visitAppointment.hidden,false);
+assert.equal(ids.visitAppointmentDetails.children[1].textContent,'Dr. Test');
+ids.visitErase.fire('click');assert.equal(ids.visitCalendarButton.disabled,true);assert.equal(ids.visitAppointment.hidden,true);
+console.log('PASS: IST-to-UTC conversion, midnight rollover, past/invalid dates, ICS escaping and Unicode folding, symptom exclusion, appointment preview and clear.');

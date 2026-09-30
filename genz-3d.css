@@ -140,3 +140,11 @@ button:disabled{opacity:.5;cursor:not-allowed}.sakhi-voice-actions button:focus-
  #visitPrint .visit-doc-footer-line{flex-direction:row;font-size:7pt}
  #visitPrint a:after{content:none!important}
 }
+
+
+/* Appointment details and local calendar export. */
+.visit-booking-fields{min-width:0;margin:0 0 28px;padding:18px;border:1px solid #d6c9e6;border-radius:16px}.visit-booking-fields legend{font-weight:700;padding:0 8px}#visitForm select{width:100%;padding:12px;border:1px solid #a899b7;border-radius:12px;font:inherit;font-size:16px;background:#fff;color:#30203f}#visitCalendarButton{margin-top:12px;white-space:normal}
+#visitPrint .visit-doc-appointment{border:1px solid #d6dbe1;border-left:3px solid #49315f;padding:15px;margin-bottom:24px;background:#fff}#visitPrint .visit-doc-appointment[hidden]{display:none}
+#visitPrint .visit-doc-appointment h4{font:700 11px/1.4 Arial,sans-serif!important;letter-spacing:.04em;color:#49315f!important;margin:0 0 12px}#visitPrint .visit-doc-appointment dl{display:grid;grid-template-columns:1fr 1.7fr;gap:8px 14px;margin:0;font:400 12px/1.5 Arial,sans-serif}#visitPrint .visit-doc-appointment dt{font-weight:700;color:#586273}#visitPrint .visit-doc-appointment dd{margin:0;overflow-wrap:anywhere;color:#263244}#visitPrint .visit-booking-notice{font:400 10px/1.6 Arial,sans-serif;color:#586273;border-top:1px solid #e4e7ec;padding-top:12px;margin:12px 0 0}
+[data-theme="dark"] .visit-booking-fields{border-color:#705b83}
+@media print{#visitPrint .visit-doc-appointment{break-inside:avoid;padding:4mm;margin-bottom:6mm}#visitPrint .visit-doc-appointment h4{font-size:9pt!important}#visitPrint .visit-doc-appointment dl{font-size:10pt}#visitPrint .visit-booking-notice{font-size:8.5pt}}

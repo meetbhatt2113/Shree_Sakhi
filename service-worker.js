@@ -13,7 +13,7 @@
  * If you rename or add pages, update CACHE_FILES below to match.
  */
 
-const CACHE_NAME = 'shree-sakhi-v25-professional-print';
+const CACHE_NAME = 'shree-sakhi-v26-appointment-reminder';
 const CACHE_FILES = [
   '/index.html',
   '/refresh.css',
@@ -25,6 +25,7 @@ const CACHE_FILES = [
   '/shree-sakhi-icon.svg',
   '/site.js',
   '/visit-summary.js',
+  '/calendar-reminder.js',
   '/periods.html',
   '/pregnancy.html',
   '/tools.html',
@@ -77,3 +78,4 @@ self.addEventListener('fetch', (event) => {
       .catch(() => caches.match(event.request)) // offline fallback to last cached version
   );
 });
+
