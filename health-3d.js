@@ -57,9 +57,9 @@
     }
     return new Float32Array(a);
   }
-  document.querySelectorAll('[data-health-3d]').forEach(root=>{
+  function initViewer(root){
     const canvas=root.querySelector('canvas'),status=root.querySelector('.health-status');
-    const gl=canvas.getContext('webgl',{alpha:true,antialias:true,preserveDrawingBuffer:true});
+    const gl=canvas.getContext('webgl',{alpha:true,antialias:true,preserveDrawingBuffer:false});
     const soft=gl?null:canvas.getContext('2d');
     let mode=root.getAttribute('data-health-3d')||'cycle';if(!topics[mode])mode='cycle';
     function text(){const t=topics[mode];root.querySelector('.health-title').textContent=t.title;root.querySelector('.health-description').textContent=t.text;const link=root.querySelector('.health-link');link.href=t.link;link.textContent=t.action+' ↗';canvas.setAttribute('aria-label',t.name+'. Drag horizontally or use the rotation buttons.');root.querySelectorAll('[data-topic]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.topic===mode)))}
@@ -78,7 +78,7 @@
     let meshData=null;root.dataset.renderer=gl?'webgl':'software-3d';
     let count=0,yaw=-.18,pitch=.06,zoom=5.4,frame=0,visible=true,last=0;
     const reduced=matchMedia('(prefers-reduced-motion: reduce)');let spin=false;
-    function upload(){meshData=geometry(mode,!gl);if(gl)gl.bufferData(gl.ARRAY_BUFFER,meshData,gl.STATIC_DRAW);count=meshData.length/9;root.dataset.rendered=mode;draw()}
+    function upload(){meshData=geometry(mode,!gl || canvas.clientWidth < 600);if(gl)gl.bufferData(gl.ARRAY_BUFFER,meshData,gl.STATIC_DRAW);count=meshData.length/9;root.dataset.rendered=mode;draw()}
     function draw(){
       const b=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,1.75),w=Math.max(1,Math.round(b.width*dpr)),h=Math.max(1,Math.round(b.height*dpr));
       if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}if(gl){gl.viewport(0,0,w,h);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT)}
@@ -106,11 +106,16 @@
     canvas.addEventListener('pointermove',e=>{if(!drag)return;yaw+=(e.clientX-drag.x)*.012;pitch=Math.max(-.7,Math.min(.7,pitch+(e.clientY-drag.y)*.006));drag.x=e.clientX;drag.y=e.clientY;draw()});
     for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,()=>drag=null);
     canvas.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();if(e.key==='ArrowLeft')yaw-=.15;if(e.key==='ArrowRight')yaw+=.15;if(e.key==='ArrowUp')pitch=Math.max(-.7,pitch-.1);if(e.key==='ArrowDown')pitch=Math.min(.7,pitch+.1);draw()});
-    new ResizeObserver(draw).observe(canvas);
-    new IntersectionObserver(([e])=>{visible=e.isIntersecting;if(!visible){cancelAnimationFrame(frame);frame=0}else schedule()}).observe(root);
+    if(window.ResizeObserver) new ResizeObserver(draw).observe(canvas); else window.addEventListener('resize',draw);
+    if(window.IntersectionObserver) new IntersectionObserver(([e])=>{visible=e.isIntersecting;if(!visible){cancelAnimationFrame(frame);frame=0}else schedule()}).observe(root);
     document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelAnimationFrame(frame);frame=0}else schedule()});
     canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();spin=false;cancelAnimationFrame(frame);root.classList.add('health-fallback');status.textContent='3D paused by your device. Reload to restore it; topic guides remain available.'});
     reduced.addEventListener('change',()=>{if(reduced.matches){spin=false;cancelAnimationFrame(frame);frame=0;spinBtn.textContent='Auto rotate';spinBtn.setAttribute('aria-pressed','false')}});
     status.textContent='Drag to rotate · use arrow keys or controls';upload();
-  });
+  }
+  const viewers=document.querySelectorAll('[data-health-3d]');
+  if(window.IntersectionObserver){
+    const loader=new IntersectionObserver(entries=>{for(const e of entries){if(e.isIntersecting){loader.unobserve(e.target);initViewer(e.target);}}},{rootMargin:'180px'});
+    viewers.forEach(root=>loader.observe(root));
+  }else viewers.forEach(initViewer);
 })();

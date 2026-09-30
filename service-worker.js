@@ -13,7 +13,7 @@
  * If you rename or add pages, update CACHE_FILES below to match.
  */
 
-const CACHE_NAME = 'shree-sakhi-v22-ai-service-wording';
+const CACHE_NAME = 'shree-sakhi-v23-visit-and-voice';
 const CACHE_FILES = [
   '/index.html',
   '/refresh.css',
@@ -24,6 +24,7 @@ const CACHE_FILES = [
   '/shree-sakhi-logo.svg',
   '/shree-sakhi-icon.svg',
   '/site.js',
+  '/visit-summary.js',
   '/periods.html',
   '/pregnancy.html',
   '/tools.html',
@@ -53,7 +54,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((names) =>
-      Promise.all(names.filter((n) => n !== CACHE_NAME).map((n) => caches.delete(n)))
+      Promise.all(names.filter((n) => n.startsWith('shree-sakhi-') && n !== CACHE_NAME).map((n) => caches.delete(n)))
     )
   );
   self.clients.claim();

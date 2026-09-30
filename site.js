@@ -170,9 +170,13 @@
 
   // Shared helper for the AI proxy. Show a useful error when its model or
   // credentials fail, without sending a second billable request automatically.
-  async function askSakhiAIRaw(context, language){
+  async function askSakhiAIRaw(context, language, parentSignal){
+    if(typeof context !== 'string' || !context.trim() || context.length > 4000) throw new Error('Question must be 1–4000 characters');
     const controller = new AbortController();
-    const timeout = setTimeout(()=>controller.abort(), 25000);
+    const cancel = ()=>controller.abort();
+    if(parentSignal?.aborted) controller.abort();
+    parentSignal?.addEventListener('abort', cancel, {once:true});
+    const timeout = setTimeout(cancel, 25000);
     try{
       const res = await fetch(SAKHI_AI_ENDPOINT, {
         method:'POST',
@@ -186,6 +190,7 @@
       return data.reply.trim();
     }finally{
       clearTimeout(timeout);
+      parentSignal?.removeEventListener('abort', cancel);
     }
   }
 
@@ -470,6 +475,12 @@ Rules you always follow:
   let speechLang = 'auto'; // automatic detection unless a language is selected
   let mediaRecorder = null;
   let recordingTimer = null;
+  let recordingStarting = false;
+  let recordingGeneration = 0;
+  let transcriptionController = null;
+  let answerController = null;
+  let lastAnswer = '';
+  let lastVoiceState = 'ready';
 
   function isIOS(){
     return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
@@ -477,7 +488,7 @@ Rules you always follow:
   }
 
   function chooseSpeechLang(lang){
-    if(isListening) return;
+    if(isListening || recordingStarting || transcriptionController || answerController) return;
     speechLang = lang;
     document.querySelectorAll('#speechLangPicker .vp-btn').forEach(b=>{
       b.classList.toggle('active', b.dataset.slang === lang);
@@ -506,6 +517,7 @@ Rules you always follow:
     r.maxAlternatives = 1;
     r.onresult = (e)=>{
       const text = e.results[0][0].transcript;
+      setListeningUI(false);
       addBubble('user', text);
       askSakhiAI(text, speechLang);
     };
@@ -527,6 +539,10 @@ Rules you always follow:
 
   function setLiveStatus(state, label){
     const el = document.getElementById('vwLiveStatus');
+    if(!el) return;
+    lastVoiceState = state;
+    const stop = document.getElementById('stopVoice');
+    if(stop) stop.disabled = state === 'ready';
     el.className = state; // 'ready' | 'listening' | 'thinking' | 'speaking'
     el.innerHTML = '<span class="vw-dot"></span> ' + label;
   }
@@ -537,22 +553,33 @@ Rules you always follow:
     document.getElementById('micRing').classList.toggle('pulsing', listening);
     document.getElementById('micRing2').classList.toggle('pulsing', listening);
     document.getElementById('waveBars').classList.toggle('active', listening);
-    setLiveStatus(listening ? 'listening' : 'ready', listening ? 'listening...' : 'ready to listen');
+    document.getElementById('micBtn').setAttribute('aria-pressed', String(listening));
+    document.getElementById('micBtn').setAttribute('aria-label', listening ? 'Finish recording and send question' : 'Ask a question by voice');
+    if(listening || lastVoiceState === 'listening') setLiveStatus(listening ? 'listening' : 'ready', listening ? 'listening — tap mic to send' : 'ready to listen');
   }
 
   async function recordAndTranscribe(){
-    if(isListening && mediaRecorder){ mediaRecorder.stop(); return; }
+    if(isListening && mediaRecorder){ if(mediaRecorder.state === 'recording') mediaRecorder.stop(); return; }
+    if(recordingStarting || transcriptionController || answerController) return;
+    stopSpeech();
+    recordingStarting = true;
+    const generation = ++recordingGeneration;
+    let stream;
+    setLiveStatus('listening', 'allow microphone access to begin');
     try{
-      const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
+      stream = await navigator.mediaDevices.getUserMedia({ audio:true });
+      if(generation !== recordingGeneration){ stream.getTracks().forEach(t=>t.stop()); return; }
       const mime = ['audio/webm','audio/mp4','audio/ogg'].find(type=>MediaRecorder.isTypeSupported(type));
       const recorder = mime ? new MediaRecorder(stream,{mimeType:mime}) : new MediaRecorder(stream);
       const chunks = [];
       mediaRecorder = recorder;
       recorder.ondataavailable = event=>{ if(event.data.size) chunks.push(event.data); };
+      recorder.onerror = ()=>{ stopSakhiActivity(); setLiveStatus('ready', 'Recording failed — please type your question'); };
       recorder.onstop = async ()=>{
         clearTimeout(recordingTimer);
         stream.getTracks().forEach(track=>track.stop());
-        mediaRecorder = null;
+        if(mediaRecorder === recorder) mediaRecorder = null;
+        if(generation !== recordingGeneration) return;
         setListeningUI(false);
         if(!chunks.length){ setLiveStatus('ready', 'No speech detected — tap to try again'); return; }
         setLiveStatus('thinking', 'understanding your voice...');
@@ -560,29 +587,71 @@ Rules you always follow:
         const data = new FormData();
         data.append('audio',new Blob(chunks,{type:recorder.mimeType}), 'question.'+ext);
         data.append('language',speechLang);
+        const controller = new AbortController();
+        transcriptionController = controller;
+        const timer = setTimeout(()=>controller.abort(), 25000);
         try{
-          const response = await fetch('/api/sakhi-transcribe',{ method:'POST',body:data });
+          const response = await fetch('/api/sakhi-transcribe',{ method:'POST',body:data, signal:controller.signal });
           const result = await response.json();
-          if(!response.ok || !result.text) throw new Error('Could not understand the recording');
+          if(generation !== recordingGeneration) return;
+          if(!response.ok || typeof result.text !== 'string' || !result.text.trim() || result.text.length > 4000) throw new Error('Could not understand the recording');
           addBubble('user',result.text);
           const detected = speechLang === 'auto' ? result.language : speechLang;
           const answerLang = detected === 'hi' && !/[\u0900-\u097F]/.test(result.text) ? 'hinglish' : detected;
+          transcriptionController = null;
           askSakhiAI(result.text, answerLang);
         }catch(error){
+          if(generation !== recordingGeneration) return;
           setLiveStatus('ready', 'voice unavailable — type your question instead');
-          addBubble('ai', 'I could not understand that recording. Please try again or type your question.');
+          addBubble('ai', 'I could not process that recording. Please try again or type your question.');
+          document.getElementById('typedQuestion').focus();
+        }finally{
+          clearTimeout(timer);
+          if(transcriptionController === controller) transcriptionController = null;
         }
       };
       recorder.start();
       setListeningUI(true);
-      recordingTimer = setTimeout(()=>{ if(recorder.state === 'recording') recorder.stop(); }, 9000);
+      recordingTimer = setTimeout(()=>{ if(recorder.state === 'recording') recorder.stop(); }, 15000);
     }catch(error){
+      stream?.getTracks().forEach(t=>t.stop());
+      if(generation !== recordingGeneration) return;
       setListeningUI(false);
+      setLiveStatus('ready', 'microphone unavailable — type below');
       addBubble('ai', 'Microphone access is unavailable. Please allow it in your browser settings, or type your question instead.');
-    }
+      document.getElementById('typedQuestion').focus();
+    }finally{ if(generation === recordingGeneration) recordingStarting = false; }
+  }
+
+  function stopSakhiActivity(){
+    recordingGeneration++;
+    recordingStarting = false;
+    clearTimeout(recordingTimer);
+    if(mediaRecorder?.state === 'recording') mediaRecorder.stop();
+    mediaRecorder?.stream.getTracks().forEach(t=>t.stop());
+    recognition?.abort();
+    transcriptionController?.abort();
+    transcriptionController = null;
+    answerController?.abort();
+    answerController = null;
+    stopSpeech();
+    setListeningUI(false);
+    setLiveStatus('ready', 'stopped — ready when you are');
+  }
+  function replayLastAnswer(){ if(lastAnswer && !answerController && !transcriptionController && !isListening) speak(lastAnswer); }
+  function clearSakhiChat(){
+    stopSakhiActivity();
+    document.querySelectorAll('#vwThread .vw-bubble').forEach(el=>el.remove());
+    replyTexts = {}; lastAnswer = '';
+    const empty = document.getElementById('vwEmpty'); if(empty) empty.style.display = '';
+    document.getElementById('typedQuestion').value = '';
+    document.getElementById('replayLast').disabled = true;
+    setLiveStatus('ready', 'chat cleared on this page');
   }
 
   function toggleListening(){
+    if(answerController || transcriptionController || recordingStarting) return;
+    stopSpeech();
     if(window.MediaRecorder && navigator.mediaDevices?.getUserMedia){ recordAndTranscribe(); return; }
     if(speechLang === 'auto'){
       addBubble('ai', 'Automatic voice language detection is unavailable in this browser. Choose English, हिन्दी, or ગુજરાતી, or type your question.');
@@ -591,7 +660,7 @@ Rules you always follow:
     if(!recognition) recognition = setupRecognition();
     if(!recognition){
       const msg = isIOS()
-        ? "Voice input isn't supported on iPhone/iPad browsers yet (this is an Apple limitation, not this site) — please type your question below instead, it works exactly the same way."
+        ? "Voice input is unavailable in this browser. Please type your question below."
         : "Voice input isn't supported in this browser — please try Chrome on Android, or type your question below instead.";
       addBubble('ai', msg);
       document.getElementById('typedQuestion').focus();
@@ -616,7 +685,7 @@ Rules you always follow:
       if(micBtn){
         micBtn.style.opacity = '0.5';
         micBtn.title = isIOS()
-          ? 'Voice input is not supported on iPhone/iPad — please type your question instead'
+          ? 'Voice input is unavailable in this browser — please type your question instead'
           : 'Voice input is not supported in this browser — please type your question instead';
       }
     }
@@ -624,7 +693,8 @@ Rules you always follow:
 
   function askTyped(){
     const val = document.getElementById('typedQuestion').value.trim();
-    if(!val) return;
+    if(!val || val.length > 4000) return;
+    if(answerController || transcriptionController || isListening || recordingStarting){ setLiveStatus('thinking','Please finish this request or press Stop first'); return; }
     addBubble('user', val);
     document.getElementById('typedQuestion').value = '';
     askSakhiAI(val, speechLang);
@@ -662,21 +732,33 @@ Rules you always follow:
   }
 
   async function askSakhiAI(userText, language){
+    if(answerController) return;
+    stopSpeech();
+    const controller = new AbortController();
+    answerController = controller;
     setLiveStatus('thinking', 'thinking...');
     const thinkingId = addBubble('thinking', '');
+    const send = document.getElementById('sendQuestion'); if(send) send.disabled = true;
     try{
-      const reply = await askSakhiAIRaw(userText, language);
-      document.getElementById(thinkingId).remove();
+      const reply = await askSakhiAIRaw(userText, language, controller.signal);
+      if(controller.signal.aborted) return;
+      document.getElementById(thinkingId)?.remove();
       const bubbleId = addBubble('ai', reply);
-      speak(reply, bubbleId);
+      lastAnswer = reply;
+      document.getElementById('replayLast').disabled = false;
+      if(document.getElementById('autoSpeak')?.checked) speak(reply, bubbleId);
+      else setLiveStatus('ready', 'answer ready — tap Replay to listen');
     }catch(err){
-      document.getElementById(thinkingId).remove();
-      console.error('Sakhi AI request failed:', err);
+      if(controller.signal.aborted) return;
       const msg = err.name === 'AbortError'
         ? 'Sakhi AI took too long to reply. Please try again shortly.'
-        : 'Sakhi AI is unavailable right now. Please try again later, or use the FAQs and helplines.';
+        : 'Sakhi AI is unavailable right now. Please try again later, or use the FAQs and Find care page.';
       addBubble('ai', msg);
-      setLiveStatus('ready', 'ready to listen');
+      setLiveStatus('ready', 'unable to reply — please try again');
+    }finally{
+      document.getElementById(thinkingId)?.remove();
+      if(answerController === controller) answerController = null;
+      if(send) send.disabled = !!answerController;
     }
   }
 
@@ -805,7 +887,7 @@ Rules you always follow:
     speechController = null;
     if(currentAudio){ currentAudio.pause(); currentAudio.onended?.(); currentAudio.src = ''; currentAudio = null; }
     window.speechSynthesis?.cancel();
-    document.getElementById('micBtn').classList.remove('speaking');
+    document.getElementById('micBtn')?.classList.remove('speaking');
   }
   function speakWithDevice(text, request){
     if(!window.speechSynthesis){ setLiveStatus('ready', 'ready to listen'); return; }
@@ -830,11 +912,12 @@ Rules you always follow:
       setLiveStatus('ready', 'ready to listen');
     };
     u.onend = finish;
-    u.onerror = finish;
+    u.onerror = ()=>{ if(request !== currentSpeech) return; document.getElementById('micBtn').classList.remove('speaking'); setLiveStatus('ready', 'voice unavailable — read the reply or tap Replay'); };
     window.speechSynthesis.speak(u);
   }
 
   async function speak(text){
+    if(isListening || recordingStarting || transcriptionController) return;
     stopSpeech();
     const request = currentSpeech;
     const clean = speechFriendlyText(text);
@@ -848,10 +931,13 @@ Rules you always follow:
     let playedParts = 0;
     try{
       for(const part of splitSpeech(clean)){
-        const response = await fetch('/api/sakhi-voice', {
+        const activeController = speechController;
+        const voiceTimer = setTimeout(()=>activeController.abort(), 20000);
+        let response;
+        try { response = await fetch('/api/sakhi-voice', {
           method:'POST', headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({text:part,voice:preferredGender}), signal:speechController.signal
-        });
+          body:JSON.stringify({text:part,voice:preferredGender}), signal:activeController.signal
+        }); } finally { clearTimeout(voiceTimer); }
         if(!response.ok || !(response.headers.get('Content-Type') || '').includes('audio/')) throw new Error('Voice unavailable');
         const blob = await response.blob();
         if(request !== currentSpeech) return;
@@ -1237,3 +1323,6 @@ Rules you always follow:
     const moved = { '#ask-sakhi':'#ai-voice', '#periods-care':'periods.html#periods-care', '#pregnancy-care':'pregnancy.html#pregnancy-care', '#faqs':'faqs.html#faqs', '#myths':'faqs.html#myths', '#tools':'tools.html#tools', '#mind-calm':'wellbeing.html#mind-calm', '#stories':'wellbeing.html#stories', '#voice-support':'wellbeing.html#voice-support', '#find-doctor':'care.html#find-doctor', '#about':'about.html#about' };
     if (moved[location.hash]) location.replace(moved[location.hash]);
   }
+
+window.addEventListener('pagehide', ()=>{ if(document.getElementById('micBtn')) stopSakhiActivity(); });
+document.getElementById('autoSpeak')?.addEventListener('change', e=>{ if(!e.target.checked){stopSpeech(); if(lastVoiceState === 'speaking') setLiveStatus('ready','automatic voice off');} });

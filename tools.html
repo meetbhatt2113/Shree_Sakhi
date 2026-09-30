@@ -901,6 +901,23 @@
 <nav aria-label="Main navigation"><div class="navwrap"><a class="brand" href="index.html" aria-label="Shree Sakhi home"><img class="brand-logo" src="shree-sakhi-logo.svg" alt="Shree Sakhi" width="184" height="49"></a><div class="nav-controls"><div class="langswitch" id="langswitch"><button class="active" data-lang="en">EN</button><button data-lang="hi">हि</button><button data-lang="gu">ગુ</button></div><button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">🌙</button><button class="a11y-toggle" id="textSizeToggle" onclick="toggleTextSize()" aria-label="Toggle larger text size">A+</button><button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Toggle menu" aria-controls="navlinksRow" aria-expanded="false"><span></span><span></span><span></span></button></div></div><div class="navlinks-row" id="navlinksRow"><div class="navlinks"><a href="index.html">Sakhi AI</a><a href="periods.html">Periods &amp; PCOS</a><a href="pregnancy.html">Pregnancy</a><a aria-current="page" href="tools.html">Tools</a><a href="faqs.html">FAQs &amp; myths</a><a href="wellbeing.html">Wellbeing</a><a href="care.html">Find care</a><a href="about.html">About</a></div></div></nav>
 <main id="main-content">
 <header class="page-banner"><div class="container"><span class="eyebrow">SHREE SAKHI / TOOLS</span><h1>A few helpful tools for everyday questions.</h1><p>Keep track of dates and explore estimates. These tools do not provide a medical diagnosis.</p></div></header>
+<section id="visit-summary" class="release-section" aria-labelledby="visit-title">
+<div class="container"><span class="eyebrow">PREPARE FOR YOUR APPOINTMENT</span>
+<h2 id="visit-title">Make room for every question.</h2>
+<p class="release-intro">Organise what you want to discuss with a clinician. This is your own account of your symptoms, not an AI diagnosis. All fields are optional.</p>
+<div class="visit-layout"><form id="visitForm" autocomplete="off">
+<label for="visitReason">What would you like help with?</label><textarea id="visitReason" name="reason" rows="3" maxlength="1200" placeholder="For example: changes in my cycle, pain, or a pregnancy question"></textarea>
+<div class="visit-pair"><div><label for="visitStart">When did it start?</label><input id="visitStart" name="start" type="date"></div><div><label for="visitPeriod">Last period start (if relevant)</label><input id="visitPeriod" name="period" type="date"></div></div>
+<label for="visitImpact">How does it affect your day? What has changed?</label><textarea id="visitImpact" name="impact" rows="3" maxlength="1200" placeholder="Describe timing, severity, sleep, work or school, and anything that helps."></textarea>
+<label for="visitMedicines">Medicines, supplements and allergies to discuss</label><textarea id="visitMedicines" name="medicines" rows="2" maxlength="1000" placeholder="Include only what you want to share with your clinician."></textarea>
+<label for="visitQuestions">Your questions for the clinician</label><textarea id="visitQuestions" name="questions" rows="3" maxlength="1200" placeholder="What could explain this? Do I need tests? What should I watch for? When should I return?"></textarea>
+<p class="visit-privacy">These notes stay on this page unless you choose “Save on this device”. They are not sent to Sakhi AI. Avoid names and contact details. Anyone using the same browser may be able to read a saved draft.</p>
+<div class="visit-buttons"><button type="submit" class="btn btn-primary">Preview my summary</button><button type="button" id="visitSave" class="btn btn-ghost">Save on this device</button><button type="button" id="visitErase" class="btn btn-ghost">Clear notes &amp; saved draft</button></div>
+<p id="visitStatus" role="status" aria-live="polite">Not saved. Closing or reloading this page clears unsaved notes.</p>
+</form><aside class="visit-preview" aria-label="Appointment summary preview"><div id="visitPrint"><span class="eyebrow">SHREE SAKHI / MY VISIT NOTES</span><h3>My appointment summary</h3><p id="visitDate"></p><div id="visitOutput"><p>Your summary will appear here. Fill in any fields you want and choose Preview.</p></div><p class="visit-disclaimer">Self-reported notes, not a diagnosis or medical record. Review these details with your clinician.</p></div><button type="button" id="visitPrintButton" class="btn btn-primary" disabled>Print / save as PDF</button><p class="visit-privacy">Printing opens your device’s print dialog. Choose your printer or PDF option. Keep exported copies somewhere private.</p></aside></div>
+<p class="visit-sources">Planning reference: <a href="https://www.acog.org/womens-health/infographics/10-telehealth-tips-for-an-ob-gyn-visit" target="_blank" rel="noopener noreferrer">ACOG: preparing for an appointment</a>. This tool does not assess urgency. If you need urgent care, seek help rather than completing this form.</p>
+<noscript><p>Enable JavaScript to preview, save or print a summary. You can also write your notes on paper.</p></noscript>
+</div></section>
 <section id="tools" class="band-cream">
   <div class="container">
     <div class="section-head">
@@ -1043,5 +1060,6 @@
 </main>
 <footer class="portal-footer"><div class="container footer-grid"><div><a href="index.html" class="footer-brand"><img class="footer-logo" src="shree-sakhi-logo.svg" alt="Shree Sakhi" width="190" height="50"></a><p>Good questions deserve clear, kind answers.</p><p class="footer-note">Educational information only. Sakhi AI cannot diagnose or replace a clinician.</p></div><div><strong>Explore</strong><a href="periods.html">Periods &amp; PCOS</a><a href="pregnancy.html">Pregnancy</a><a href="tools.html">Tools</a><a href="faqs.html">FAQs &amp; myths</a></div><div><strong>More</strong><a href="care.html">Find care</a><a href="about.html">About Sakhi</a><a href="blog.html">Blog</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></div><div class="container copyright-line">Copyright © 2026 Voice Technology. All rights reserved.</div></footer>
 <script src="site.js" defer></script>
+<script src="visit-summary.js" defer></script>
 </body>
 </html>

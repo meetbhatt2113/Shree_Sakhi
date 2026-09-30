@@ -53,3 +53,34 @@ nav{background:rgba(255,255,255,.86);backdrop-filter:blur(20px);border-bottom:1p
 [data-theme=dark] .health-viewer{background:#302039;border-color:#72517b;box-shadow:0 20px 45px #10051d48}[data-theme=dark] .health-viewer-top{color:#edcaf9}[data-theme=dark] .health-live{color:#d8bbdf}[data-theme=dark] .health-tabs{background:#432e50}[data-theme=dark] .health-tabs button{color:#f2e2f5}[data-theme=dark] .health-tabs button[aria-pressed=true]{background:#c19ae1;color:#241231}[data-theme=dark] .health-stage{background:radial-gradient(ellipse at 50% 42%,#583560,transparent 68%)}[data-theme=dark] .health-model-note,[data-theme=dark] .health-viewer .health-status{color:#ddc7e4!important}[data-theme=dark] .health-controls button{background:#4b3357;color:#fff0fa;border-color:#8d6b9d}[data-theme=dark] .health-controls button:hover{background:#624371}[data-theme=dark] .health-caption{border-color:#674773}[data-theme=dark] .health-viewer .health-title{color:#fff0fa}[data-theme=dark] .health-viewer .health-description{color:#ecd9f0}[data-theme=dark] .health-link{color:#efbfff}[data-theme=dark] .health-topic-scene{background:#24192f}
 @media(max-width:900px){.home-intro-inner{grid-template-columns:1fr;gap:35px}.home-intro .health-viewer{width:100%;max-width:650px;margin:auto}.home-intro h1{font-size:clamp(3.6rem,9vw,6rem)}}
 @media(max-width:520px){.home-intro{padding:36px 15px 45px}.home-intro .container{padding:0}.home-intro h1{font-size:clamp(3.15rem,12vw,4.3rem)}.health-viewer{padding:14px;border-radius:23px}.health-stage,.health-topic-scene .health-stage{height:290px}.health-viewer-top{font-size:.57rem;gap:5px}.health-tabs button{font-size:.7rem}.health-viewer .health-title{font-size:1.45rem}.health-topic-scene{padding:25px 15px!important}.health-topic-scene .container{padding:0}.health-controls button{min-height:40px}.health-live{max-width:100px;text-align:right}}
+
+/* September usability release: readable controls and appointment notes. */
+.release-section{padding:56px 0;background:#faf7ff;color:#30203f}
+.release-section h2{font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.15;margin:12px 0 18px;letter-spacing:-.035em}
+.release-intro{max-width:720px;line-height:1.7;margin-bottom:28px}
+.appointment-callout{display:flex;gap:32px;align-items:center;justify-content:space-between}
+.appointment-callout>div{max-width:650px}.appointment-callout .btn{flex-shrink:0}
+.visit-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:start}
+#visitForm,.visit-preview{padding:28px;border:1px solid #d6c9e6;border-radius:24px;background:#fff;min-width:0}
+#visitForm label{display:block;font-weight:700;margin:16px 0 8px;color:#39234f}
+#visitForm textarea,#visitForm input{display:block;width:100%;box-sizing:border-box;border:1px solid #a899b7;border-radius:12px;padding:12px;color:#30203f;background:#fff;font:inherit;font-size:16px}
+#visitForm textarea{resize:vertical}#visitForm textarea::placeholder{color:#6b5b76;opacity:1}
+.visit-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.visit-buttons,.sakhi-voice-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:20px 0}
+.visit-privacy,.visit-sources,.visit-disclaimer{font-size:.88rem;line-height:1.65;color:#594765;margin-top:18px}
+#visitStatus{font-size:.9rem;font-weight:600;color:#594765;line-height:1.6}
+#visitOutput section{margin:22px 0}#visitOutput h4{margin:0 0 8px;color:#39234f}#visitOutput p{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65;margin:0}
+#visitPrintButton{margin-top:20px}.visit-preview h3{font-size:1.5rem;line-height:1.25;margin-top:12px}
+.sakhi-voice-actions{justify-content:center}.sakhi-voice-actions button{border:1px solid #ac96bf;background:#fff;color:#39234f;padding:10px 16px;border-radius:999px;font:inherit;font-weight:650;min-height:44px;cursor:pointer}
+.sakhi-voice-actions label{display:flex;gap:8px;align-items:center;font-size:.9rem;color:inherit}.sakhi-voice-actions input{width:20px;height:20px;accent-color:#634079}
+button:disabled{opacity:.5;cursor:not-allowed}.sakhi-voice-actions button:focus-visible,#visitForm :focus-visible,.guide-brief a:focus-visible{outline:3px solid #9254b2;outline-offset:3px}
+.guide-brief{padding:28px;border:1px solid #d6c9e6;border-radius:24px;background:#fff;margin:28px auto;color:#30203f}
+.guide-brief h2{font-size:1.65rem;margin:12px 0 20px}.guide-brief-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.guide-brief h3{font-size:1.04rem;color:#39234f;margin:0 0 8px}.guide-brief p{line-height:1.65}.guide-brief a,.visit-sources a{color:#633582;text-decoration:underline;text-underline-offset:3px}
+.guide-source{font-size:.85rem;border-top:1px solid #e0d5eb;margin-top:20px;padding-top:16px}.guide-source a{display:inline-block;margin:0 12px 8px 0}.guide-meta{font-size:.8rem;color:#64536f}.guide-brief .btn{margin-top:14px;color:#fff}
+[data-theme="dark"] .release-section{background:#201829;color:#f6edf9}[data-theme="dark"] .guide-brief,[data-theme="dark"] #visitForm,[data-theme="dark"] .visit-preview{background:#2e233a;color:#f6edf9;border-color:#705b83}
+[data-theme="dark"] #visitForm label,[data-theme="dark"] #visitOutput h4,[data-theme="dark"] .guide-brief h3{color:#f6edf9}
+[data-theme="dark"] .visit-privacy,[data-theme="dark"] .visit-disclaimer,[data-theme="dark"] .visit-sources,[data-theme="dark"] #visitStatus,[data-theme="dark"] .guide-meta{color:#dfd1e8}
+[data-theme="dark"] .guide-brief a,[data-theme="dark"] .visit-sources a{color:#e3b9ff}
+@media(max-width:700px){.visit-layout,.guide-brief-grid{grid-template-columns:1fr}.visit-pair{grid-template-columns:1fr}.appointment-callout{align-items:flex-start;flex-direction:column}#visitForm,.visit-preview,.guide-brief{padding:20px}.release-section{padding:36px 0}.visit-buttons .btn{width:100%;white-space:normal}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{body:has(#visitPrint){background:#fff!important;color:#000!important}body:has(#visitPrint) nav,body:has(#visitPrint) footer,body:has(#visitPrint) .skip-link,body:has(#visitPrint) .page-banner,body:has(#visitPrint) #tools,body:has(#visitPrint) #visitForm,body:has(#visitPrint) #visit-summary>.container>*,body:has(#visitPrint) .visit-preview>*:not(#visitPrint){display:none!important}body:has(#visitPrint) #visit-summary>.container>.visit-layout{display:block!important}#visit-summary{padding:0!important;background:#fff!important}#visit-summary .container{max-width:none!important;width:100%!important;padding:0!important}.visit-preview{border:none!important;padding:0!important;background:#fff!important;color:#000!important}#visitPrint,#visitPrint *{color:#000!important;background:#fff!important}#visitOutput section{break-inside:avoid}#visitPrint .eyebrow{font-size:10pt}#visitPrint h3{font-size:20pt}#visitPrint p{font-size:11pt}#visitPrint a:after{content:none!important}}

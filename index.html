@@ -913,7 +913,7 @@
       </div>
       <span class="eyebrow" data-i18n="aivoice.eyebrow">Instant answers, out loud</span>
       <h2 data-i18n="aivoice.h2">Ask Sakhi AI — In Your Own Voice</h2>
-      <p data-i18n="aivoice.p">Tap the mic, ask your question like you'd ask a friend, and hear a reply back. Works best in Chrome or Edge.</p>
+      <p data-i18n="aivoice.p">Tap the mic, ask your question like you'd ask a friend, and hear a reply back. You can always type instead. Voice availability depends on your browser and device.</p>
     </div>
 
     <div class="voicewidget premium">
@@ -927,7 +927,7 @@
         </div>
         <div>
           <div class="vw-name">Sakhi AI</div>
-          <div class="vw-status" id="vwLiveStatus"><span class="vw-dot"></span> ready to listen</div>
+          <div class="vw-status" id="vwLiveStatus" role="status" aria-live="polite" aria-atomic="true"><span class="vw-dot"></span> ready to listen</div>
         </div>
         <span class="vw-header-tag">YOUR SPACE TO ASK ✳</span>
       </div>
@@ -956,6 +956,12 @@
           </div>
           <button class="micbtn" id="micBtn" onclick="toggleListening()" aria-label="Tap to ask a question by voice">🎙️</button>
         </div>
+        <div class="sakhi-voice-actions" aria-label="Voice and chat controls">
+          <button type="button" id="stopVoice" onclick="stopSakhiActivity()" disabled>Stop</button>
+          <button type="button" id="replayLast" onclick="replayLastAnswer()" disabled>Replay answer</button>
+          <button type="button" onclick="clearSakhiChat()">Clear chat</button>
+          <label><input type="checkbox" id="autoSpeak" checked> Read replies aloud</label>
+        </div>
         <div class="voice-picker" id="voicePicker">
           <span class="vp-label">Voice:</span>
           <button class="vp-btn active" data-gender="female" onclick="chooseVoiceGender('female')">👩 Female</button>
@@ -972,14 +978,14 @@
       </div>
       <div class="voice-typed">
         <label class="sr-only" for="typedQuestion">Your question for Sakhi AI</label>
-        <input type="text" id="typedQuestion" placeholder="Ask anything on your mind..." onkeydown="if(event.key==='Enter')askTyped()">
-        <button class="btn btn-primary" onclick="askTyped()">Send <span aria-hidden="true">↗</span></button>
+        <input type="text" id="typedQuestion" maxlength="4000" placeholder="Ask anything on your mind..." onkeydown="if(event.key==='Enter')askTyped()">
+        <button class="btn btn-primary" id="sendQuestion" onclick="askTyped()">Send <span aria-hidden="true">↗</span></button>
       </div>
       <p class="mini-note" style="margin-top:16px;">Sakhi AI is not a doctor. For urgent concerns, contact a clinician or a helpline. We do not save your chat questions or voice recordings for future use. Voice input and questions are processed by an AI service to provide a reply. Avoid sharing identifying details.</p>
     </div>
   </div>
 </section><section class="portal-paths"><div class="container"><span class="eyebrow">YOUR NEXT STEP</span><h2>Explore at your own pace.</h2><div class="path-grid"><a href="periods.html" class="path-card lilac"><span>01 · LEARN</span><strong>Periods &amp; PCOS</strong><small>Get to know your cycle and common concerns.</small><b>↗</b></a><a href="pregnancy.html" class="path-card pink"><span>02 · EXPLORE</span><strong>Pregnancy</strong><small>Start with questions and learn step by step.</small><b>↗</b></a><a href="tools.html" class="path-card mint"><span>03 · USE</span><strong>Helpful tools</strong><small>Cycle and due date estimators, and more.</small><b>↗</b></a><a href="care.html" class="path-card yellow"><span>04 · CONNECT</span><strong>Find care</strong><small>Know where to turn for personal support.</small><b>↗</b></a></div></div></section><section class="home-assurance"><div class="container"><span>✦ Simple language</span><span>✦ No judgement</span><span>✦ Personal care comes from clinicians</span></div></section>
-</main>
+<section class="release-section"><div class="container appointment-callout"><div><span class="eyebrow">A LITTLE PREPARATION HELPS</span><h2>Your questions. Ready for your visit.</h2><p>Bring your symptoms, dates and questions together in a simple summary you can print. No account needed.</p></div><a class="btn btn-primary" href="tools.html#visit-summary">Prepare for my doctor visit ↗</a></div></section></main>
 <footer class="portal-footer"><div class="container footer-grid"><div><a href="index.html" class="footer-brand"><img class="footer-logo" src="shree-sakhi-logo.svg" alt="Shree Sakhi" width="190" height="50"></a><p>Good questions deserve clear, kind answers.</p><p class="footer-note">Educational information only. Sakhi AI cannot diagnose or replace a clinician.</p></div><div><strong>Explore</strong><a href="periods.html">Periods &amp; PCOS</a><a href="pregnancy.html">Pregnancy</a><a href="tools.html">Tools</a><a href="faqs.html">FAQs &amp; myths</a></div><div><strong>More</strong><a href="care.html">Find care</a><a href="about.html">About Sakhi</a><a href="blog.html">Blog</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div></div><div class="container copyright-line">Copyright © 2026 Voice Technology. All rights reserved.</div></footer>
 <script src="site.js" defer></script>
 <script src="health-3d.js" defer></script>
