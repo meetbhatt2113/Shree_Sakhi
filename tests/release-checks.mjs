@@ -39,3 +39,17 @@ ids.visitErase.fire('click');assert.equal(saved.size,0);assert.equal(inputs.reas
 ids.visitPrintButton.fire('click');assert.equal(printed,1,'Empty summary must not print');
 env.localStorage.setItem=()=>{throw Error('blocked')};inputs.reason.value='Unsaved note';ids.visitSave.fire('click');assert.match(ids.visitStatus.textContent,/could not save/);
 console.log('PASS: Worker boundaries, CORS, rate-limit behavior; appointment opt-in saving, plain text rendering, print, erase and storage failure.');
+
+// Late replies from a cancelled request must never appear or start speaking.
+const voiceSource=readFileSync(new URL('../site.js',import.meta.url),'utf8');
+const askFunction=voiceSource.slice(voiceSource.indexOf('  async function askSakhiAI(userText'),voiceSource.indexOf('  /* ---------- VOICE SELECTION'));
+const stopFunction=voiceSource.slice(voiceSource.indexOf('  function stopSakhiActivity(){'),voiceSource.indexOf('  function replayLastAnswer()'));
+const voiceElements={sendQuestion:{disabled:false},replayLast:{disabled:true},autoSpeak:{checked:true}};
+let resolveReply;const bubbles=[];let spoken=0;
+const scope=vm.createContext({AbortController,clearTimeout,document:{getElementById:id=>voiceElements[id]||{remove(){}}},setLiveStatus(){},setListeningUI(){},stopSpeech(){},speak(){spoken++},addBubble(role,text){bubbles.push({role,text});return 'thinking'},askSakhiAIRaw:()=>new Promise(resolve=>{resolveReply=resolve})});
+vm.runInContext(`let recordingGeneration=0,recordingStarting=false,recordingTimer=null,mediaRecorder=null,recognition=null,transcriptionController=null,answerController=null,lastAnswer='';${askFunction}\n${stopFunction}`,scope);
+const pending=vm.runInContext("askSakhiAI('Example question','en')",scope);
+assert.equal(voiceElements.sendQuestion.disabled,true);
+vm.runInContext('stopSakhiActivity()',scope);resolveReply('Must not show');await pending;
+assert.equal(bubbles.filter(b=>b.role==='ai').length,0);assert.equal(spoken,0);assert.equal(voiceElements.sendQuestion.disabled,false);
+console.log('PASS: cancelling a reply suppresses late answers and speech and restores Send.');

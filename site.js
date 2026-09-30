@@ -219,7 +219,7 @@
     if(age) context += ` I am ${age} years old.`;
     if(height) context += ` My height is ${height} cm.`;
     if(weight) context += ` My current weight is ${weight} kg.`;
-    context += ` Based on this real data, give me a short, warm, personalized note about my cycle — reference the actual dates above, add one encouraging line, one gentle lifestyle tip, and mention if these numbers suggest anything worth asking a doctor about (e.g. a very irregular cycle length, or an age/height/weight combination that could relate to PCOD risk) — but do NOT diagnose anything.`;
+    context += ` Based on this real data, give me a short, warm, personalized note about my cycle — reference the actual dates above, add one encouraging line, one gentle lifestyle tip, and suggest one useful question for a clinician. Do not infer PCOS or other conditions from age, height, weight or a single cycle. Explain that date estimates can vary. Do not diagnose anything.`;
 
     resultEl.innerHTML = '<div class="ai-loading"><span></span><span></span><span></span></div>';
     resultEl.classList.add('show');
@@ -989,7 +989,7 @@ Rules you always follow:
       'faqsec.eyebrow':'Start here','faqsec.h2':'Frequently Asked, Rarely Answered',
       'faqsec.p':'The questions girls whisper to their friends at 1am — answered out loud, in plain language.',
       'toolssec.eyebrow':'Tools that listen back','toolssec.h2':"Track It, Don't Just Wonder About It",
-      'toolssec.p':"Simple tools that live right here in your browser — nothing is sent anywhere, it's saved only on this device.",
+      'toolssec.p':"Track dates in this browser. If you choose an AI insight, the details used for that insight are sent to an AI service.",
       'mythssec.eyebrow':"Let's clear the air",'mythssec.h2':'Myths vs Facts',
       'mythssec.p':"Tap a card to flip it and see the truth behind what you've probably heard.",
       'periodssec.eyebrow':'Periods care','periodssec.h2':'Getting Through the Hard Days, Gently',
@@ -1075,7 +1075,7 @@ Rules you always follow:
       'tools.kickslabel':'kicks','tools.minlabel':'minutes elapsed',
       'tools.age':'Age','tools.height':'Height','tools.weight':'Weight','tools.curweight':'Current weight',
       'tools.aih4':'✨ Want a personalized insight?',
-      'tools.aip1':'Optional — adding these helps Sakhi AI give more relevant, personal context. Nothing here is stored anywhere.',
+      'tools.aip1':'Optional. Choosing Get AI insight sends your entered cycle details and any age, height or weight you provide to an AI service. Leave these fields blank if you prefer.',
       'tools.aip2':"Optional — these help Sakhi AI tailor the answer to you. This is general guidance, never a substitute for your doctor's advice.",
       'tools.aibtn':'✨ Get AI insight',
       'tools.sym1':'Heavy bleeding — soaking a pad/tampon every hour','tools.sym2':"Severe abdominal pain that won't ease",
@@ -1099,7 +1099,7 @@ Rules you always follow:
       'faqsec.eyebrow':'यहाँ से शुरू करें','faqsec.h2':'अक्सर पूछे जाने वाले सवाल, कम ही जिनके जवाब मिलते हैं',
       'faqsec.p':'वो सवाल जो लड़कियाँ रात 1 बजे अपनी सहेली से फुसफुसाकर पूछती हैं — यहाँ खुलकर, सीधी भाषा में जवाब दिए गए हैं।',
       'toolssec.eyebrow':'टूल्स जो आपकी सुनते हैं','toolssec.h2':'ट्रैक करें, बस सोचते मत रहिए',
-      'toolssec.p':'सीधे आपके ब्राउज़र में चलने वाले आसान टूल्स — कुछ भी कहीं भेजा नहीं जाता, सिर्फ इसी डिवाइस में सेव होता है।',
+      'toolssec.p':'तारीखें इस ब्राउज़र में ट्रैक करें। AI सुझाव चुनने पर उस सुझाव के लिए इस्तेमाल की गई जानकारी AI सेवा को भेजी जाती है।',
       'mythssec.eyebrow':'चलिए भ्रम दूर करते हैं','mythssec.h2':'भ्रम बनाम सच',
       'mythssec.p':'कार्ड पर टैप करें और जो सच में सुना है उसके पीछे की सच्चाई देखें।',
       'periodssec.eyebrow':'पीरियड्स केयर','periodssec.h2':'मुश्किल दिनों को आसानी से पार करें',
@@ -1185,7 +1185,7 @@ Rules you always follow:
       'tools.kickslabel':'किक','tools.minlabel':'मिनट बीते',
       'tools.age':'उम्र','tools.height':'लंबाई','tools.weight':'वज़न','tools.curweight':'वर्तमान वज़न',
       'tools.aih4':'✨ एक पर्सनलाइज़्ड जानकारी चाहिए?',
-      'tools.aip1':'वैकल्पिक — यह जोड़ने से सखी AI ज़्यादा सटीक, व्यक्तिगत जवाब दे पाती है। यहाँ कुछ भी कहीं सेव नहीं होता।',
+      'tools.aip1':'वैकल्पिक। AI सुझाव चुनने पर आपकी दर्ज की गई चक्र की जानकारी और उम्र, लंबाई या वजन AI सेवा को भेजे जाते हैं। चाहें तो ये फ़ील्ड खाली छोड़ें।',
       'tools.aip2':'वैकल्पिक — यह सखी AI को आपके लिए जवाब बेहतर बनाने में मदद करता है। यह सामान्य सलाह है, आपके डॉक्टर की सलाह का विकल्प नहीं।',
       'tools.aibtn':'✨ AI जानकारी पाएँ',
       'tools.sym1':'भारी ब्लीडिंग — हर घंटे पैड/टैम्पोन भीग जाना','tools.sym2':'तेज़ पेट दर्द जो कम नहीं हो रहा',
@@ -1209,7 +1209,7 @@ Rules you always follow:
       'faqsec.eyebrow':'અહીંથી શરૂ કરો','faqsec.h2':'વારંવાર પુછાતા પ્રશ્નો, ભાગ્યે જ જવાબ મળે એવા',
       'faqsec.p':'એ પ્રશ્નો જે છોકરીઓ રાત્રે 1 વાગ્યે પોતાની બહેનપણીને ધીમેથી પૂછે છે — અહીં ખુલ્લેઆમ, સાદી ભાષામાં જવાબ આપ્યા છે.',
       'toolssec.eyebrow':'ટૂલ્સ જે તમારું સાંભળે છે','toolssec.h2':'ટ્રેક કરો, ફક્ત વિચારતા ના રહો',
-      'toolssec.p':'તમારા બ્રાઉઝરમાં જ ચાલતા સરળ ટૂલ્સ — કંઈ પણ ક્યાંય મોકલાતું નથી, ફક્ત આ ડિવાઇસ પર જ સેવ થાય છે.',
+      'toolssec.p':'તારીખો આ બ્રાઉઝરમાં ટ્રૅક કરો. AI સૂચન પસંદ કરો ત્યારે તે સૂચન માટેની માહિતી AI સેવાને મોકલવામાં આવે છે.',
       'mythssec.eyebrow':'ચાલો ભ્રમ દૂર કરીએ','mythssec.h2':'ભ્રમ વિરુદ્ધ સત્ય',
       'mythssec.p':'કાર્ડ પર ટેપ કરો અને તમે જે સાંભળ્યું હશે તેની પાછળનું સત્ય જુઓ.',
       'periodssec.eyebrow':'પીરિયડ્સ કેર','periodssec.h2':'મુશ્કેલ દિવસો સરળતાથી પસાર કરો',
@@ -1295,7 +1295,7 @@ Rules you always follow:
       'tools.kickslabel':'કિક','tools.minlabel':'મિનિટ પસાર થઈ',
       'tools.age':'ઉંમર','tools.height':'ઊંચાઈ','tools.weight':'વજન','tools.curweight':'હાલનું વજન',
       'tools.aih4':'✨ પર્સનલાઇઝ્ડ માહિતી જોઈએ છે?',
-      'tools.aip1':'વૈકલ્પિક — આ ઉમેરવાથી સખી AI વધુ સુસંગત, વ્યક્તિગત જવાબ આપી શકે છે. અહીં કંઈ પણ ક્યાંય સેવ થતું નથી.',
+      'tools.aip1':'વૈકલ્પિક. AI સૂચન પસંદ કરવાથી દાખલ કરેલી ચક્રની માહિતી અને આપેલી ઉંમર, ઊંચાઈ કે વજન AI સેવાને મોકલાય છે. ઇચ્છો તો આ વિગતો ખાલી રાખો.',
       'tools.aip2':'વૈકલ્પિક — આ સખી AI ને તમારા માટે જવાબ વધુ યોગ્ય બનાવવામાં મદદ કરે છે. આ સામાન્ય માર્ગદર્શન છે, તમારા ડૉક્ટરની સલાહનો વિકલ્પ નથી.',
       'tools.aibtn':'✨ AI માહિતી મેળવો',
       'tools.sym1':'ભારે રક્તસ્ત્રાવ — દર કલાકે પેડ/ટેમ્પોન પલળી જવું','tools.sym2':'તીવ્ર પેટનો દુખાવો જે ઓછો થતો નથી',
