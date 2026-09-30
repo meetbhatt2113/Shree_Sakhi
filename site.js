@@ -172,6 +172,8 @@
   // credentials fail, without sending a second billable request automatically.
   async function askSakhiAIRaw(context, language, parentSignal){
     if(typeof context !== 'string' || !context.trim() || context.length > 4000) throw new Error('Question must be 1–4000 characters');
+    const basicAnswer = window.SakhiBasics?.answer(context, language);
+    if(basicAnswer) return basicAnswer;
     const controller = new AbortController();
     const cancel = ()=>controller.abort();
     if(parentSignal?.aborted) controller.abort();
@@ -638,7 +640,7 @@ Rules you always follow:
     setListeningUI(false);
     setLiveStatus('ready', 'stopped — ready when you are');
   }
-  function replayLastAnswer(){ if(lastAnswer && !answerController && !transcriptionController && !isListening) speak(lastAnswer); }
+  function replayLastAnswer(){ if(lastAnswer && !answerController && !transcriptionController && !isListening) replayOnDevice(lastAnswer); }
   function clearSakhiChat(){
     stopSakhiActivity();
     document.querySelectorAll('#vwThread .vw-bubble').forEach(el=>el.remove());
@@ -750,6 +752,9 @@ Rules you always follow:
       else setLiveStatus('ready', 'answer ready — tap Replay to listen');
     }catch(err){
       if(controller.signal.aborted) return;
+      // Restore the failed question without overwriting a newly typed draft.
+      const input = document.getElementById('typedQuestion');
+      if(input && !input.value) input.value = userText;
       const msg = err.name === 'AbortError'
         ? 'Sakhi AI took too long to reply. Please try again shortly.'
         : 'Sakhi AI is unavailable right now. Please try again later, or use the FAQs and Find care page.';
@@ -890,7 +895,7 @@ Rules you always follow:
     document.getElementById('micBtn')?.classList.remove('speaking');
   }
   function speakWithDevice(text, request){
-    if(!window.speechSynthesis){ setLiveStatus('ready', 'ready to listen'); return; }
+    if(!window.speechSynthesis){ setLiveStatus('ready', 'Voice unavailable on this device — read the reply instead'); return; }
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(speechFriendlyText(text));
     const replyLang = detectReplyLang(text);
@@ -906,13 +911,20 @@ Rules you always follow:
     u.volume = 1;
     document.getElementById('micBtn').classList.add('speaking');
     setLiveStatus('speaking', 'speaking...');
+    const startTimer = setTimeout(()=>{
+      if(request !== currentSpeech) return;
+      document.getElementById('micBtn').classList.remove('speaking');
+      setLiveStatus('ready', 'Audio did not start — tap Replay to use your device voice');
+    }, 4000);
+    u.onstart = ()=>clearTimeout(startTimer);
     const finish = ()=>{
+      clearTimeout(startTimer);
       if(request !== currentSpeech) return;
       document.getElementById('micBtn').classList.remove('speaking');
       setLiveStatus('ready', 'ready to listen');
     };
     u.onend = finish;
-    u.onerror = ()=>{ if(request !== currentSpeech) return; document.getElementById('micBtn').classList.remove('speaking'); setLiveStatus('ready', 'voice unavailable — read the reply or tap Replay'); };
+    u.onerror = ()=>{ clearTimeout(startTimer); if(request !== currentSpeech) return; document.getElementById('micBtn').classList.remove('speaking'); setLiveStatus('ready', 'voice unavailable — read the reply or tap Replay'); };
     window.speechSynthesis.speak(u);
   }
 
@@ -968,8 +980,14 @@ Rules you always follow:
     }
   }
 
+  function replayOnDevice(text){
+    if(answerController || transcriptionController || isListening || recordingStarting) return;
+    stopSpeech();
+    // Keep speech inside the tap handler for Safari's user-gesture requirement.
+    speakWithDevice(text, currentSpeech);
+  }
   function replaySpeech(bubbleId){
-    if(replyTexts[bubbleId]) speak(replyTexts[bubbleId], bubbleId);
+    if(replyTexts[bubbleId]) replayOnDevice(replyTexts[bubbleId]);
   }
 
   /* ---------- LANGUAGE TOGGLE ---------- */

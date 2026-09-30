@@ -56,6 +56,38 @@ vm.runInContext('stopSakhiActivity()',scope);resolveReply('Must not show');await
 assert.equal(bubbles.filter(b=>b.role==='ai').length,0);assert.equal(spoken,0);assert.equal(voiceElements.sendQuestion.disabled,false);
 console.log('PASS: cancelling a reply suppresses late answers and speech and restores Send.');
 
+// Failed requests restore the question, but never overwrite the user's next draft.
+voiceElements.typedQuestion={value:''};
+scope.askSakhiAIRaw=async()=>{throw new Error('offline')};
+await vm.runInContext("askSakhiAI('Retry this question','en')",scope);
+assert.equal(voiceElements.typedQuestion.value,'Retry this question');
+voiceElements.typedQuestion.value='My next question';
+await vm.runInContext("askSakhiAI('Previous question','en')",scope);
+assert.equal(voiceElements.typedQuestion.value,'My next question');
+
+// Replay must invoke device speech synchronously, before Safari's tap gesture expires.
+const replaySource=voiceSource.slice(voiceSource.indexOf('  function replayOnDevice('),voiceSource.indexOf('  /* ---------- LANGUAGE TOGGLE'));
+const replayCalls=[];
+const replayScope=vm.createContext({stopSpeech:()=>replayCalls.push('stop'),speakWithDevice:(text)=>replayCalls.push(text)});
+vm.runInContext(`let answerController=null,transcriptionController=null,isListening=false,recordingStarting=false,currentSpeech=1; const replyTexts={sample:'Hello'}; ${replaySource}`,replayScope);
+vm.runInContext("replaySpeech('sample')",replayScope);
+assert.deepEqual(replayCalls,['stop','Hello']);
+vm.runInContext("isListening=true; replaySpeech('sample')",replayScope);
+assert.equal(replayCalls.length,2,'Replay cannot interrupt recording');
+
+const basicsScope={window:{}};
+vm.runInNewContext(readFileSync(new URL('../menstrual-basics.js',import.meta.url),'utf8'),basicsScope);
+assert.equal(basicsScope.window.SakhiBasics.answer('What is the menstrual cycle? I am bleeding heavily and dizzy.','en'),null,'Longer symptom questions must not be intercepted');
+assert.match(basicsScope.window.SakhiBasics.answer('માસિક ચક્ર શું છે?','auto'),/ગર્ભાશય/);
+for(const [language,pattern] of [['en',/lining of the uterus/],['hi',/गर्भाशय/],['gu',/ગર્ભાશય/],['hinglish',/uterus/]]){
+  const response=await worker.fetch(post(JSON.stringify({message:'What is the menstrual cycle? Explain simply.',language})),{GROQ_API_KEY:'test-placeholder'});
+  assert.equal(response.status,200);
+  const reply=(await response.json()).reply;
+  assert.match(reply,pattern);
+  assert.equal(basicsScope.window.SakhiBasics.answer('What is the menstrual cycle? Explain simply.',language),reply,'Website and Worker definitions must agree');
+}
+console.log('PASS: failed-question restoration, draft preservation, synchronous device replay and multilingual menstrual definition.');
+
 
 // Calendar times are India Standard Time, regardless of the device time zone.
 const calendar=env.window.SakhiCalendar;

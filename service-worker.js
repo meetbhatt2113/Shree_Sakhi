@@ -13,7 +13,7 @@
  * If you rename or add pages, update CACHE_FILES below to match.
  */
 
-const CACHE_NAME = 'shree-sakhi-v26-appointment-reminder';
+const CACHE_NAME = 'shree-sakhi-v27-mobile-reliability';
 const CACHE_FILES = [
   '/index.html',
   '/refresh.css',
@@ -24,6 +24,7 @@ const CACHE_FILES = [
   '/shree-sakhi-logo.svg',
   '/shree-sakhi-icon.svg',
   '/site.js',
+  '/menstrual-basics.js',
   '/visit-summary.js',
   '/calendar-reminder.js',
   '/periods.html',
@@ -46,7 +47,10 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       // Cache what we can; don't fail install if one file 404s
-      return Promise.allSettled(CACHE_FILES.map((url) => cache.add(url)));
+      // Save only the shared shell on installation. Other pages are cached
+      // after a visit, avoiding a whole-site download on mobile data.
+      const shell = CACHE_FILES.filter(url => !url.endsWith('.html') && !['/visit-summary.js', '/calendar-reminder.js', '/health-3d.js', '/refresh-pages.css'].includes(url));
+      return Promise.allSettled(shell.map((url) => cache.add(url)));
     })
   );
   self.skipWaiting();
@@ -78,4 +82,3 @@ self.addEventListener('fetch', (event) => {
       .catch(() => caches.match(event.request)) // offline fallback to last cached version
   );
 });
-

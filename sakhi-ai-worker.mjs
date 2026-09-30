@@ -14,6 +14,15 @@ function languageOf(value) {
 }
 
 const fixed = {
+  // Educational summary: https://www.cdc.gov/hygiene/about/menstrual-hygiene.html
+  // and https://my.clevelandclinic.org/health/articles/10132-menstrual-cycle
+  // Checked 2026-09-30. Translation still needs qualified clinical review.
+  menstrualBasics: {
+    en: 'The menstrual cycle runs from the first day of one period to the first day of the next. Hormones prepare the uterus for a possible pregnancy. If pregnancy does not occur, blood and tissue from the lining of the uterus leave through the vagina: this is a period. Cycle length varies.',
+    hi: 'मासिक धर्म चक्र एक पीरियड के पहले दिन से अगले पीरियड के पहले दिन तक गिना जाता है। हार्मोन गर्भाशय को संभावित गर्भावस्था के लिए तैयार करते हैं। गर्भधारण न होने पर गर्भाशय की अंदरूनी परत का रक्त और ऊतक योनि से बाहर निकलते हैं; इसे पीरियड कहते हैं। चक्र की अवधि अलग-अलग हो सकती है।',
+    gu: 'માસિક ચક્ર એક માસિકના પહેલા દિવસથી આવતા માસિકના પહેલા દિવસ સુધી ગણાય છે. હોર્મોન્સ ગર્ભાશયને સંભવિત ગર્ભાવસ્થા માટે તૈયાર કરે છે. ગર્ભ ન રહે તો ગર્ભાશયની અંદરની પરતમાંથી લોહી અને પેશી યોનિ દ્વારા બહાર આવે છે; તેને માસિક કહે છે. ચક્રની લંબાઈ વ્યક્તિએ વ્યક્તિએ બદલાઈ શકે છે.',
+    hinglish: 'Menstrual cycle ek period ke pehle din se agle period ke pehle din tak gina jata hai. Hormones uterus ko pregnancy ke liye taiyar karte hain. Pregnancy na hone par uterus ki andar ki lining ka blood aur tissue vagina se bahar aata hai; ise period kehte hain. Cycle ki length alag ho sakti hai.'
+  },
   privacy: {
     en: 'Shree Sakhi does not save your questions or chat history for future use, and we do not sell your information. To answer you, your question is sent to an external AI service. Please avoid sharing names, phone numbers, or other personal details.',
     hi: 'Shree Sakhi आपके सवाल या चैट हिस्ट्री को भविष्य के उपयोग के लिए सेव नहीं करता और आपकी जानकारी बेचता नहीं है। जवाब देने के लिए आपका सवाल एक बाहरी AI सेवा को भेजा जाता है। कृपया नाम, फ़ोन नंबर या दूसरी निजी जानकारी न लिखें।',
@@ -140,6 +149,8 @@ function classify(message) {
   if (/(condom.{0,20}(broke|break|slip|toot)|कंडोम.{0,20}(टूट|फट)|કૉન્ડોમ.{0,20}તૂટ)/iu.test(q)) return 'contraception';
   if (/(privacy|private|stored|store my|share my|sent anywhere|data secure|chat.*safe|गोपनीय|प्राइवेसी|ખાનગી|પ્રાઇવસી)/iu.test(q)) return 'privacy';
   if (/(capital of |write a (c |python |javascript )?program|reverse a string|trip to |travel itinerary|invest.*stock|savings.*stock|stock market|recipe for|movie recommendation)/iu.test(q)) return 'offTopic';
+  // Match basic definitions only, never a longer question about symptoms.
+  if (/^(?:(?:what is (?:the )?menstrual cycle)[?.! ]*(?:explain simply[.! ]*)?|मासिक (?:धर्म )?चक्र क्या है[?। ]*|માસિક ચક્ર શું છે[?। ]*|menstrual cycle kya hai[?.! ]*)$/iu.test(q)) return 'menstrualBasics';
   return null;
 }
 
